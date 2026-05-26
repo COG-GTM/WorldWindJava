@@ -61,11 +61,10 @@ public class GliderImageLayer extends AbstractLayer {
     }
 
     public void setImage(GliderImage image) throws IOException {
-        if (image.getImageSource() instanceof String) {
-            ((SurfaceImageLayer) this.getImageLayer()).addImage((String) image.getImageSource(), image.getCorners());
-        } else if (image.getImageSource() instanceof BufferedImage) {
-            ((SurfaceImageLayer) this.getImageLayer()).addImage(image.getName(), (BufferedImage) image.getImageSource(),
-                    image.getSector());
+        if (image.getImageSource() instanceof String imageSource) {
+            ((SurfaceImageLayer) this.getImageLayer()).addImage(imageSource, image.getCorners());
+        } else if (image.getImageSource() instanceof BufferedImage imageSource) {
+            ((SurfaceImageLayer) this.getImageLayer()).addImage(image.getName(), imageSource, image.getSector());
         } else {
             throw new IllegalArgumentException("Unsupported image source type");
         }

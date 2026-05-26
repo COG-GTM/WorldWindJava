@@ -116,8 +116,8 @@ public class DataInstallerApp {
             // Search the layer list for layers that are also select listeners and register them with the World
             // Window. This enables interactive layers to be included without specific knowledge of them here.
             for (Layer layer : this.getWwd().getModel().getLayers()) {
-                if (layer instanceof SelectListener) {
-                    this.getWwd().addSelectListener((SelectListener) layer);
+                if (layer instanceof SelectListener selectListener) {
+                    this.getWwd().addSelectListener(selectListener);
                 }
             }
 
