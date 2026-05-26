@@ -123,7 +123,7 @@ public class WMSLayerStyle extends AbstractXMLEventParser
             {
                 Object o = parser.parse(ctx, event, args);
                 if (o instanceof WMSLogoURL legendURL)
-                    this.addLegendURL(LegendURL);
+                    this.addLegendURL(legendURL);
             }
         }
         else if (ctx.isStartElement(event, STYLE_SHEET_URL))
