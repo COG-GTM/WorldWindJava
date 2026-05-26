@@ -61,7 +61,7 @@ public class OGCRequestDescription extends AbstractXMLEventParser
     private void initialize()
     {
         FORMAT = new QName(this.getNamespaceURI(), "Format");
-        DCPTYPE = new QName(this.getNamespaceURI(), "DCPType");
+        DCPTYPE = new QName(this.getNamespaceURI(), "dCPType");
     }
 
     @Override
@@ -105,14 +105,14 @@ public class OGCRequestDescription extends AbstractXMLEventParser
             {
                 Object o = parser.parse(ctx, event, args);
                 if (o instanceof OGCDCType dCPType)
-                    this.addDCPType(DCPType);
+                    this.adddCPType(dCPType);
             }
         }
     }
 
     public OGCOnlineResource getOnlineResouce(String protocol, String requestMethod)
     {
-        for (OGCDCType dct : this.getDCPTypes())
+        for (OGCDCType dct : this.getdCPTypes())
         {
             OGCOnlineResource olr = dct.getOnlineResouce(protocol, requestMethod);
             if (olr != null)
@@ -143,12 +143,12 @@ public class OGCRequestDescription extends AbstractXMLEventParser
         this.formats.add(format);
     }
 
-    protected void setDCPTypes(Set<OGCDCType> dcTypes)
+    protected void setdCPTypes(Set<OGCDCType> dcTypes)
     {
         this.dcpTypes = dcTypes;
     }
 
-    public Set<OGCDCType> getDCPTypes()
+    public Set<OGCDCType> getdCPTypes()
     {
         if (this.dcpTypes != null)
             return dcpTypes;
@@ -156,7 +156,7 @@ public class OGCRequestDescription extends AbstractXMLEventParser
             return Collections.emptySet();
     }
 
-    public void addDCPType(OGCDCType dct)
+    public void adddCPType(OGCDCType dct)
     {
         if (this.dcpTypes == null)
             this.dcpTypes = new HashSet<OGCDCType>();
@@ -188,8 +188,8 @@ public class OGCRequestDescription extends AbstractXMLEventParser
             sb.append("\t").append(format).append(", ");
         }
 
-        sb.append("\n\tDCPTypes:\n");
-        for (OGCDCType dcpt : this.getDCPTypes())
+        sb.append("\n\tdCPTypes:\n");
+        for (OGCDCType dcpt : this.getdCPTypes())
         {
             sb.append("\t\t").append(dcpt.toString()).append("\n");
         }

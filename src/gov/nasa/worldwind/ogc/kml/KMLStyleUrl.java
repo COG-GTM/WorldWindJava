@@ -61,7 +61,7 @@ public class KMLStyleUrl extends KMLAbstractObject
             return null;
 
         Object o = this.getRoot().resolveReference(this.getCharacters());
-        return o instanceof KMLAbstractStyleSelector kMLAbstractStyleSelector ? KMLAbstractStyleSelector : null;
+        return o instanceof KMLAbstractStyleSelector kMLAbstractStyleSelector ? kMLAbstractStyleSelector : null;
     }
 
     @Override
