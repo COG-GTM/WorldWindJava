@@ -1060,8 +1060,8 @@ public abstract class AbstractSceneController extends WWObjectImpl implements Sc
             try
             {
                 OrderedRenderable or = dc.getOrderedSurfaceRenderables().poll();
-                if (or instanceof PreRenderable)
-                    ((PreRenderable) or).preRender(dc);
+                if (or instanceof PreRenderable preRenderable)
+                    preRenderable.preRender(dc);
             }
             catch (Exception e)
             {

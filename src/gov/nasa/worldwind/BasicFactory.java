@@ -142,14 +142,14 @@ public class BasicFactory implements Factory
 
         try
         {
-            if (configSource instanceof Element)
+            if (configSource instanceof Element element)
             {
-                o = this.doCreateFromElement((Element) configSource, params);
+                o = this.doCreateFromElement(element, params);
             }
-            else if (configSource instanceof OGCCapabilities)
-                o = this.doCreateFromCapabilities((OGCCapabilities) configSource, params);
-            else if (configSource instanceof WCS100Capabilities)
-                o = this.doCreateFromCapabilities((WCS100Capabilities) configSource, params);
+            else if (configSource instanceof OGCCapabilities capabilities)
+                o = this.doCreateFromCapabilities(capabilities, params);
+            else if (configSource instanceof WCS100Capabilities capabilities)
+                o = this.doCreateFromCapabilities(capabilities, params);
             else
             {
                 Document doc = WWXML.openDocument(configSource);
