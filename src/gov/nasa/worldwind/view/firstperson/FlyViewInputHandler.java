@@ -466,9 +466,8 @@ public class FlyViewInputHandler extends BasicViewInputHandler
             return;
         }
 
-        if (view instanceof BasicFlyView)
+        if (view instanceof BasicFlyView flyView)
         {
-            BasicFlyView flyView = (BasicFlyView) view;
             this.setPitch(flyView, this.uiAnimControl, flyView.getPitch().add(pitchChange),
                 actionAttribs);
             this.setHeading(flyView, this.uiAnimControl, flyView.getHeading().add(headingChange),
@@ -509,9 +508,8 @@ public class FlyViewInputHandler extends BasicViewInputHandler
             return;
         }
 
-        if (view instanceof BasicFlyView)
+        if (view instanceof BasicFlyView flyView)
         {
-            BasicFlyView flyView = (BasicFlyView) view;
             this.setRoll(flyView, this.uiAnimControl, flyView.getRoll().add(rollChange), actionAttribs);
 
             view.firePropertyChange(AVKey.VIEW, null, view);

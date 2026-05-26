@@ -117,7 +117,7 @@ public class OrbitViewInputHandler extends BasicViewInputHandler
     protected boolean isNonContinous2DGlobe()
     {
         Globe globe = this.getWorldWindow().getModel().getGlobe();
-        return globe instanceof Globe2D && !((Globe2D) globe).isContinuous();
+        return globe instanceof Globe2D globe2D && !globe2D.isContinuous();
     }
 
     //**************************************************************//
@@ -511,9 +511,9 @@ public class OrbitViewInputHandler extends BasicViewInputHandler
         {
             return;
         }
-        if (view instanceof BasicOrbitView)
+        if (view instanceof BasicOrbitView basicOrbitView)
         {
-            this.changeZoom((BasicOrbitView) view, uiAnimControl, translateChange, actionAttribs);
+            this.changeZoom(basicOrbitView, uiAnimControl, translateChange, actionAttribs);
         }
     }
 
@@ -587,9 +587,9 @@ public class OrbitViewInputHandler extends BasicViewInputHandler
         if (view == null)
             return;
 
-        if (view instanceof BasicOrbitView)
+        if (view instanceof BasicOrbitView basicOrbitView)
         {
-            ((BasicOrbitView) view).setViewOutOfFocus(true);
+            basicOrbitView.setViewOutOfFocus(true);
         }
     }
 
@@ -1171,9 +1171,8 @@ public class OrbitViewInputHandler extends BasicViewInputHandler
             throw new IllegalArgumentException(message);
         }
         View view = this.getView();
-        if (view instanceof OrbitView)
+        if (view instanceof OrbitView orbitView)
         {
-            OrbitView orbitView = (OrbitView) view;
             Angle beginHeading = orbitView.getHeading();
             Angle beginPitch = orbitView.getPitch();
             double beginZoom = orbitView.getZoom();
@@ -1225,9 +1224,8 @@ public class OrbitViewInputHandler extends BasicViewInputHandler
         }
 
         View view = this.getView();
-        if (view instanceof OrbitView)
+        if (view instanceof OrbitView orbitView)
         {
-            OrbitView orbitView = (OrbitView) view;
             Interpolator interpolator;
             if (smoothed)
             {

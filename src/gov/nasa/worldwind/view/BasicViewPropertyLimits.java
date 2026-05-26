@@ -278,7 +278,7 @@ public class BasicViewPropertyLimits implements ViewPropertyLimits
 
     protected boolean isNonContinous2DGlobe(Globe globe)
     {
-        return globe instanceof Globe2D && !((Globe2D) globe).isContinuous();
+        return globe instanceof Globe2D globe2D && !globe2D.isContinuous();
     }
 
     /**
