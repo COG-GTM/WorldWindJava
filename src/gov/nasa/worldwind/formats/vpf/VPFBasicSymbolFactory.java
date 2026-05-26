@@ -516,14 +516,14 @@ public class VPFBasicSymbolFactory implements VPFSymbolFactory
         }
 
         Object o = featureAttributes.getValue(attr.getOrientationAttributeName());
-        if (o instanceof Number)
+        if (o instanceof Number number)
         {
-            Double d = ((Number) o).doubleValue();
+            Double d = number.doubleValue();
             return Angle.fromDegrees(d);
         }
-        else if (o instanceof String)
+        else if (o instanceof String string)
         {
-            Double d = WWUtil.convertStringToDouble((String) o);
+            Double d = WWUtil.convertStringToDouble(string);
             if (d != null)
                 return Angle.fromDegrees(d);
         }

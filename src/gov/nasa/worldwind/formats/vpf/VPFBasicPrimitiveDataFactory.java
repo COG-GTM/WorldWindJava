@@ -325,8 +325,8 @@ public class VPFBasicPrimitiveDataFactory implements VPFPrimitiveDataFactory
         VPFTripletId id = null;
 
         Object o = record.getValue("left_face");
-        if (o instanceof VPFTripletId)
-            id = (VPFTripletId) o;
+        if (o instanceof VPFTripletId tripletId)
+            id = tripletId;
 
         if (id == null)
         {
@@ -340,18 +340,18 @@ public class VPFBasicPrimitiveDataFactory implements VPFPrimitiveDataFactory
 
     protected static int getNumber(Object key)
     {
-        if (key instanceof Number)
-            return ((Number) key).intValue();
+        if (key instanceof Number number)
+            return number.intValue();
 
         return -1;
     }
 
     protected static int getId(Object key)
     {
-        if (key instanceof Number)
-            return ((Number) key).intValue();
-        else if (key instanceof VPFTripletId)
-            return ((VPFTripletId) key).getId();
+        if (key instanceof Number number)
+            return number.intValue();
+        else if (key instanceof VPFTripletId tripletId)
+            return tripletId.getId();
 
         return -1;
     }
