@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -111,10 +111,8 @@ public class StatusLayer extends AbstractLayer implements PositionListener, Rend
     {
         setPickEnabled(false);
 
-        Timer downloadTimer = new Timer(300, new ActionListener()
+        Timer downloadTimer = new Timer(300, actionEvent ->
         {
-            public void actionPerformed(java.awt.event.ActionEvent actionEvent)
-            {
                 if (!showNetworkStatus)
                 {
                     activatedDownload = false;
@@ -145,26 +143,22 @@ public class StatusLayer extends AbstractLayer implements PositionListener, Rend
                     }
                     activatedDownload = false;
                 }
-            }
+
         });
         downloadTimer.start();
 
-        Timer netCheckTimer = new Timer(10000, new ActionListener()
+        Timer netCheckTimer = new Timer(10000, actionEvent ->
         {
-            public void actionPerformed(java.awt.event.ActionEvent actionEvent)
-            {
                 if (!showNetworkStatus)
                     return;
 
-                Thread t = new Thread(new Runnable()
+                Thread t = new Thread(() ->
                 {
-                    public void run()
-                    {
                         isNetworkAvailable.set(!WorldWind.getNetworkStatus().isNetworkUnavailable());
-                    }
+
                 });
                 t.start();
-            }
+
         });
         netCheckTimer.start();
     }
@@ -392,16 +386,14 @@ public class StatusLayer extends AbstractLayer implements PositionListener, Rend
         if (!event.getStage().equals(RenderingEvent.BEFORE_BUFFER_SWAP))
             return;
 
-        EventQueue.invokeLater(new Runnable()
+        EventQueue.invokeLater(() ->
         {
-            public void run()
-            {
                 if (eventSource.getView() != null && eventSource.getView().getEyePosition() != null)
                     altDisplay = makeEyeAltitudeDescription(
                         eventSource.getView().getEyePosition().getElevation());
                 else
                     altDisplay = (Logging.getMessage("term.Altitude"));
-            }
+
         });
     }
 

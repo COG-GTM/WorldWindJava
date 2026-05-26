@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -945,42 +945,36 @@ public class Annotations extends ApplicationTemplate
             fontPanel.add(Box.createRigidArea(new Dimension(10, 0)));
             this.cbFontName = new JComboBox(new String[] {"Arial", "SansSerif", "Serif", "Courier", "Times",
                 "Helvetica", "Trebuchet", "Tahoma"});
-            this.cbFontName.addActionListener(new ActionListener()
+            this.cbFontName.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             fontPanel.add(this.cbFontName);
             fontPanel.add(Box.createRigidArea(new Dimension(10, 0)));
             this.cbFontStyle = new JComboBox(new String[] {"Plain", "Bold", "Italic", "BoldItalic"});
-            this.cbFontStyle.addActionListener(new ActionListener()
+            this.cbFontStyle.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             fontPanel.add(this.cbFontStyle);
             fontPanel.add(Box.createRigidArea(new Dimension(10, 0)));
             this.cbFontSize = new JComboBox(new String[] {"10", "12", "14", "16", "18", "20", "24", "28", "34",
                 "48", "64"});
-            this.cbFontSize.addActionListener(new ActionListener()
+            this.cbFontSize.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             fontPanel.add(this.cbFontSize);
             //fontPanel.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -990,27 +984,23 @@ public class Annotations extends ApplicationTemplate
             alignPanel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
             alignPanel.add(new JLabel("Align & Effect:"));
             this.cbTextAlign = new JComboBox(new String[] {"Left", "Center", "Right"});
-            this.cbTextAlign.addActionListener(new ActionListener()
+            this.cbTextAlign.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             alignPanel.add(this.cbTextAlign);
             this.cbTextEffect = new JComboBox(new String[] {"None", "Shadow", "Outline"});
-            this.cbTextEffect.addActionListener(new ActionListener()
+            this.cbTextEffect.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             alignPanel.add(this.cbTextEffect);
 
@@ -1018,15 +1008,13 @@ public class Annotations extends ApplicationTemplate
             final JPanel adjustWidthPanel = new JPanel(new GridLayout(0, 1, 5, 5));
             adjustWidthPanel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
             this.cbAdjustWidth = new JCheckBox("Adjust width to text");
-            this.cbAdjustWidth.addActionListener(new ActionListener()
+            this.cbAdjustWidth.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             this.cbAdjustWidth.setSelected(true);
             adjustWidthPanel.add(this.cbAdjustWidth);
@@ -1037,28 +1025,24 @@ public class Annotations extends ApplicationTemplate
 
             shapePanel.add(new JLabel("Shape:"));
             this.cbShape = new JComboBox(new String[] {"Rectangle", "Ellipse", "None"});
-            this.cbShape.addActionListener(new ActionListener()
+            this.cbShape.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             shapePanel.add(this.cbShape);
             shapePanel.add(new JLabel("Leader Shape:"));
             this.cbLeader = new JComboBox(new String[] {"Triangle", "None"});
-            this.cbLeader.addActionListener(new ActionListener()
+            this.cbLeader.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             shapePanel.add(this.cbLeader);
             shapePanel.add(new JLabel("Leader Gap Width:"));
@@ -1085,28 +1069,24 @@ public class Annotations extends ApplicationTemplate
 
             imagePanel.add(new JLabel("Image:"));
             this.cbImage = new JComboBox(new String[] {"None", "Earth", "NASA", "WWJ Splash", "Custom"});
-            this.cbImage.addActionListener(new ActionListener()
+            this.cbImage.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             imagePanel.add(this.cbImage);
             imagePanel.add(new JLabel("Repeat:"));
             this.cbImageRepeat = new JComboBox(new String[] {"None", "Repeat-X", "Repeat-Y", "Repeat-XY"});
-            this.cbImageRepeat.addActionListener(new ActionListener()
+            this.cbImageRepeat.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             imagePanel.add(this.cbImageRepeat);
 
@@ -1301,10 +1281,8 @@ public class Annotations extends ApplicationTemplate
 
             colorPanel.add(new JLabel("Text color:"));
             this.btTextColor = new JButton("");
-            this.btTextColor.addActionListener(new ActionListener()
+            this.btTextColor.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     Color c = JColorChooser.showDialog(colorPanel,
                         "Choose a color...", ((JButton) event.getSource()).getBackground());
                     if (c != null)
@@ -1313,29 +1291,25 @@ public class Annotations extends ApplicationTemplate
                         if (currentAnnotation != null)
                             updateAnnotation();
                     }
-                }
+
             });
             colorPanel.add(this.btTextColor);
             this.cbTextColorAlpha = new JComboBox(new String[] {"10", "9", "8", "7", "6", "5", "4", "3", "2",
                 "1", "0"});
-            this.cbTextColorAlpha.addActionListener(new ActionListener()
+            this.cbTextColorAlpha.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             colorPanel.add(this.cbTextColorAlpha);
 
             colorPanel.add(new JLabel("Back color:"));
             this.btBackColor = new JButton("");
-            this.btBackColor.addActionListener(new ActionListener()
+            this.btBackColor.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     Color c = JColorChooser.showDialog(colorPanel,
                         "Choose a color...", ((JButton) event.getSource()).getBackground());
                     if (c != null)
@@ -1344,29 +1318,25 @@ public class Annotations extends ApplicationTemplate
                         if (currentAnnotation != null)
                             updateAnnotation();
                     }
-                }
+
             });
             colorPanel.add(this.btBackColor);
             this.cbBackColorAlpha = new JComboBox(new String[] {"10", "9", "8", "7", "6", "5", "4", "3", "2",
                 "1", "0"});
-            this.cbBackColorAlpha.addActionListener(new ActionListener()
+            this.cbBackColorAlpha.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             colorPanel.add(this.cbBackColorAlpha);
 
             colorPanel.add(new JLabel("Border color:"));
             this.btBorderColor = new JButton("");
-            this.btBorderColor.addActionListener(new ActionListener()
+            this.btBorderColor.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     Color c = JColorChooser.showDialog(colorPanel,
                         "Choose a color...", ((JButton) event.getSource()).getBackground());
                     if (c != null)
@@ -1375,20 +1345,18 @@ public class Annotations extends ApplicationTemplate
                         if (currentAnnotation != null)
                             updateAnnotation();
                     }
-                }
+
             });
             colorPanel.add(this.btBorderColor);
             this.cbBorderColorAlpha = new JComboBox(new String[] {"10", "9", "8", "7", "6", "5", "4", "3", "2",
                 "1", "0"});
-            this.cbBorderColorAlpha.addActionListener(new ActionListener()
+            this.cbBorderColorAlpha.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
             colorPanel.add(this.cbBorderColorAlpha);
 
@@ -1400,23 +1368,19 @@ public class Annotations extends ApplicationTemplate
             // Apply changes button
             this.btApply = new JButton("Apply");
             this.btApply.setEnabled(false);
-            this.btApply.addActionListener(new ActionListener()
+            this.btApply.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     if (currentAnnotation != null)
                     {
                         updateAnnotation();
                     }
-                }
+
             });
 
             // Add annotation button
             JButton btAdd = new JButton("Add new");
-            btAdd.addActionListener(new ActionListener()
+            btAdd.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     Position lookAtPos = computeGroundPosition(getWwd());
                     if (lookAtPos != null && inputTextArea.getText().length() > 0)
                     {
@@ -1427,16 +1391,14 @@ public class Annotations extends ApplicationTemplate
                         currentAnnotation = a;
                         getWwd().redraw();
                     }
-                }
+
             });
 
             // Remove button
             this.btRemove = new JButton("Remove");
             this.btRemove.setEnabled(false);
-            this.btRemove.addActionListener(new ActionListener()
+            this.btRemove.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     if (currentAnnotation != null)
                     {
                         layer.removeAnnotation(currentAnnotation);
@@ -1448,7 +1410,7 @@ public class Annotations extends ApplicationTemplate
                         btRemove.setEnabled(false);
                         getWwd().redraw();
                     }
-                }
+
             });
 
             buttonPanel.add(btAdd);

@@ -294,16 +294,13 @@ public abstract class WorldWindowImpl extends WWObjectImpl implements WorldWindo
 
     protected void callPositionListeners(final PositionEvent event)
     {
-        EventQueue.invokeLater(new Runnable()
+        EventQueue.invokeLater(() ->
         {
-            @Override
-            public void run()
-            {
                 for (PositionListener listener : eventListeners.getListeners(PositionListener.class))
                 {
                     listener.moved(event);
                 }
-            }
+
         });
     }
 
@@ -321,16 +318,13 @@ public abstract class WorldWindowImpl extends WWObjectImpl implements WorldWindo
 
     protected void callSelectListeners(final SelectEvent event)
     {
-        EventQueue.invokeLater(new Runnable()
+        EventQueue.invokeLater(() ->
         {
-            @Override
-            public void run()
-            {
                 for (SelectListener listener : eventListeners.getListeners(SelectListener.class))
                 {
                     listener.selected(event);
                 }
-            }
+
         });
     }
 
@@ -348,17 +342,14 @@ public abstract class WorldWindowImpl extends WWObjectImpl implements WorldWindo
 
     protected void callRenderingExceptionListeners(final Throwable exception)
     {
-        EventQueue.invokeLater(new Runnable()
+        EventQueue.invokeLater(() ->
         {
-            @Override
-            public void run()
-            {
                 for (RenderingExceptionListener listener : eventListeners.getListeners(
                     RenderingExceptionListener.class))
                 {
                     listener.exceptionThrown(exception);
                 }
-            }
+
         });
     }
 
