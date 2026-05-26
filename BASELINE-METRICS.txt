@@ -1,0 +1,33 @@
+WorldWindJava Java 11 Pre-Migration Baseline
+Captured: 2026-05-26T15:41:55Z
+Branch: develop
+Commit: 2543c234349c76f4a290e318b49f071ac156d2a0
+
+JDK:
+openjdk version "11.0.30" 2026-01-20
+OpenJDK Runtime Environment (build 11.0.30+7-post-Ubuntu-1ubuntu122.04)
+OpenJDK 64-Bit Server VM (build 11.0.30+7-post-Ubuntu-1ubuntu122.04, mixed mode, sharing)
+
+File count
+src java files: 1727
+
+Anonymous inner class counts
+new Runnable(): 148
+new ActionListener(): 185
+new Callable(): 0
+new MouseListener(): 2
+new KeyListener(): 0
+new ChangeListener(): 60
+new PropertyChangeListener(): 44
+new WindowListener(): 0
+
+instanceof pattern-match candidates
+instanceof: 1303
+
+Deprecated usage
+@Deprecated: 131
+new Integer(: 0
+new Double(: 0
+new Float(: 0
+new Long(: 0
+new Boolean(: 0
