@@ -77,9 +77,9 @@ public class TacticalGraphicUtil
         Object date2 = null;
 
         Object o = graphic.getModifier(SymbologyConstants.DATE_TIME_GROUP);
-        if (o instanceof Iterable)
+        if (o instanceof Iterable<?> iterable)
         {
-            Iterator iterator = ((Iterable) o).iterator();
+            Iterator<?> iterator = iterable.iterator();
             if (iterator.hasNext())
             {
                 date1 = iterator.next();
@@ -115,9 +115,9 @@ public class TacticalGraphicUtil
         Object alt2 = null;
 
         Object o = graphic.getModifier(SymbologyConstants.ALTITUDE_DEPTH);
-        if (o instanceof Iterable)
+        if (o instanceof Iterable<?> iterable)
         {
-            Iterator iterator = ((Iterable) o).iterator();
+            Iterator<?> iterator = iterable.iterator();
             if (iterator.hasNext())
             {
                 alt1 = iterator.next();

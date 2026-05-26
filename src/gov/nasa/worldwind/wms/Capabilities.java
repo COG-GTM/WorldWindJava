@@ -83,13 +83,8 @@ public abstract class Capabilities
             CapabilitiesRequest req = new CapabilitiesRequest(uri, service);
             URL capsURL = req.getUri().toURL();
 
-            URLRetriever retriever = URLRetriever.createRetriever(capsURL, new RetrievalPostProcessor()
-            {
-                public ByteBuffer run(Retriever retriever)
-                {
-                    return retriever.getBuffer();
-                }
-            });
+            URLRetriever retriever = URLRetriever.createRetriever(capsURL,
+                (Retriever r) -> r.getBuffer());
 
             if (retriever == null)
             {
@@ -281,7 +276,7 @@ public abstract class Capabilities
         if (strings == null)
             return null;
 
-        ArrayList<String> sarl = new ArrayList<String>();
+        ArrayList<String> sarl = new ArrayList<>();
         for (String s : strings)
         {
             if (!sarl.contains(s))
@@ -300,7 +295,7 @@ public abstract class Capabilities
             if (node == null)
                 return null;
 
-            return node instanceof Element ? (Element) node : null;
+            return node instanceof Element e ? e : null;
         }
         catch (XPathExpressionException e)
         {
@@ -321,8 +316,8 @@ public abstract class Capabilities
             for (int i = 0; i < nodes.getLength(); i++)
             {
                 Node node = nodes.item(i);
-                if (node instanceof Element)
-                    elements[i] = (Element) node;
+                if (node instanceof Element e)
+                    elements[i] = e;
             }
             return elements;
         }
@@ -338,7 +333,7 @@ public abstract class Capabilities
         if (elements == null)
             return null;
 
-        HashMap<String, Element> styles = new HashMap<String, Element>();
+        HashMap<String, Element> styles = new HashMap<>();
         for (Element e : elements)
         {
             String name = this.getText(e, uniqueTag);
@@ -349,8 +344,8 @@ public abstract class Capabilities
         return styles.values().toArray(new Element[1]);
     }
 
-    private HashMap<Element, Layer> namedLayerElements = new HashMap<Element, Layer>();
-    private HashMap<String, Layer> namedLayers = new HashMap<String, Layer>();
+    private HashMap<Element, Layer> namedLayerElements = new HashMap<>();
+    private HashMap<String, Layer> namedLayers = new HashMap<>();
 
     private void fillLayerList()
     {
@@ -643,7 +638,7 @@ public abstract class Capabilities
 
     protected static class Layer
     {
-        protected HashMap<Element, Style> styleElements = new HashMap<Element, Style>();
+        protected HashMap<Element, Style> styleElements = new HashMap<>();
         protected final Element element;
         protected Layer layer;
         protected String name;
@@ -725,8 +720,8 @@ public abstract class Capabilities
         if (dims == null || dims.length == 0)
             return null;
 
-        ArrayList<Element> uniqueDims = new ArrayList<Element>();
-        ArrayList<String> dimNames = new ArrayList<String>();
+        ArrayList<Element> uniqueDims = new ArrayList<>();
+        ArrayList<String> dimNames = new ArrayList<>();
         for (Element e : dims)
         {
             // Filter out dimensions with same name.
@@ -749,8 +744,8 @@ public abstract class Capabilities
         if (extents == null || extents.length == 0)
             return null;
 
-        ArrayList<Element> uniqueExtents = new ArrayList<Element>();
-        ArrayList<String> extentNames = new ArrayList<String>();
+        ArrayList<Element> uniqueExtents = new ArrayList<>();
+        ArrayList<String> extentNames = new ArrayList<>();
         for (Element e : extents)
         {
             // Filter out dimensions with same name.
@@ -846,7 +841,7 @@ public abstract class Capabilities
         if (styleElements == null)
             return null;
 
-        layer.styleElements = new HashMap<Element, Style>();
+        layer.styleElements = new HashMap<>();
         for (Element se : styleElements)
         {
             Style style = new Style(se, layer);
@@ -912,7 +907,7 @@ public abstract class Capabilities
 
     // ********* Style Items ********* //
 
-    protected HashMap<Element, Style> styleElements = new HashMap<Element, Style>();
+    protected HashMap<Element, Style> styleElements = new HashMap<>();
 
     protected static class Style
     {

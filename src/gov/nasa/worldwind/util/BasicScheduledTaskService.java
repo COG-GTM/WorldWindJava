@@ -93,16 +93,13 @@ public class BasicScheduledTaskService extends WWObjectImpl
         protected ScheduledTaskExecutor(int poolSize)
         {
             super(poolSize,
-                new ThreadFactory()
+                runnable ->
                 {
-                    public Thread newThread(Runnable runnable)
-                    {
-                        Thread thread = new Thread(runnable);
-                        thread.setDaemon(true);
-                        thread.setPriority(Thread.MIN_PRIORITY);
-                        thread.setUncaughtExceptionHandler(BasicScheduledTaskService.this);
-                        return thread;
-                    }
+                    Thread thread = new Thread(runnable);
+                    thread.setDaemon(true);
+                    thread.setPriority(Thread.MIN_PRIORITY);
+                    thread.setUncaughtExceptionHandler(BasicScheduledTaskService.this);
+                    return thread;
                 },
                 new DiscardPolicy()
                 {

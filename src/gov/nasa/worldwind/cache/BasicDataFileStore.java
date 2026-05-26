@@ -83,7 +83,7 @@ public class BasicDataFileStore extends AbstractFileStore
      * This list may be overridden by specifying a comma-delimited list of content types in the WorldWind configuration
      * parameter <code>gov.nasa.worldwind.avkey.CacheContentTypes</code>.
      */
-    protected List<String> cacheContentTypes = new ArrayList<String>(DEFAULT_CACHE_CONTENT_TYPES);
+    protected List<String> cacheContentTypes = new ArrayList<>(DEFAULT_CACHE_CONTENT_TYPES);
 
     /**
      * Create an instance.

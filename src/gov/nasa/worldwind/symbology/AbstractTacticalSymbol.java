@@ -2026,9 +2026,8 @@ public abstract class AbstractTacticalSymbol extends WWObjectImpl implements Tac
 
         if (!dc.isPickingMode())
         {
-            while (nextItem != null && nextItem instanceof OrderedSymbol)
+            while (nextItem instanceof OrderedSymbol ts)
             {
-                OrderedSymbol ts = (OrderedSymbol) nextItem;
                 if (!ts.isEnableBatchRendering())
                     break;
 
@@ -2040,9 +2039,8 @@ public abstract class AbstractTacticalSymbol extends WWObjectImpl implements Tac
         }
         else if (this.isEnableBatchPicking())
         {
-            while (nextItem != null && nextItem instanceof OrderedSymbol)
+            while (nextItem instanceof OrderedSymbol ts)
             {
-                OrderedSymbol ts = (OrderedSymbol) nextItem;
                 if (!ts.isEnableBatchRendering() || !ts.isEnableBatchPicking())
                     break;
 

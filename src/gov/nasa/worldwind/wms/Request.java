@@ -45,7 +45,7 @@ public abstract class Request
     // Use a TreeMap to hold the query params so that they'll always be attached to the
     // URL query string in the same order. This allows a simple string comparison to
     // determine whether two url strings address the same document.
-    private TreeMap<String, String> queryParams = new TreeMap<String, String>();
+    private TreeMap<String, String> queryParams = new TreeMap<>();
 
     /** Constructs a request for the default service, WMS. */
     protected Request()
@@ -130,7 +130,7 @@ public abstract class Request
 
         for (Map.Entry<String, String> entry : this.queryParams.entrySet())
         {
-            destinationRequest.setParam((String) ((Map.Entry) entry).getKey(), (String) ((Map.Entry) entry).getValue());
+            destinationRequest.setParam(entry.getKey(), entry.getValue());
         }
     }
 
@@ -226,18 +226,18 @@ public abstract class Request
 
     private String buildQueryString(String existingQueryString)
     {
-        StringBuffer queryString = new StringBuffer(existingQueryString != null ? existingQueryString : "");
+        StringBuilder queryString = new StringBuilder(existingQueryString != null ? existingQueryString : "");
 
         if (queryString.length() > 1 && queryString.lastIndexOf("&") != queryString.length() - 1)
-            queryString = queryString.append("&");
+            queryString.append("&");
 
         for (Map.Entry<String, String> entry : this.queryParams.entrySet())
         {
-            if (((Map.Entry) entry).getKey() != null && ((Map.Entry) entry).getValue() != null)
+            if (entry.getKey() != null && entry.getValue() != null)
             {
-                queryString.append(((Map.Entry) entry).getKey());
+                queryString.append(entry.getKey());
                 queryString.append("=");
-                queryString.append(((Map.Entry) entry).getValue());
+                queryString.append(entry.getValue());
                 queryString.append("&");
             }
         }

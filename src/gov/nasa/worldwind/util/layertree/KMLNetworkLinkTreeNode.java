@@ -84,31 +84,26 @@ public class KMLNetworkLinkTreeNode extends KMLContainerTreeNode
         // Add a property change listener to the KMLRoot. Upon receiving an RETRIEVAL_STATE_SUCCESSFUL event,
         // repopulate this node's hierarchy with the KML features in its KMLNetworkLink and fire a
         // RETRIEVAL_STATE_SUCCESSFUL to this nodes listeners.
-        this.getFeature().getRoot().addPropertyChangeListener(new PropertyChangeListener()
+        this.getFeature().getRoot().addPropertyChangeListener(propertyChangeEvent ->
         {
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent)
+            if (AVKey.RETRIEVAL_STATE_SUCCESSFUL.equals(propertyChangeEvent.getPropertyName())
+                && KMLNetworkLinkTreeNode.this.getFeature() == propertyChangeEvent.getNewValue())
             {
-                if (AVKey.RETRIEVAL_STATE_SUCCESSFUL.equals(propertyChangeEvent.getPropertyName())
-                    && KMLNetworkLinkTreeNode.this.getFeature() == propertyChangeEvent.getNewValue())
+                // Ensure that the node list is manipulated on the EDT
+                if (SwingUtilities.isEventDispatchThread())
                 {
-                    // Ensure that the node list is manipulated on the EDT
-                    if (SwingUtilities.isEventDispatchThread())
+                    refresh();
+                    KMLNetworkLinkTreeNode.this.firePropertyChange(AVKey.RETRIEVAL_STATE_SUCCESSFUL, null,
+                        KMLNetworkLinkTreeNode.this);
+                }
+                else
+                {
+                    SwingUtilities.invokeLater(() ->
                     {
                         refresh();
-                        KMLNetworkLinkTreeNode.this.firePropertyChange(AVKey.RETRIEVAL_STATE_SUCCESSFUL, null, this);
-                    }
-                    else
-                    {
-                        SwingUtilities.invokeLater(new Runnable()
-                        {
-                            public void run()
-                            {
-                                refresh();
-                                KMLNetworkLinkTreeNode.this.firePropertyChange(AVKey.RETRIEVAL_STATE_SUCCESSFUL, null,
-                                    this);
-                            }
-                        });
-                    }
+                        KMLNetworkLinkTreeNode.this.firePropertyChange(AVKey.RETRIEVAL_STATE_SUCCESSFUL, null,
+                            KMLNetworkLinkTreeNode.this);
+                    });
                 }
             }
         });
@@ -139,9 +134,8 @@ public class KMLNetworkLinkTreeNode extends KMLContainerTreeNode
         // document. Attaching the document as a tree node would add an extra level to the tree that doesn't provide any
         // meaningful grouping.
 
-        if (kmlRoot.getFeature() instanceof KMLDocument)
+        if (kmlRoot.getFeature() instanceof KMLDocument doc)
         {
-            KMLDocument doc = (KMLDocument) kmlRoot.getFeature();
             for (KMLAbstractFeature child : doc.getFeatures())
             {
                 if (child != null)

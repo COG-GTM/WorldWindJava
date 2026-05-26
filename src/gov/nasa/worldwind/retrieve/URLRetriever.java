@@ -348,8 +348,8 @@ public abstract class URLRetriever extends WWObjectImpl implements Retriever
             throw new IllegalStateException(message);
         }
 
-        if (this.connection instanceof HttpsURLConnection)
-            this.configureSSLContext((HttpsURLConnection) this.connection);
+        if (this.connection instanceof HttpsURLConnection httpsConn)
+            this.configureSSLContext(httpsConn);
 
         this.connection.setConnectTimeout(this.connectTimeout);
         this.connection.setReadTimeout(this.readTimeout);

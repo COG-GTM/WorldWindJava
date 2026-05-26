@@ -884,13 +884,7 @@ public class WWMath
         // Compute an index array who's entries define the order in which the eigenValues array can be sorted in
         // ascending order.
         Integer[] indexArray = {0, 1, 2};
-        Arrays.sort(indexArray, new Comparator<Integer>()
-        {
-            public int compare(Integer a, Integer b)
-            {
-                return Double.compare(eigenValues[a], eigenValues[b]);
-            }
-        });
+        Arrays.sort(indexArray, (a, b) -> Double.compare(eigenValues[a], eigenValues[b]));
 
         // Return the normalized eigenvectors in order of decreasing eigenvalue. This has the effect of returning three
         // normalized orthognal vectors defining a coordinate system, which are sorted from the most prominent axis to
@@ -955,13 +949,7 @@ public class WWMath
         // Compute an index array who's entries define the order in which the eigenValues array can be sorted in
         // ascending order.
         Integer[] indexArray = {0, 1, 2};
-        Arrays.sort(indexArray, new Comparator<Integer>()
-        {
-            public int compare(Integer a, Integer b)
-            {
-                return Double.compare(eigenValues[a], eigenValues[b]);
-            }
-        });
+        Arrays.sort(indexArray, (a, b) -> Double.compare(eigenValues[a], eigenValues[b]));
 
         // Return the normalized eigenvectors in order of decreasing eigenvalue. This has the effect of returning three
         // normalized orthognal vectors defining a coordinate system, which are sorted from the most prominent axis to

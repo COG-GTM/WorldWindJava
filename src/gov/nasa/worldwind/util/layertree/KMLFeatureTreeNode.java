@@ -101,10 +101,10 @@ public class KMLFeatureTreeNode extends BasicTreeNode
             throw new IllegalArgumentException(message);
         }
 
-        if (feature instanceof KMLNetworkLink)
-            return new KMLNetworkLinkTreeNode((KMLNetworkLink) feature);
-        else if (feature instanceof KMLAbstractContainer)
-            return new KMLContainerTreeNode((KMLAbstractContainer) feature);
+        if (feature instanceof KMLNetworkLink networkLink)
+            return new KMLNetworkLinkTreeNode(networkLink);
+        else if (feature instanceof KMLAbstractContainer container)
+            return new KMLContainerTreeNode(container);
         else
             return new KMLFeatureTreeNode(feature);
     }
@@ -171,8 +171,8 @@ public class KMLFeatureTreeNode extends BasicTreeNode
 
         for (TreeNode child : this.getChildren())
         {
-            if (child instanceof KMLFeatureTreeNode)
-                ((KMLFeatureTreeNode) child).expandOpenContainers(tree);
+            if (child instanceof KMLFeatureTreeNode featureChild)
+                featureChild.expandOpenContainers(tree);
         }
     }
 
@@ -212,9 +212,8 @@ public class KMLFeatureTreeNode extends BasicTreeNode
         String text;
 
         Object snippet = this.getFeature().getSnippet();
-        if (snippet instanceof KMLSnippet)
+        if (snippet instanceof KMLSnippet kmlSnippet)
         {
-            KMLSnippet kmlSnippet = (KMLSnippet) snippet;
 
             // Check the maxLines property of the snippet. maxLines == 0, don't set any description.
             Integer maxLines = kmlSnippet.getMaxLines();

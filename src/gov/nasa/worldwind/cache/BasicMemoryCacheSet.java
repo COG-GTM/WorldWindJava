@@ -38,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class BasicMemoryCacheSet implements MemoryCacheSet
 {
-    private ConcurrentHashMap<String, MemoryCache> caches = new ConcurrentHashMap<String, MemoryCache>();
+    private ConcurrentHashMap<String, MemoryCache> caches = new ConcurrentHashMap<>();
 
     public synchronized boolean containsCache(String key)
     {
@@ -95,7 +95,7 @@ public class BasicMemoryCacheSet implements MemoryCacheSet
 
     public Collection<PerformanceStatistic> getPerformanceStatistics()
     {
-        ArrayList<PerformanceStatistic> stats = new ArrayList<PerformanceStatistic>();
+        ArrayList<PerformanceStatistic> stats = new ArrayList<>();
 
         for (MemoryCache cache : this.caches.values())
         {

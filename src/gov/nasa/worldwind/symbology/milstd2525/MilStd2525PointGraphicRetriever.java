@@ -208,7 +208,7 @@ public class MilStd2525PointGraphicRetriever extends AbstractIconRetriever
             return null;
 
         Object o = params.getValue(AVKey.COLOR);
-        return (o instanceof Color) ? (Color) o : null;
+        return (o instanceof Color color) ? color : null;
     }
 
     /**

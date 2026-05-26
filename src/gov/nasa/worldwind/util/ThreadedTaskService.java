@@ -84,16 +84,13 @@ public class ThreadedTaskService extends WWObjectImpl implements TaskService, Th
         {
             super(poolSize, poolSize, THREAD_TIMEOUT, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<Runnable>(queueSize),
-                new ThreadFactory()
+                runnable ->
                 {
-                    public Thread newThread(Runnable runnable)
-                    {
-                        Thread thread = new Thread(runnable);
-                        thread.setDaemon(true);
-                        thread.setPriority(Thread.MIN_PRIORITY);
-                        thread.setUncaughtExceptionHandler(ThreadedTaskService.this);
-                        return thread;
-                    }
+                    Thread thread = new Thread(runnable);
+                    thread.setDaemon(true);
+                    thread.setPriority(Thread.MIN_PRIORITY);
+                    thread.setUncaughtExceptionHandler(ThreadedTaskService.this);
+                    return thread;
                 },
                 new ThreadPoolExecutor.DiscardPolicy() // abandon task when queue is full
                 {

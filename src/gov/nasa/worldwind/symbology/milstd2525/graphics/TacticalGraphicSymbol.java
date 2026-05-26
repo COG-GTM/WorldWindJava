@@ -319,18 +319,18 @@ public class TacticalGraphicSymbol extends AbstractTacticalSymbol
                 continue;
 
             // If we're retrieving the date modifier, maybe add a hyphen to the first value to indicate a date range.
-            if (SymbologyConstants.DATE_TIME_GROUP.equals(layout.modifier) && (value instanceof Iterable))
+            if (SymbologyConstants.DATE_TIME_GROUP.equals(layout.modifier) && (value instanceof Iterable iterable))
             {
-                value = this.addHyphenToDateRange((Iterable) value, offsets);
+                value = this.addHyphenToDateRange(iterable, offsets);
             }
 
             String mode = SymbologyConstants.LOCATION.equals(layout.modifier) ? LAYOUT_RELATIVE : LAYOUT_NONE;
 
             // Some graphics support multiple instances of the same modifier. Handle this case differently than the
             // single instance case.
-            if (value instanceof Iterable)
+            if (value instanceof Iterable iterable)
             {
-                this.layoutMultiLabel(dc, font, offsets, (Iterable) value, mode, osym);
+                this.layoutMultiLabel(dc, font, offsets, iterable, mode, osym);
             }
             else if (value != null)
             {
@@ -362,14 +362,14 @@ public class TacticalGraphicSymbol extends AbstractTacticalSymbol
         // Direction of Movement indicator. Placed at the bottom of the symbol layout. Direction of Movement applies
         // only to CBRN graphics (see MIL-STD-2525C table XI, pg. 38).
         Object o = modifiers.getValue(SymbologyConstants.DIRECTION_OF_MOVEMENT);
-        if (this.isShowDirectionOfMovement() && o instanceof Angle)
+        if (this.isShowDirectionOfMovement() && o instanceof Angle angle)
         {
             // The length of the direction of movement line is equal to the height of the symbol frame. See
             // MIL-STD-2525C section 5.3.4.1.c, page 33.
             double length = this.iconRect.getHeight();
 
             java.util.List<? extends Point2D> points = MilStd2525Util.computeGroundHeadingIndicatorPoints(dc,
-                osym.placePoint, (Angle) o, length, this.iconRect.getHeight());
+                osym.placePoint, angle, length, this.iconRect.getHeight());
             this.addLine(dc, BELOW_BOTTOM_CENTER_OFFSET, points, LAYOUT_RELATIVE, points.size() - 1, osym);
         }
     }

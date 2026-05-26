@@ -72,8 +72,8 @@ public class Airborne extends Aviation
     @Override
     public void setModifier(String modifier, Object value)
     {
-        if (SymbologyConstants.SYMBOL_INDICATOR.equals(modifier) && value instanceof String)
-            this.setSymbol((String) value);
+        if (SymbologyConstants.SYMBOL_INDICATOR.equals(modifier) && value instanceof String s)
+            this.setSymbol(s);
         else
             super.setModifier(modifier, value);
     }
