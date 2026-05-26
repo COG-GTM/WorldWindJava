@@ -57,7 +57,7 @@ public abstract class AbstractFileStore extends WWObjectImpl implements FileStor
         public java.io.File getFile()
         {
             Object o = this.getValue(AVKey.FILE_STORE_LOCATION);
-            return (o != null && o instanceof java.io.File) ? (java.io.File) o : null;
+            return o instanceof java.io.File f ? f : null;
         }
 
         public void setFile(java.io.File file)
@@ -68,7 +68,7 @@ public abstract class AbstractFileStore extends WWObjectImpl implements FileStor
         public boolean isInstall()
         {
             Object o = this.getValue(AVKey.INSTALLED);
-            return (o != null && o instanceof Boolean) ? (Boolean) o : false;
+            return o instanceof Boolean b ? b : false;
         }
 
         public void setInstall(boolean isInstall)
@@ -90,7 +90,7 @@ public abstract class AbstractFileStore extends WWObjectImpl implements FileStor
     // Retrieval could be occurring on several threads when the app adds a read location, so protect the list of read
     // locations from concurrent modification.
     protected final java.util.List<StoreLocation> readLocations =
-        new java.util.concurrent.CopyOnWriteArrayList<StoreLocation>();
+        new java.util.concurrent.CopyOnWriteArrayList<>();
     protected StoreLocation writeLocation = null;
     private final Object fileLock = new Object();
 
@@ -383,7 +383,7 @@ public abstract class AbstractFileStore extends WWObjectImpl implements FileStor
 
     public java.util.List<? extends java.io.File> getLocations()
     {
-        java.util.ArrayList<java.io.File> locations = new java.util.ArrayList<java.io.File>();
+        java.util.ArrayList<java.io.File> locations = new java.util.ArrayList<>();
         for (StoreLocation location : this.readLocations)
         {
             locations.add(location.getFile());
