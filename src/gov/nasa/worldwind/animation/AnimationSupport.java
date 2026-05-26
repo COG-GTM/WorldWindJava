@@ -144,7 +144,7 @@ public class AnimationSupport
      */
     public static double clampDouble(double value, double min, double max)
     {
-        return Math.clamp(value, min, max);
+        return value < min ? min : (value > max ? max : value);
     }
 
     /**
