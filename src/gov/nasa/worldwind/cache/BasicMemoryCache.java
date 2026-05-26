@@ -87,8 +87,8 @@ public class BasicMemoryCache implements MemoryCache
      */
     public BasicMemoryCache(long loWater, long capacity)
     {
-        this.entries = new java.util.concurrent.ConcurrentHashMap<Object, CacheEntry>();
-        this.listeners = new java.util.concurrent.CopyOnWriteArrayList<MemoryCache.CacheListener>();
+        this.entries = new java.util.concurrent.ConcurrentHashMap<>();
+        this.listeners = new java.util.concurrent.CopyOnWriteArrayList<>();
         this.capacity.set(capacity);
         this.lowWater = loWater;
         this.currentUsedCapacity.set((long) 0);
