@@ -502,9 +502,9 @@ public class AWTInputHandler extends WWObjectImpl
         // mouse on the GLJPanel, causing GLJPanel to take the focus in the same manner as GLCanvas. Note that focus is
         // passed only when the user clicks the primary mouse button. See
         // http://issues.worldwind.arc.nasa.gov/jira/browse/WWJ-272.
-        if (MouseEvent.BUTTON1 == mouseEvent.getButton() && this.wwd instanceof GLJPanel)
+        if (MouseEvent.BUTTON1 == mouseEvent.getButton() && this.wwd instanceof GLJPanel glJPanel)
         {
-            ((GLJPanel) this.wwd).requestFocusInWindow();
+            glJPanel.requestFocusInWindow();
         }
     }
 
