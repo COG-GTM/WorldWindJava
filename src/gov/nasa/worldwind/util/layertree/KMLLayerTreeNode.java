@@ -75,34 +75,25 @@ public class KMLLayerTreeNode extends LayerTreeNode
         this.addChildFeatures();
 
         // Add a listener to refresh the tree model when the KML document is updated or a network link is retrieved.
-        this.kmlRoot.addPropertyChangeListener(new PropertyChangeListener()
+        this.kmlRoot.addPropertyChangeListener(event ->
         {
-            public void propertyChange(final PropertyChangeEvent event)
-            {
-                String name = (event != null) ? event.getPropertyName() : null;
-                Object newValue = (event != null) ? event.getNewValue() : null;
-                KMLAbstractFeature rootFeature = KMLLayerTreeNode.this.kmlRoot.getFeature();
+            String name = (event != null) ? event.getPropertyName() : null;
+            Object newValue = (event != null) ? event.getNewValue() : null;
+            KMLAbstractFeature rootFeature = KMLLayerTreeNode.this.kmlRoot.getFeature();
 
-                // Update the document if an update is received, or if this node represents a network link that has been
-                // resolved.
-                if (AVKey.UPDATED.equals(name)
-                    || (AVKey.RETRIEVAL_STATE_SUCCESSFUL.equals(name) && rootFeature == newValue))
+            // Update the document if an update is received, or if this node represents a network link that has been
+            // resolved.
+            if (AVKey.UPDATED.equals(name)
+                || (AVKey.RETRIEVAL_STATE_SUCCESSFUL.equals(name) && rootFeature == newValue))
+            {
+                // Ensure that the node list is manipulated on the EDT
+                if (SwingUtilities.isEventDispatchThread())
                 {
-                    // Ensure that the node list is manipulated on the EDT
-                    if (SwingUtilities.isEventDispatchThread())
-                    {
-                        KMLLayerTreeNode.this.refresh();
-                    }
-                    else
-                    {
-                        SwingUtilities.invokeLater(new Runnable()
-                        {
-                            public void run()
-                            {
-                                KMLLayerTreeNode.this.refresh();
-                            }
-                        });
-                    }
+                    KMLLayerTreeNode.this.refresh();
+                }
+                else
+                {
+                    SwingUtilities.invokeLater(() -> KMLLayerTreeNode.this.refresh());
                 }
             }
         });
@@ -154,9 +145,8 @@ public class KMLLayerTreeNode extends LayerTreeNode
         this.setSelected(visibility == null || visibility);
 
         // If the root is a container, add its children
-        if (rootFeature instanceof KMLAbstractContainer)
+        if (rootFeature instanceof KMLAbstractContainer container)
         {
-            KMLAbstractContainer container = (KMLAbstractContainer) rootFeature;
             for (KMLAbstractFeature child : container.getFeatures())
             {
                 if (child != null)
@@ -165,18 +155,17 @@ public class KMLLayerTreeNode extends LayerTreeNode
         }
 
         // If the root is a network link, add the linked document
-        if (rootFeature instanceof KMLNetworkLink)
+        if (rootFeature instanceof KMLNetworkLink networkLink)
         {
-            KMLRoot networkResource = ((KMLNetworkLink) rootFeature).getNetworkResource();
+            KMLRoot networkResource = networkLink.getNetworkResource();
             if (networkResource != null && networkResource.getFeature() != null)
             {
                 rootFeature = networkResource.getFeature();
 
                 // Don't add Document nodes (they don't provide meaningful grouping).
-                if (rootFeature instanceof KMLDocument)
+                if (rootFeature instanceof KMLDocument document)
                 {
-                    KMLAbstractContainer container = (KMLAbstractContainer) rootFeature;
-                    for (KMLAbstractFeature child : container.getFeatures())
+                    for (KMLAbstractFeature child : document.getFeatures())
                     {
                         if (child != null)
                             this.addFeatureNode(child);
@@ -230,8 +219,8 @@ public class KMLLayerTreeNode extends LayerTreeNode
 
         for (TreeNode child : this.getChildren())
         {
-            if (child instanceof KMLFeatureTreeNode)
-                ((KMLFeatureTreeNode) child).expandOpenContainers(tree);
+            if (child instanceof KMLFeatureTreeNode featureChild)
+                featureChild.expandOpenContainers(tree);
         }
     }
 

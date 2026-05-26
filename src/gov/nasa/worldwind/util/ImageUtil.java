@@ -1284,10 +1284,9 @@ public class ImageUtil
 
         BufferedImage biOut;
         //Note: image type always BufferedImage.TYPE_INT_ARGB to handle transparent no-data areas after reprojection
-        if ((image.getColorModel() != null) && (image.getColorModel() instanceof IndexColorModel))
+        if ((image.getColorModel() != null) && (image.getColorModel() instanceof IndexColorModel icm))
         {
-            biOut = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB,
-                (IndexColorModel) image.getColorModel());
+            biOut = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB, icm);
         }
         else
         {
@@ -1298,12 +1297,12 @@ public class ImageUtil
         double yPixelSize = 0;
 
         Object o = values.getValue(WorldFile.WORLD_FILE_X_PIXEL_SIZE);
-        if (o != null && o instanceof Double)
-            xPixelSize = (Double) o;
+        if (o instanceof Double d)
+            xPixelSize = d;
 
         o = values.getValue(WorldFile.WORLD_FILE_Y_PIXEL_SIZE);
-        if (o != null && o instanceof Double)
-            yPixelSize = (Double) o;
+        if (o instanceof Double d)
+            yPixelSize = d;
 
         // TODO: validate that all these values exist and are valid
         double xLocation = (Double) values.getValue(WorldFile.WORLD_FILE_X_LOCATION);
@@ -1905,13 +1904,13 @@ public class ImageUtil
 
         BufferedImage image;
 
-        if (raster instanceof BufferedImageRaster)
+        if (raster instanceof BufferedImageRaster bir)
         {
-            image = ((BufferedImageRaster) raster).getBufferedImage();
+            image = bir.getBufferedImage();
         }
-        else if (raster instanceof BufferWrapperRaster)
+        else if (raster instanceof BufferWrapperRaster bwr)
         {
-            image = ImageUtil.visualize((BufferWrapperRaster) raster);
+            image = ImageUtil.visualize(bwr);
         }
         else
         {
@@ -1981,13 +1980,13 @@ public class ImageUtil
 
         BufferedImage image;
 
-        if (raster instanceof BufferedImageRaster)
+        if (raster instanceof BufferedImageRaster bir)
         {
-            image = ((BufferedImageRaster) raster).getBufferedImage();
+            image = bir.getBufferedImage();
         }
-        else if (raster instanceof BufferWrapperRaster)
+        else if (raster instanceof BufferWrapperRaster bwr)
         {
-            image = ImageUtil.visualize((BufferWrapperRaster) raster);
+            image = ImageUtil.visualize(bwr);
         }
         else
         {

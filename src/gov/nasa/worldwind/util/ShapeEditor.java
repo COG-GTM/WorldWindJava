@@ -795,8 +795,8 @@ public class ShapeEditor implements SelectListener, PropertyChangeListener
                 this.updateAnnotation(this.getCurrentSizingMarker());
             else if (event.getTopObject() != null && event.getTopObject() == this.getShape())
                 this.updateShapeAnnotation();
-            else if (event.getTopObject() != null && event.getTopObject() instanceof ControlPointMarker)
-                this.updateAnnotation((ControlPointMarker) event.getTopObject());
+            else if (event.getTopObject() instanceof ControlPointMarker controlPoint)
+                this.updateAnnotation(controlPoint);
             else
                 this.updateAnnotation(null);
         }

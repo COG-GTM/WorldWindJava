@@ -143,17 +143,17 @@ public class WWXML
             throw new IllegalArgumentException(message);
         }
 
-        if (docSource instanceof URL)
+        if (docSource instanceof URL url)
         {
-            return openDocumentURL((URL) docSource);
+            return openDocumentURL(url);
         }
-        else if (docSource instanceof InputStream)
+        else if (docSource instanceof InputStream is)
         {
-            return openDocumentStream((InputStream) docSource);
+            return openDocumentStream(is);
         }
-        else if (docSource instanceof File)
+        else if (docSource instanceof File file)
         {
-            return openDocumentFile(((File) docSource).getPath(), null);
+            return openDocumentFile(file.getPath(), null);
         }
         else if (!(docSource instanceof String))
         {
@@ -163,9 +163,9 @@ public class WWXML
 
         String sourceName = (String) docSource;
 
-        URL url = WWIO.makeURL(sourceName);
-        if (url != null)
-            return openDocumentURL(url);
+        URL url2 = WWIO.makeURL(sourceName);
+        if (url2 != null)
+            return openDocumentURL(url2);
 
         return openDocumentFile(sourceName, null);
     }
@@ -506,21 +506,21 @@ public class WWXML
             throw new IllegalArgumentException(message);
         }
 
-        if (docSource instanceof URL)
+        if (docSource instanceof URL url)
         {
-            return openEventReaderURL((URL) docSource, isNamespaceAware);
+            return openEventReaderURL(url, isNamespaceAware);
         }
-        else if (docSource instanceof InputStream)
+        else if (docSource instanceof InputStream is)
         {
-            return openEventReaderStream((InputStream) docSource, isNamespaceAware);
+            return openEventReaderStream(is, isNamespaceAware);
         }
-        else if (docSource instanceof File)
+        else if (docSource instanceof File file)
         {
-            return openEventReaderFile(((File) docSource).getPath(), null, isNamespaceAware);
+            return openEventReaderFile(file.getPath(), null, isNamespaceAware);
         }
-        else if (docSource instanceof java.nio.ByteBuffer)
+        else if (docSource instanceof java.nio.ByteBuffer byteBuffer)
         {
-            InputStream is = WWIO.getInputStreamFromByteBuffer((java.nio.ByteBuffer) docSource);
+            InputStream is = WWIO.getInputStreamFromByteBuffer(byteBuffer);
             return openEventReaderStream(is, isNamespaceAware);
         }
         else if (!(docSource instanceof String))
@@ -584,10 +584,10 @@ public class WWXML
             throw new IllegalArgumentException(message);
         }
 
-        if (output instanceof OutputStream)
-            return XMLOutputFactory.newInstance().createXMLStreamWriter((OutputStream) output);
-        else if (output instanceof Writer)
-            return XMLOutputFactory.newInstance().createXMLStreamWriter((Writer) output);
+        if (output instanceof OutputStream os)
+            return XMLOutputFactory.newInstance().createXMLStreamWriter(os);
+        else if (output instanceof Writer writer)
+            return XMLOutputFactory.newInstance().createXMLStreamWriter(writer);
 
         return null;
     }
@@ -1032,8 +1032,8 @@ public class WWXML
             for (int i = 0; i < nodes.getLength(); i++)
             {
                 Node node = nodes.item(i);
-                if (node instanceof Element)
-                    elements[i] = (Element) node;
+                if (node instanceof Element element)
+                    elements[i] = element;
             }
             return elements;
         }
@@ -2124,7 +2124,7 @@ public class WWXML
             throw new IllegalArgumentException(message);
         }
 
-        if (screenCredit instanceof ScreenCreditImage)
+        if (screenCredit instanceof ScreenCreditImage screenCreditImage)
         {
             Element el = WWXML.appendElementPath(context, path);
             setTextAttribute(el, "creditType", "ScreenImage");
@@ -2133,10 +2133,10 @@ public class WWXML
             if (link != null && link.length() > 0)
                 WWXML.appendText(el, "Link", link);
 
-            Object imageSource = ((ScreenCreditImage) screenCredit).getImageSource();
-            if (imageSource != null && imageSource instanceof String)
+            Object imageSource = screenCreditImage.getImageSource();
+            if (imageSource instanceof String fileName)
             {
-                WWXML.appendText(el, "FileName", (String) imageSource);
+                WWXML.appendText(el, "FileName", fileName);
             }
             else
             {

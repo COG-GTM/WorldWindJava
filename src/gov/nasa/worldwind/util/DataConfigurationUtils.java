@@ -456,21 +456,18 @@ public class DataConfigurationUtils
      */
     public static ScheduledExecutorService createResourceRetrievalService(final String threadName)
     {
-        ThreadFactory threadFactory = new ThreadFactory()
+        ThreadFactory threadFactory = r ->
         {
-            public Thread newThread(Runnable r)
+            Thread thread = new Thread(r);
+            thread.setDaemon(true);
+            thread.setPriority(Thread.MIN_PRIORITY);
+
+            if (threadName != null)
             {
-                Thread thread = new Thread(r);
-                thread.setDaemon(true);
-                thread.setPriority(Thread.MIN_PRIORITY);
-
-                if (threadName != null)
-                {
-                    thread.setName(threadName);
-                }
-
-                return thread;
+                thread.setName(threadName);
             }
+
+            return thread;
         };
 
         return Executors.newSingleThreadScheduledExecutor(threadFactory);

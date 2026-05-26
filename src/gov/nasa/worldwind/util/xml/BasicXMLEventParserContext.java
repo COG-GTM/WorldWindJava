@@ -125,36 +125,33 @@ public class BasicXMLEventParserContext extends AVListImpl implements XMLEventPa
 
     protected void initializeDefaultNotificationListener()
     {
-        this.addPropertyChangeListener(new PropertyChangeListener()
+        this.addPropertyChangeListener(propEvent ->
         {
-            public void propertyChange(PropertyChangeEvent propEvent)
+            XMLParserNotification notification = (XMLParserNotification) propEvent;
+
+            if (notificationListener != null)
             {
-                XMLParserNotification notification = (XMLParserNotification) propEvent;
-
-                if (notificationListener != null)
-                {
-                    notificationListener.notify(notification);
-                    return;
-                }
-
-                String msg;
-                if (notification.getEvent() != null)
-                {
-                    msg = Logging.getMessage(notification.getMessage(), notification.getEvent().toString(),
-                        notification.getEvent().getLocation().getLineNumber(),
-                        notification.getEvent().getLocation().getColumnNumber(),
-                        notification.getEvent().getLocation().getCharacterOffset());
-                }
-                else
-                {
-                    msg = Logging.getMessage(notification.getMessage(), "", "");
-                }
-
-                if (notification.getPropertyName().equals(XMLParserNotification.EXCEPTION))
-                    Logging.logger().log(Level.WARNING, msg);
-                else if (notification.getPropertyName().equals(XMLParserNotification.UNRECOGNIZED))
-                    Logging.logger().log(Level.WARNING, msg);
+                notificationListener.notify(notification);
+                return;
             }
+
+            String msg;
+            if (notification.getEvent() != null)
+            {
+                msg = Logging.getMessage(notification.getMessage(), notification.getEvent().toString(),
+                    notification.getEvent().getLocation().getLineNumber(),
+                    notification.getEvent().getLocation().getColumnNumber(),
+                    notification.getEvent().getLocation().getCharacterOffset());
+            }
+            else
+            {
+                msg = Logging.getMessage(notification.getMessage(), "", "");
+            }
+
+            if (notification.getPropertyName().equals(XMLParserNotification.EXCEPTION))
+                Logging.logger().log(Level.WARNING, msg);
+            else if (notification.getPropertyName().equals(XMLParserNotification.UNRECOGNIZED))
+                Logging.logger().log(Level.WARNING, msg);
         });
     }
 

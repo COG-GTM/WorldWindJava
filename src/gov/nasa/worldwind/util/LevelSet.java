@@ -169,14 +169,10 @@ public class LevelSet extends WWObjectImpl
 
         if (this.sectorLevelLimits != null)
         {
-            Arrays.sort(this.sectorLevelLimits, new Comparator<SectorResolution>()
-            {
-                public int compare(SectorResolution sra, SectorResolution srb)
-                {
-                    // sort order is deliberately backwards in order to list higher-resolution sectors first
-                    return sra.levelNumber < srb.levelNumber ? 1 : sra.levelNumber == srb.levelNumber ? 0 : -1;
-                }
-            });
+            Arrays.sort(this.sectorLevelLimits, (sra, srb) ->
+                // sort order is deliberately backwards in order to list higher-resolution sectors first
+                sra.levelNumber < srb.levelNumber ? 1 : sra.levelNumber == srb.levelNumber ? 0 : -1
+            );
         }
 
         // Compute the number of level zero columns. This value is guaranteed to be a nonzero number, since there is
