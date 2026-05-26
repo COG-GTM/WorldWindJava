@@ -165,9 +165,9 @@ public class WorldFile
 
         int[] size;
         Object o = values.getValue(WORLD_FILE_IMAGE_SIZE);
-        if (o != null && (o instanceof int[]))
+        if (o instanceof int[] imageSize)
         {
-            size = (int[]) o;
+            size = imageSize;
         }
         else
         {
@@ -479,26 +479,26 @@ public class WorldFile
         double yPixelSize;
 
         Object o = values.getValue(WORLD_FILE_X_LOCATION);
-        if (o != null && o instanceof Double)
-            xLocation = (Double) o;
+        if (o instanceof Double x)
+            xLocation = x;
         else
             return false;
 
         o = values.getValue(WORLD_FILE_Y_LOCATION);
-        if (o != null && o instanceof Double)
-            yLocation = (Double) o;
+        if (o instanceof Double y)
+            yLocation = y;
         else
             return false;
 
         o = values.getValue(WORLD_FILE_X_PIXEL_SIZE);
-        if (o != null && o instanceof Double)
-            xPixelSize = (Double) o;
+        if (o instanceof Double xSize)
+            xPixelSize = xSize;
         else
             return false;
 
         o = values.getValue(WORLD_FILE_Y_PIXEL_SIZE);
-        if (o != null && o instanceof Double)
-            yPixelSize = (Double) o;
+        if (o instanceof Double ySize)
+            yPixelSize = ySize;
         else
             return false;
 
@@ -985,9 +985,8 @@ public class WorldFile
 
         // Translate the property WORLD_FILE_IMAGE_SIZE to separate properties WIDTH and HEIGHT.
         Object o = params.getValue(WorldFile.WORLD_FILE_IMAGE_SIZE);
-        if (o != null && o instanceof int[])
+        if (o instanceof int[] size)
         {
-            int[] size = (int[]) o;
 
             if (!params.hasKey(AVKey.WIDTH))
                 params.setValue(AVKey.WIDTH, size[0]);

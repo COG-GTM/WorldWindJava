@@ -909,9 +909,9 @@ public class GeoSymSupport
             attr.setDrawOutline(false);
             attr.setInteriorMaterial(geoSymAttr.getInteriorMaterial());
 
-            if (geoSymAttr.getImageSource() != null && geoSymAttr.getImageSource() instanceof String)
+            if (geoSymAttr.getImageSource() instanceof String imageSource)
             {
-                Object symbolSource = this.getSymbolSource((String) geoSymAttr.getImageSource());
+                Object symbolSource = this.getSymbolSource(imageSource);
                 attr.setImageSource(symbolSource);
             }
         }

@@ -124,8 +124,8 @@ public class VPFLayer extends AbstractLayer
             for (VPFTile tile : this.currentTiles)
             {
                 Extent extent = tile.getExtent(dc.getGlobe(), dc.getVerticalExaggeration());
-                if (extent instanceof Renderable)
-                    ((Renderable) extent).render(dc);
+                if (extent instanceof Renderable renderable)
+                    renderable.render(dc);
             }
         }
 
@@ -271,9 +271,9 @@ public class VPFLayer extends AbstractLayer
                 if (s == null)
                     continue;
 
-                if (s.getMapObject() instanceof Disposable)
+                if (s.getMapObject() instanceof Disposable disposable)
                 {
-                    ((Disposable) s.getMapObject()).dispose();
+                    disposable.dispose();
                 }
             }
 
@@ -461,8 +461,8 @@ public class VPFLayer extends AbstractLayer
         // Pre render renderable objects.
         for (Renderable r : this.renderableObjects)
         {
-            if (r instanceof PreRenderable)
-                ((PreRenderable) r).preRender(dc);
+            if (r instanceof PreRenderable preRenderable)
+                preRenderable.preRender(dc);
         }
     }
 
