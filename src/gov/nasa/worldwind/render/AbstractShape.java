@@ -1542,7 +1542,7 @@ public abstract class AbstractShape extends WWObjectImpl
             extremes = new double[] {Double.MAX_VALUE, -Double.MAX_VALUE};
             for (LatLon pos : positions)
             {
-                double elevation = pos instanceof Position ? ((Position) pos).getElevation() : 0;
+                double elevation = pos instanceof Position position ? position.getElevation() : 0;
                 if (this.getAltitudeMode() == WorldWind.RELATIVE_TO_GROUND)
                     elevation += minAndMaxElevations[1];
 

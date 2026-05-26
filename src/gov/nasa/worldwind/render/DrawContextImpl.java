@@ -820,7 +820,7 @@ public class DrawContextImpl extends WWObjectImpl implements DrawContext
 //        ArrayList<OrderedRenderableEntry> declutterableArray = new ArrayList<OrderedRenderableEntry>();
 //        for (OrderedRenderableEntry ore : this.orderedRenderables)
 //        {
-//            if (ore.or instanceof Declutterable && ((Declutterable) ore.or).isEnableDecluttering())
+//            if (ore.or instanceof Declutterable declutterable && declutterable.isEnableDecluttering())
 //                declutterableArray.add(ore);
 //        }
 //
@@ -880,7 +880,7 @@ public class DrawContextImpl extends WWObjectImpl implements DrawContext
         ArrayList<OrderedRenderableEntry> declutterableArray = new ArrayList<OrderedRenderableEntry>();
         for (OrderedRenderableEntry ore : this.orderedRenderables)
         {
-            if (ore.or instanceof Declutterable && ((Declutterable) ore.or).isEnableDecluttering())
+            if (ore.or instanceof Declutterable declutterable && declutterable.isEnableDecluttering())
                 declutterableArray.add(ore);
         }
 

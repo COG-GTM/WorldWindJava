@@ -116,7 +116,7 @@ public class UserFacingIcon extends AVListImpl implements WWIcon, Movable, Dragg
 
     public String getPath()
     {
-        return this.getImageSource() instanceof String ? (String) this.getImageSource() : null;
+        return this.getImageSource() instanceof String imageSource ? imageSource : null;
     }
 
     public Position getPosition()
