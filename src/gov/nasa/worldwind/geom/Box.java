@@ -1125,10 +1125,8 @@ public class Box implements Extent, Renderable
     {
         if (this == o)
             return true;
-        if (!(o instanceof Box))
+        if (!(o instanceof Box box))
             return false;
-
-        Box box = (Box) o;
 
         if (center != null ? !center.equals(box.center) : box.center != null)
             return false;

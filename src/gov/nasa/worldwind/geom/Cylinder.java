@@ -951,10 +951,8 @@ public class Cylinder implements Extent, Renderable
     {
         if (this == o)
             return true;
-        if (!(o instanceof Cylinder))
+        if (!(o instanceof Cylinder cylinder))
             return false;
-
-        Cylinder cylinder = (Cylinder) o;
 
         if (Double.compare(cylinder.cylinderHeight, cylinderHeight) != 0)
             return false;
