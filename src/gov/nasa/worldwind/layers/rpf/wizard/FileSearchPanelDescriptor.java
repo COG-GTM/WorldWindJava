@@ -116,9 +116,9 @@ public class FileSearchPanelDescriptor extends DefaultPanelDescriptor
             {
                 refreshFileList();
 
-                WizardModel model = getWizardModel();
-                if (model != null)
-                    RPFWizardUtil.setFileListCurrent(model, true);
+                WizardModel currentModel = getWizardModel();
+                if (currentModel != null)
+                    RPFWizardUtil.setFileListCurrent(currentModel, true);
 
                 moveToNextPanel();
             });
