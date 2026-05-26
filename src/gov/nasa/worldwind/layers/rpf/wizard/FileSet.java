@@ -61,7 +61,7 @@ public class FileSet extends WizardProperties
     public Collection<File> getFiles()
     {
         Object value = getProperty(FILES);
-        return (value != null && value instanceof Collection) ? (Collection<File>) value : null;
+        return value instanceof Collection ? (Collection<File>) value : null;
     }
 
     public void setFiles(Collection<File> files)

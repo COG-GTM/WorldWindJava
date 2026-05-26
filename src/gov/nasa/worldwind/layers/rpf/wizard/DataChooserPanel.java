@@ -166,11 +166,11 @@ public class DataChooserPanel extends JPanel
         if (e != null)
         {
             FileSet set = null;
-            if (e.getItem() != null && e.getItem() instanceof JComponent)
+            if (e.getItem() instanceof JComponent component)
             {
-                Object property = ((JComponent) e.getItem()).getClientProperty("fileSet");
-                if (property != null && property instanceof FileSet)
-                    set = (FileSet) property;
+                Object property = component.getClientProperty("fileSet");
+                if (property instanceof FileSet fileSet)
+                    set = fileSet;
             }
 
             if (set != null)
@@ -207,9 +207,8 @@ public class DataChooserPanel extends JPanel
     private void fileSetSelectionChanged(Object source)
     {
         // Make sure the CheckBox selection reflects the FileSet selection state.
-        if (source != null && source instanceof FileSet)
+        if (source instanceof FileSet set)
         {
-            FileSet set = (FileSet) source;
             JToggleButton button = this.selectButtons.get(set);
             if (button != null)
                 button.setSelected(set.isSelected());
@@ -279,18 +278,10 @@ public class DataChooserPanel extends JPanel
         Dimension size = new Dimension(35, 20);
         this.selectAllButton.setFont(font);
         this.selectAllButton.setPreferredSize(size);
-        this.selectAllButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                selectAllPressed();
-            }
-        });
+        this.selectAllButton.addActionListener(e -> selectAllPressed());
         this.deselectAllButton.setFont(font);
         this.deselectAllButton.setPreferredSize(size);
-        this.deselectAllButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                deselectAllPressed();
-            }
-        });
+        this.deselectAllButton.addActionListener(e -> deselectAllPressed());
         this.dataScrollPane = new JScrollPane();
         this.dataScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         size = this.dataScrollPane.getPreferredSize();

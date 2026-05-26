@@ -112,16 +112,15 @@ public class FileSearchPanelDescriptor extends DefaultPanelDescriptor
         if (model != null && !RPFWizardUtil.isFileListCurrent(model))
         {
             this.panelComponent.getProgressBar().setIndeterminate(true);
-            startWorkerThread(new Runnable() {
-                public void run() {
-                    refreshFileList();
+            startWorkerThread(() ->
+            {
+                refreshFileList();
 
-                    WizardModel model = getWizardModel();
-                    if (model != null)
-                        RPFWizardUtil.setFileListCurrent(model, true);
+                WizardModel model = getWizardModel();
+                if (model != null)
+                    RPFWizardUtil.setFileListCurrent(model, true);
 
-                    moveToNextPanel();
-                }
+                moveToNextPanel();
             });
         }
     }

@@ -362,9 +362,8 @@ public class RPFTiledImageLayer extends TiledImageLayer
         StringBuilder sb = new StringBuilder();
 
         Object o = params.getValue(RPFGenerator.RPF_FILE_INDEX);
-        if (o != null && o instanceof RPFFileIndex)
+        if (o instanceof RPFFileIndex fileIndex)
         {
-            RPFFileIndex fileIndex = (RPFFileIndex) o;
             if (fileIndex.getIndexProperties() != null)
             {
                 if (fileIndex.getIndexProperties().getDescription() != null)
@@ -401,19 +400,19 @@ public class RPFTiledImageLayer extends TiledImageLayer
 
         for (Map.Entry<String, Object> p : params.getEntries())
         {
-            if (p.getValue() instanceof LatLon)
+            if (p.getValue() instanceof LatLon latLon)
             {
-                rs.addStateValueAsDouble(p.getKey() + ".Latitude", ((LatLon) p.getValue()).getLatitude().degrees);
-                rs.addStateValueAsDouble(p.getKey() + ".Longitude", ((LatLon) p.getValue()).getLongitude().degrees);
+                rs.addStateValueAsDouble(p.getKey() + ".Latitude", latLon.getLatitude().degrees);
+                rs.addStateValueAsDouble(p.getKey() + ".Longitude", latLon.getLongitude().degrees);
             }
-            else if (p.getValue() instanceof Sector)
+            else if (p.getValue() instanceof Sector sector)
             {
-                rs.addStateValueAsDouble(p.getKey() + ".MinLatitude", ((Sector) p.getValue()).getMinLatitude().degrees);
-                rs.addStateValueAsDouble(p.getKey() + ".MaxLatitude", ((Sector) p.getValue()).getMaxLatitude().degrees);
+                rs.addStateValueAsDouble(p.getKey() + ".MinLatitude", sector.getMinLatitude().degrees);
+                rs.addStateValueAsDouble(p.getKey() + ".MaxLatitude", sector.getMaxLatitude().degrees);
                 rs.addStateValueAsDouble(p.getKey() + ".MinLongitude",
-                    ((Sector) p.getValue()).getMinLongitude().degrees);
+                    sector.getMinLongitude().degrees);
                 rs.addStateValueAsDouble(p.getKey() + ".MaxLongitude",
-                    ((Sector) p.getValue()).getMaxLongitude().degrees);
+                    sector.getMaxLongitude().degrees);
             }
             else if (p.getValue() instanceof URLBuilder)
             {
@@ -793,8 +792,8 @@ public class RPFTiledImageLayer extends TiledImageLayer
         @Override
         protected boolean validateResponseCode()
         {
-            if (this.getRetriever() instanceof RPFRetriever)
-                return ((RPFRetriever) this.getRetriever()).getResponseCode() == RPFRetriever.RESPONSE_CODE_OK;
+            if (this.getRetriever() instanceof RPFRetriever rpfRetriever)
+                return rpfRetriever.getResponseCode() == RPFRetriever.RESPONSE_CODE_OK;
             else
                 return super.validateResponseCode();
         }
