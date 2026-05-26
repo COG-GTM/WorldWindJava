@@ -103,9 +103,8 @@ public class TiledElevationProducer extends TiledRasterProducer
         // This code expects the string "gov.nasa.worldwind.avkey.MissingDataValue", which now corresponds to the key 
         // MISSING_DATA_REPLACEMENT.
         Object o = params.getValue(AVKey.MISSING_DATA_REPLACEMENT);
-        if (o != null && o instanceof Double)
+        if (o instanceof Double missingDataValue)
         {
-            Double missingDataValue = (Double) o;
             bufferRaster.fill(missingDataValue);
             bufferRaster.setTransparentValue(missingDataValue);
         }
@@ -139,9 +138,8 @@ public class TiledElevationProducer extends TiledRasterProducer
 
         // TiledElevationProducer accepts BufferWrapperRaster as a data source. If the data source is a DataRaster, then
         // check that it's a BufferWrapperRaster.
-        if (source instanceof DataRaster)
+        if (source instanceof DataRaster raster)
         {
-            DataRaster raster = (DataRaster) source;
 
             if (!(raster instanceof BufferWrapperRaster))
             {
