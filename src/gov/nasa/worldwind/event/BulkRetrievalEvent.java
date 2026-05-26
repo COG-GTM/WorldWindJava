@@ -74,7 +74,7 @@ public class BulkRetrievalEvent extends WWEvent
      */
     public BulkRetrievable getSource()
     {
-        return super.getSource() instanceof BulkRetrievable ? (BulkRetrievable) super.getSource() : null;
+        return super.getSource() instanceof BulkRetrievable bulkRetrievable ? bulkRetrievable : null;
     }
 
     /**
