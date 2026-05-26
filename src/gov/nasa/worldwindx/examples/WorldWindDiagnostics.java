@@ -116,8 +116,8 @@ public class WorldWindDiagnostics {
             for (Attr attr : attrs) {
                 sb.append(attr.name).append(": ");
 
-                if (attr.attr instanceof Integer) {
-                    gl.glGetIntegerv((Integer) attr.attr, intVals, 0);
+                if (attr.attr instanceof Integer attrValue) {
+                    gl.glGetIntegerv(attrValue, intVals, 0);
                     sb.append(intVals[0]).append(intVals[1] > 0 ? ", " + intVals[1] : "");
                 }
 

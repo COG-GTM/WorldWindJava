@@ -121,10 +121,10 @@ public class KeepingObjectsInView extends ApplicationTemplate {
 
             // Add the objects to track to the layers.
             for (Object o : objectsToTrack) {
-                if (o instanceof WWIcon) {
-                    iconLayer.addIcon((WWIcon) o);
-                } else if (o instanceof Renderable) {
-                    shapesLayer.addRenderable((Renderable) o);
+                if (o instanceof WWIcon icon) {
+                    iconLayer.addIcon(icon);
+                } else if (o instanceof Renderable renderable) {
+                    shapesLayer.addRenderable(renderable);
                 }
             }
 

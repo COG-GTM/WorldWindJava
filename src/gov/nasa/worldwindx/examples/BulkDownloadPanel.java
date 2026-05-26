@@ -77,15 +77,15 @@ public class BulkDownloadPanel extends JPanel
         // Layers
         for (Layer layer : this.wwd.getModel().getLayers())
         {
-            if (layer instanceof BulkRetrievable)
-                this.retrievables.add(new BulkRetrievablePanel((BulkRetrievable) layer));
+            if (layer instanceof BulkRetrievable bulkRetrievable)
+                this.retrievables.add(new BulkRetrievablePanel(bulkRetrievable));
         }
         // Elevation models
         CompoundElevationModel cem = (CompoundElevationModel) wwd.getModel().getGlobe().getElevationModel();
         for (ElevationModel elevationModel : cem.getElevationModels())
         {
-            if (elevationModel instanceof BulkRetrievable)
-                this.retrievables.add(new BulkRetrievablePanel((BulkRetrievable) elevationModel));
+            if (elevationModel instanceof BulkRetrievable bulkRetrievable)
+                this.retrievables.add(new BulkRetrievablePanel(bulkRetrievable));
         }
 
         // Init sector selector

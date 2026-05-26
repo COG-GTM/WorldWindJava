@@ -212,10 +212,10 @@ public class ScreenSelection extends ApplicationTemplate
                 // Turn on highlight if object selected.
                 for (Object o : list)
                 {
-                    if (o instanceof Highlightable)
+                    if (o instanceof Highlightable highlightable)
                     {
-                        ((Highlightable) o).setHighlighted(true);
-                        this.lastBoxHighlightObjects.add((Highlightable) o);
+                        highlightable.setHighlighted(true);
+                        this.lastBoxHighlightObjects.add(highlightable);
                     }
                 }
             }
