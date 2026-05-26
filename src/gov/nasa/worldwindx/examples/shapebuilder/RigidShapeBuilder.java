@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -1591,10 +1591,8 @@ public class RigidShapeBuilder extends ApplicationTemplate
 
             final Iterable<AbstractShapeEntry> entries = this.getModel().getEntries();
 
-            Thread t = new Thread(new Runnable()
+            Thread t = new Thread(() ->
             {
-                public void run()
-                {
                     try
                     {
                         java.text.DecimalFormat f = new java.text.DecimalFormat("####");
@@ -1630,17 +1628,15 @@ public class RigidShapeBuilder extends ApplicationTemplate
                     }
                     finally
                     {
-                        SwingUtilities.invokeLater(new Runnable()
+                        SwingUtilities.invokeLater(() ->
                         {
-                            public void run()
-                            {
                                 setEnabled(true);
                                 getApp().setCursor(null);
                                 getApp().getWwd().redraw();
-                            }
+
                         });
                     }
-                }
+
             });
             this.setEnabled(false);
             getApp().setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -1666,10 +1662,8 @@ public class RigidShapeBuilder extends ApplicationTemplate
             if (dir == null)
                 return;
 
-            Thread t = new Thread(new Runnable()
+            Thread t = new Thread(() ->
             {
-                public void run()
-                {
                     final ArrayList<AbstractShape> shapes = new ArrayList<AbstractShape>();
                     try
                     {
@@ -1706,18 +1700,16 @@ public class RigidShapeBuilder extends ApplicationTemplate
                     }
                     finally
                     {
-                        SwingUtilities.invokeLater(new Runnable()
+                        SwingUtilities.invokeLater(() ->
                         {
-                            public void run()
-                            {
                                 setAbstractShapes(shapes);
                                 setEnabled(true);
                                 getApp().setCursor(null);
                                 getApp().getWwd().redraw();
-                            }
+
                         });
                     }
-                }
+
             });
             this.setEnabled(false);
             getApp().setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -1748,27 +1740,23 @@ public class RigidShapeBuilder extends ApplicationTemplate
         {
             this.app.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
-            Thread thread = new Thread(new Runnable()
+            Thread thread = new Thread(() ->
             {
-                public void run()
-                {
                     for (File f : files)
                     {
                         loadFile(f);
                     }
 
                     app.setCursor(null);
-                }
+
             });
             thread.start();
         }
 
         protected void loadFile(final File file)
         {
-            SwingUtilities.invokeLater(new Runnable()
+            SwingUtilities.invokeLater(() ->
             {
-                public void run()
-                {
                     String filename = file.getAbsolutePath();
 
                     AbstractShape shape = null;
@@ -1780,7 +1768,7 @@ public class RigidShapeBuilder extends ApplicationTemplate
                         setImageSource(filename);
                         view.textureBox.setText(filename);
                     }
-                }
+
             });
         }
 
@@ -1883,12 +1871,10 @@ public class RigidShapeBuilder extends ApplicationTemplate
                 for (final AbstractShapeFactory factory : defaultAbstractShapeFactories)
                 {
                     JMenuItem item = new JMenuItem(factory.toString());
-                    item.addActionListener(new ActionListener()
+                    item.addActionListener(e ->
                     {
-                        public void actionPerformed(ActionEvent e)
-                        {
                             controller.createNewEntry(factory);
-                        }
+
                     });
                     subMenu.add(item);
                 }
@@ -1901,12 +1887,10 @@ public class RigidShapeBuilder extends ApplicationTemplate
                     JMenuItem item = new JMenuItem(mode.getMode());
                     item.setAccelerator(KeyStroke.getKeyStroke(mode.getShortcut(),
                         Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-                    item.addActionListener(new ActionListener()
+                    item.addActionListener(e ->
                     {
-                        public void actionPerformed(ActionEvent e)
-                        {
                             controller.setEditMode(mode.getMode());
-                        }
+
                     });
                     subMenu.add(item);
                 }

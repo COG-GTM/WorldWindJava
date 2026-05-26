@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -223,10 +223,8 @@ public class MarkersOrder extends ApplicationTemplate
             final ButtonGroup group = new ButtonGroup();
             JRadioButton btRamp = new JRadioButton("Ramp");
             btRamp.setSelected(false);
-            btRamp.addActionListener(new ActionListener()
+            btRamp.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     colorMode = COLOR_MODE_RAMP;
                     colorRampCombo.setEnabled(true);
                     timeScaleSlider.setEnabled(true);
@@ -247,39 +245,35 @@ public class MarkersOrder extends ApplicationTemplate
                     }
                     updateScreenAnnotation(null);
                     getWwd().redraw();
-                }
+
             });
             group.add(btRamp);
             radioPanel.add(btRamp);
             JRadioButton btDow = new JRadioButton("Days");
             btDow.setSelected(true);
-            btDow.addActionListener(new ActionListener()
+            btDow.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     colorMode = COLOR_MODE_DOW;
                     colorRampCombo.setEnabled(false);
                     timeScaleSlider.setEnabled(false);
                     attrs = attrsDayOfWeek;
                     updateScreenAnnotation(dayOfWeekLegend);
                     getWwd().redraw();
-                }
+
             });
             group.add(btDow);
             radioPanel.add(btDow);
             JRadioButton btHours = new JRadioButton("Hours");
             btHours.setSelected(false);
-            btHours.addActionListener(new ActionListener()
+            btHours.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     colorMode = COLOR_MODE_HOURS;
                     colorRampCombo.setEnabled(false);
                     timeScaleSlider.setEnabled(false);
                     attrs = attrsHours;
                     updateScreenAnnotation(hoursLegend);
                     getWwd().redraw();
-                }
+
             });
             group.add(btHours);
             radioPanel.add(btHours);
@@ -310,10 +304,8 @@ public class MarkersOrder extends ApplicationTemplate
             comboPanel.add(new JLabel("Color scheme:"));
             colorRampCombo = new JComboBox(new String[] {"Monochrome", "Desaturated", "Gradient", "Rainbow"});
             colorRampCombo.setEnabled(false);
-            colorRampCombo.addActionListener(new ActionListener()
+            colorRampCombo.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     switch (colorRampCombo.getSelectedIndex())
                     {
                         case 0:
@@ -330,7 +322,7 @@ public class MarkersOrder extends ApplicationTemplate
                             break;
                     }
                     getWwd().redraw();
-                }
+
             });
             comboPanel.add(colorRampCombo);
             controlPanel.add(comboPanel);

@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -117,10 +117,8 @@ public class FlatWorldEarthquakes extends ApplicationTemplate
                 this.getWwd(), EqAnnotation.class, 1000e3));
 
             // Add updater timer
-            this.updater = new Timer(1000, new ActionListener()
+            this.updater = new Timer(1000, event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     long now = System.currentTimeMillis();
                     long elapsed = now - updateTime;
                     if (elapsed >= UPDATE_INTERVAL)
@@ -137,7 +135,7 @@ public class FlatWorldEarthquakes extends ApplicationTemplate
                         int sec = (int) ((remaining - min * MILLISECONDS_PER_MINUTE) / 1000);
                         downloadButton.setText(String.format("Update (in %1$02d:%2$02d)", min, sec));
                     }
-                }
+
             });
             this.updater.start();
         }
@@ -259,10 +257,8 @@ public class FlatWorldEarthquakes extends ApplicationTemplate
             JPanel zoomPanel = new JPanel(new GridLayout(0, 1, 0, 0));
             zoomPanel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
             JButton btZoom = new JButton("Zoom on latest");
-            btZoom.addActionListener(new ActionListener()
+            btZoom.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     if (latestEq != null)
                     {
                         Position targetPos = latestEq.getPosition();
@@ -273,7 +269,7 @@ public class FlatWorldEarthquakes extends ApplicationTemplate
                             new Position(targetPos, 0),
                             Angle.ZERO, Angle.ZERO, 1000e3);
                     }
-                }
+
             });
             zoomPanel.add(btZoom);
             controlPanel.add(zoomPanel);
@@ -282,10 +278,8 @@ public class FlatWorldEarthquakes extends ApplicationTemplate
             JPanel viewPanel = new JPanel(new GridLayout(0, 1, 0, 0));
             viewPanel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
             JButton btReset = new JButton("Reset Global View");
-            btReset.addActionListener(new ActionListener()
+            btReset.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     Double lat = Configuration.getDoubleValue(AVKey.INITIAL_LATITUDE);
                     Double lon = Configuration.getDoubleValue(AVKey.INITIAL_LONGITUDE);
                     Double elevation = Configuration.getDoubleValue(AVKey.INITIAL_ALTITUDE);
@@ -296,7 +290,7 @@ public class FlatWorldEarthquakes extends ApplicationTemplate
                         // so we ignore it when specifying the view center position.
                         new Position(targetPos, 0),
                         Angle.ZERO, Angle.ZERO, elevation);
-                }
+
             });
             viewPanel.add(btReset);
             controlPanel.add(viewPanel);
@@ -305,12 +299,10 @@ public class FlatWorldEarthquakes extends ApplicationTemplate
             JPanel downloadPanel = new JPanel(new GridLayout(0, 1, 0, 0));
             downloadPanel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
             this.downloadButton = new JButton("Update");
-            this.downloadButton.addActionListener(new ActionListener()
+            this.downloadButton.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     startEarthquakeDownload();
-                }
+
             });
             this.downloadButton.setEnabled(false);
             downloadPanel.add(this.downloadButton);
@@ -330,12 +322,10 @@ public class FlatWorldEarthquakes extends ApplicationTemplate
             magnitudePanel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
             magnitudePanel.add(new JLabel("Min Magnitude:"));
             magnitudeCombo = new JComboBox(new String[] {"2.5", "3", "4", "5", "6", "7"});
-            magnitudeCombo.addActionListener(new ActionListener()
+            magnitudeCombo.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     applyMagnitudeFilter(Double.parseDouble((String) magnitudeCombo.getSelectedItem()));
-                }
+
             });
             magnitudePanel.add(magnitudeCombo);
             controlPanel.add(magnitudePanel);
@@ -346,10 +336,8 @@ public class FlatWorldEarthquakes extends ApplicationTemplate
             blinkPanel.add(new JLabel("Latest:"));
             final JCheckBox jcb = new JCheckBox("Animate");
             jcb.setSelected(true);
-            jcb.addActionListener(new ActionListener()
+            jcb.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     if (jcb.isSelected())
                     {
                         setBlinker(latestEq);
@@ -358,7 +346,7 @@ public class FlatWorldEarthquakes extends ApplicationTemplate
                     {
                         setBlinker(null);
                     }
-                }
+
             });
             blinkPanel.add(jcb);
             controlPanel.add(blinkPanel);
@@ -382,12 +370,10 @@ public class FlatWorldEarthquakes extends ApplicationTemplate
 
         private void startEarthquakeDownload()
         {
-            WorldWind.getScheduledTaskService().addTask(new Runnable()
+            WorldWind.getScheduledTaskService().addTask(() ->
             {
-                public void run()
-                {
                     downloadEarthquakes(USGS_EARTHQUAKE_FEED_URL);
-                }
+
             });
         }
 
@@ -595,15 +581,13 @@ public class FlatWorldEarthquakes extends ApplicationTemplate
                 this.annotation = ea;
                 this.initialScale = this.annotation.getAttributes().getScale();
                 this.initialOpacity = this.annotation.getAttributes().getOpacity();
-                this.timer = new Timer(delay, new ActionListener()
+                this.timer = new Timer(delay, event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         annotation.getAttributes().setScale(initialScale * (1f + 7f * ((float) step / (float) steps)));
                         annotation.getAttributes().setOpacity(initialOpacity * (1f - ((float) step / (float) steps)));
                         step = step == steps ? 0 : step + 1;
                         getWwd().redraw();
-                    }
+
                 });
                 start();
             }
