@@ -1,119 +1,62 @@
-# Windsurf demo — run-of-show
+# Windsurf prompts for this repo
 
-What this file is: the operator script for the Cascade-in-Windsurf portion of the Wednesday demo. Vignette 2 of the demo plan. Open this file in the IDE at the start of the vignette so the audience sees it sitting in the repo.
-
-The scenario: an engineer at the program office wants to add a new MIL-STD-2525 tactical graphic to the operator console — an OPIR sensor field-of-regard cone for a space-based infrared sensor, and a missile-launch detection track corridor. He doesn't write WorldWind code every day. He opens Windsurf and asks Cascade.
-
-Total target time on screen: **6–8 minutes**, then hand off to Devin.
+Windsurf (with Cascade) reads the whole codebase, follows `AGENTS.md`, and executes complex tasks in the IDE while the engineer reviews each chunk before accepting. Every prompt below is **copy-paste ready** and produces a real artifact in this repo. Each one is built around the same idea: **trade engineer time for more review, not less.** That's how this becomes a de-risking tool instead of a productivity tool.
 
 ---
 
-## Setup before the demo starts
+## Prompt 1 — Extend the symbology surface (capability extension)
 
-1. Windsurf open. Repo at `COG-GTM/WorldWindJava` (this fork), `develop` branch.
-2. `AGENTS.md` open in a side tab so we can point at it when we say "the operating rules live in the repo, not in slideware."
-3. `src/gov/nasa/worldwind/symbology/milstd2525/MilStd2525GraphicFactory.java` open in the main tab.
-4. Cascade panel open and ready. Memory enabled so it picks up `AGENTS.md` automatically.
+> *Walk me through how `MilStd2525GraphicFactory` registers and instantiates tactical graphics, then scaffold a new `OPIRSensorFieldOfRegard` graphic under `gov.nasa.worldwind.symbology.milstd2525.graphics.areas`. It extends `AbstractMilStd2525TacticalGraphic`. Inputs: sensor position (lat, lon, altitude), slant range, half-angle, azimuth, elevation. Use `TacticalCircle` and `TacticalQuad` as reference patterns. Honor `AGENTS.md` end-to-end: no-arg constructor, namespaced constants in `MilStd2525Constants`, `OpenGLStackHandler` in the render path, JOGL `nativeByteOrder()`, offline-mode check, no external dependencies. Register the new type in `MilStd2525GraphicFactory`. Stop after the scaffold — do not implement the geometry math yet.*
 
----
-
-## Beat 1 — Comprehend the factory (~90 seconds)
-
-**Type into Cascade:**
-
-> *Explain how `MilStd2525GraphicFactory` decides which class to instantiate for a given symbol identifier. Walk me through the registration flow and point me at the closest existing graphic implementations to the one I want to build: a sensor field-of-regard cone.*
-
-**What Cascade should produce:**
-
-- A walkthrough of `MilStd2525GraphicFactory.createGraphic()` and the SIDC dispatch.
-- A pointer to `AbstractMilStd2525TacticalGraphic` as the base class for new graphics.
-- Closest existing analogs: `TacticalCircle` (parameterized geometry), `MilStd2525PointGraphic` (point-anchored placement), `TacticalRoute` (path-with-width pattern relevant to the track corridor).
-- File:line references the engineer can click.
-
-**What to say while it runs:**
-
-> "Cascade just read 81 files in the `milstd2525` package and a few hundred more in `symbology`. The engineer didn't have to know the codebase. He pointed at the problem and asked. The audit trail of what Cascade looked at and why is visible right here — same chain of custody as a human PR review."
-
-**If Cascade drifts:** point it back with: *"Stay inside `gov.nasa.worldwind.symbology.milstd2525/`. The factory is `MilStd2525GraphicFactory`. Start there."*
+**De-risk angle:** the engineer never touched WorldWind before. Cascade enforces the no-arg-constructor, namespaced-constants, and `OpenGLStackHandler` rules from `AGENTS.md` automatically. The engineer reviews each chunk in the IDE before accepting. New capability added; existing API contract untouched.
 
 ---
 
-## Beat 2 — Scaffold the new graphic (~3 minutes)
+## Prompt 2 — Find risk before you write code (risk inventory)
 
-**Type into Cascade:**
+> *Scan this repo and produce a markdown report with: (a) every public method in `gov.nasa.worldwind.*` annotated `@Deprecated`, with file:line and one-sentence reason for deprecation, (b) every place those deprecated methods are still called internally, (c) the non-deprecated equivalent for each. Do not change any code. Save the report to `docs/agents/deprecation-inventory.md`.*
 
-> *Scaffold a new tactical graphic `OPIRSensorFieldOfRegard` under `gov.nasa.worldwind.symbology.milstd2525.graphics.areas`. It extends `AbstractMilStd2525TacticalGraphic`. Inputs: sensor position (lat, lon, altitude), slant range, half-angle, azimuth, elevation. Render it as a cone projected onto the globe. Follow `TacticalCircle` and `TacticalQuad` as reference patterns. Honor the `AGENTS.md` rules: no-arg constructor for declarative instantiation, namespaced String constants (extend `SymbologyConstants` / `MilStd2525Constants`), JOGL buffer `nativeByteOrder()`, OpenGL state protected with `OpenGLStackHandler` and try/finally, `WorldWind.setOfflineMode` respected, no external dependencies. Register the new graphic in `MilStd2525GraphicFactory` so it round-trips by SIDC. Stop after the scaffold — do not implement the math yet.*
-
-**What Cascade should produce:**
-
-- A new file at `src/gov/nasa/worldwind/symbology/milstd2525/graphics/areas/OPIRSensorFieldOfRegard.java` extending `AbstractMilStd2525TacticalGraphic`.
-- A no-arg constructor.
-- Setters for the six geometric inputs.
-- Override stubs for the render-side methods (geometry generation, attribute application, pick support) — stubs only, with TODOs marking the math.
-- A modification to `MilStd2525GraphicFactory` adding the SIDC dispatch for the new type.
-- A new namespaced constant in `MilStd2525Constants` for the SIDC.
-
-**What to say while it runs:**
-
-> "Watch the inline diff. Cascade is writing exactly what an engineer who knows this codebase would write. It's reading `AGENTS.md` and respecting the rules — no-arg constructor, namespaced constants, OpenGL state handler. The engineer reviews each chunk in the IDE before accepting. Human in the loop, all the way through."
-
-**Acceptance check before accepting:**
-
-- Does it have a no-arg constructor? (Required by NASA's declarative instantiation rule.)
-- Is the SIDC constant added to `MilStd2525Constants`? (Required by the namespaced-constants rule.)
-- Does it use `OpenGLStackHandler` in the render path? (Required by the OpenGL-state-protection rule.)
-- Is the factory registration present?
-- Are there `TODO` comments where the math is missing? (We want the scaffold honest about what's not done.)
-
-If any are missing, ask Cascade: *"Re-check against `AGENTS.md` §5 and add what's missing."*
+**De-risk angle:** zero code change, full visibility into latent debt. The report becomes the input to a follow-up Devin session that performs the actual swaps under the per-PR audit rules in `AGENTS.md` §6.
 
 ---
 
-## Beat 3 — The hand-off to Devin (~90 seconds)
+## Prompt 3 — Surface OpenGL state-handling violations (rendering safety)
 
-This is the moment the audience sees what Windsurf does *vs.* what Devin does.
+> *Find every method in `gov.nasa.worldwind.render/` and `gov.nasa.worldwind.layers/` that calls into a GL context but does not wrap the GL state changes in a `try`/`finally` with `gov.nasa.worldwind.util.OpenGLStackHandler`. For each finding, give file:line, the GL call site, and the smallest correct wrapping. Save the report to `docs/agents/opengl-state-audit.md`. Do not change code.*
 
-**Say it out loud:**
-
-> "The scaffold is good. The geometry math, the corridor, the example app, the unit tests, the 3D render screenshot — that's hours of work. The engineer doesn't sit and grind through it. He hands it to Devin."
-
-**Type into Cascade:**
-
-> *Open an Ask Devin session with this prompt: "Complete the OPIR sensor field-of-regard cone implementation that's currently scaffolded on this branch. Implement the cone geometry math, add a `MissileTrackCorridor` companion graphic with confidence-shaded tapered swath rendering, add an example app under `gov.nasa.worldwindx.examples.symbology.OPIRAndMissileTrack` that places one of each over the Korean peninsula, generate unit + functional tests, and run them. Follow `AGENTS.md` end to end. Open a PR. Include the standard six description blocks."*
-
-**What the audience sees:**
-
-- Cascade hands off cleanly. The session URL appears. Devin is now running on its own machine, in parallel, without blocking the engineer.
-- The engineer goes back to his other work. The audit chain (Cascade prompt → Devin session → Devin Review verdict → PR → CI) is one continuous lineage.
+**De-risk angle:** WorldWind's existing rule (from `Design and Coding Guidelines.html`) is "OpenGL state changes must be bracketed." Cascade audits the whole repo for compliance in under a minute. Fixes are reviewed and merged one at a time under §6 — never in bulk.
 
 ---
 
-## What "done" looks like for this vignette
+## Prompt 4 — Find offline-mode contract violations (operational safety)
 
-- A new file `OPIRSensorFieldOfRegard.java` exists in `gov.nasa.worldwind.symbology.milstd2525.graphics.areas`, with no-arg constructor, setters, and scaffold methods.
-- `MilStd2525GraphicFactory` and `MilStd2525Constants` are updated.
-- An Ask Devin session is open with the completion prompt above.
-- `AGENTS.md` was visibly the source of authority for every guardrail Cascade applied.
+> *Find every network resource access in this repo that does not first check `WorldWind.getOfflineMode()` (or the equivalent contract on `WorldWindow`). For each, give file:line, the URL or resource being accessed, and the minimal correct check to add. Save the report to `docs/agents/offline-mode-audit.md`. Do not change code.*
 
----
-
-## Failure modes and what to say if they happen
-
-| If this happens... | Say this and do this |
-|---|---|
-| Cascade ignores `AGENTS.md` | "Hold on — let me re-anchor it." Then type: *"Re-read `AGENTS.md` and apply §4 (NASA conventions) and §5 (MIL-STD-2525 domain rules) before continuing."* |
-| Cascade adds an external dependency | "That's a `AGENTS.md` §2 violation. Cascade, remove the external dependency. Use only JRE + JOGL." |
-| Cascade strips a no-arg constructor | "That breaks declarative instantiation. Cascade, restore the no-arg constructor — `AGENTS.md` §4." |
-| Cascade writes a placeholder unit test that doesn't actually exercise anything | Skip it. Say: "We don't ship that. Tests come from Devin in the next step, not from the IDE scaffold." |
-| The 3D globe doesn't render the new graphic when Devin's done | This is the Vignette 2 finale. If it fails on Wednesday, fall back to the pre-recorded screenshot stored at `docs/demo-assets/opir-cone-render.png` (we generate this in advance). Never demo a blank gray map. |
+**De-risk angle:** offline-mode is a contract the rest of the codebase depends on. Cascade verifies every call site honors it. Violations get fixed one PR at a time, with the audit trail that `AGENTS.md` §6 requires.
 
 ---
 
-## Why this lands with this audience
+## Prompt 5 — Threading-aware modernization scan (Java 21 prep)
 
-- The engineer never wrote WorldWind code. The audience watches him ask plain-English questions and get a working scaffold in 5 minutes. That's the "I wish I had that yesterday" moment.
-- `AGENTS.md` is visible, in-repo, and enforced. The customer sees the operating model is a real artifact, not slideware.
-- The hand-off to Devin shows the two tools complement each other: Windsurf is where the engineer sits, Devin is what scales the engineer's intent. Same audit chain, same anti-risk gates.
-- MIL-STD-2525 is the customer's daily symbology. The graphic we're adding (OPIR sensor FOR + missile track corridor) maps directly to their mission.
+> *Find every anonymous `Runnable` or `Callable` in `gov.nasa.worldwind.*`. Categorize each as: (A) safely convertible to a lambda — pure body, no `this` binding, no non-final outer captures, (B) convertible with care — review threading semantics first, (C) leave alone — touches `TaskManager`, `Retriever`, or other concurrency primitives where the anonymous-class identity matters. Produce a markdown report at `docs/agents/runnable-conversion-plan.md` with the category and reasoning for each. Do not change any code.*
 
-That's the whole vignette. After this, hand back to the Wednesday demo flow at step 4 (anti-risk recap).
+**De-risk angle:** the >90% lambda conversion target in `AGENTS.md` §9 only counts when each conversion is safe. Cascade produces the categorization; humans approve the (A) set, debate the (B) set, and leave (C) alone. The plan is itself the audit artifact.
+
+---
+
+## Prompt 6 — Add an example, the right way (operator-facing extension)
+
+> *Add a new example under `gov.nasa.worldwindx.examples.symbology.OPIRAndMissileTrack` that renders one `OPIRSensorFieldOfRegard` and one `MissileTrackCorridor` over the Korean peninsula. Use `ApplicationTemplate` as the base, `RenderableLayer` for the graphics, and follow the conventions in the existing `TacticalGraphics.java` example. No GUI builders. No external dependencies. Add a brief Javadoc header describing what the example shows.*
+
+**De-risk angle:** examples are how operators learn the API. Cascade follows the existing example conventions instead of inventing new ones. The new operator-facing artifact passes the same NASA conventions every other example follows.
+
+---
+
+## How this de-risks the work
+
+- **Read more, write less.** Half the prompts above (2, 3, 4, 5) produce a report, not a diff. The engineer sees the risk surface before any code changes.
+- **Every change is reviewed.** Cascade writes inline; the engineer accepts chunk-by-chunk. Then a PR. Then Devin Review. Then a human reviewer. Four gates.
+- **Existing rules win.** `AGENTS.md` defers to NASA's `CONTRIBUTING.md` and `Design and Coding Guidelines.html` on every conflict. Cascade enforces both.
+- **Speed is reinvested into testing, audit, and review** — never traded against them. That's the operating premise.
+
+For the autonomous-execution side of any of these prompts (geometry math, full Java 21 modernization across all 20 packages, multi-PR rollups), hand the same prompt to Devin with the audit chain `AGENTS.md` §6 requires.
