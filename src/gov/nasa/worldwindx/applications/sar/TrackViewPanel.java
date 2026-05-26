@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -601,12 +601,10 @@ public class TrackViewPanel extends JPanel
                 this.fastReverseButton = new JButton();
                 this.fastReverseButton.setText("<<");
                 this.fastReverseButton.setEnabled(false);
-                this.fastReverseButton.addActionListener(new ActionListener()
+                this.fastReverseButton.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         fastReverseButtonActionPerformed();
-                    }
+
                 });
                 vcrPanel.add(this.fastReverseButton);
                 vcrPanel.add(Box.createHorizontalStrut(3));
@@ -615,12 +613,10 @@ public class TrackViewPanel extends JPanel
                 this.reverseButton = new JButton();
                 this.reverseButton.setText("<");
                 this.reverseButton.setEnabled(false);
-                this.reverseButton.addActionListener(new ActionListener()
+                this.reverseButton.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         reverseButtonActionPerformed();
-                    }
+
                 });
                 vcrPanel.add(this.reverseButton);
                 vcrPanel.add(Box.createHorizontalStrut(3));
@@ -629,12 +625,10 @@ public class TrackViewPanel extends JPanel
                 this.stopButton = new JButton();
                 this.stopButton.setText("Stop");
                 this.stopButton.setEnabled(false);
-                this.stopButton.addActionListener(new ActionListener()
+                this.stopButton.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         stopButtonActionPerformed();
-                    }
+
                 });
                 vcrPanel.add(this.stopButton);
                 vcrPanel.add(Box.createHorizontalStrut(3));
@@ -644,12 +638,10 @@ public class TrackViewPanel extends JPanel
                 this.forwardButton.setText(">");
                 this.forwardButton.setBorder(UIManager.getBorder("Button.border"));
                 this.forwardButton.setEnabled(false);
-                this.forwardButton.addActionListener(new ActionListener()
+                this.forwardButton.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         forwardButtonActionPerformed();
-                    }
+
                 });
                 vcrPanel.add(this.forwardButton);
                 vcrPanel.add(Box.createHorizontalStrut(3));
@@ -658,12 +650,10 @@ public class TrackViewPanel extends JPanel
                 this.fastForwardButton = new JButton();
                 this.fastForwardButton.setText(">>");
                 this.fastForwardButton.setEnabled(false);
-                this.fastForwardButton.addActionListener(new ActionListener()
+                this.fastForwardButton.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         fastForwardButtonActionPerformed();
-                    }
+
                 });
                 vcrPanel.add(this.fastForwardButton);
 

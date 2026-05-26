@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -72,11 +72,8 @@ public class FileSetPanel extends JPanel
         this.fileChooser = new JFileChooser();
         this.fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         this.fileChooser.setMultiSelectionEnabled(true);
-        this.fileChooser.addActionListener(new ActionListener()
+        this.fileChooser.addActionListener(event ->
         {
-            @Override
-            public void actionPerformed(ActionEvent event)
-            {
                 if (event.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
                 {
                     // Cancel the scanning action by interrupting the thread. Interrupts are checked by the
@@ -91,7 +88,7 @@ public class FileSetPanel extends JPanel
                 File[] roots = fileChooser.getSelectedFiles();
                 if (roots != null && roots.length > 0)
                     resetTable(roots);
-            }
+
         });
 
         // Disable the cancel button until a directory scan begins.
@@ -148,10 +145,8 @@ public class FileSetPanel extends JPanel
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         this.enableCancelAction(true);
 
-        this.scanningThread = new Thread(new Runnable()
+        this.scanningThread = new Thread(() ->
         {
-            public void run()
-            {
                 try
                 {
                     fileSetFinder.findFileSets(roots);
@@ -162,18 +157,16 @@ public class FileSetPanel extends JPanel
                 }
                 finally
                 {
-                    SwingUtilities.invokeLater(new Runnable()
+                    SwingUtilities.invokeLater(() ->
                     {
-                        public void run()
-                        {
                             fileSetTable.setFileSetMap(fileSetFinder.getFileSetMap());
                             setCursor(Cursor.getDefaultCursor());
                             enableCancelAction(false);
                             scanningThread = null;
-                        }
+
                     });
                 }
-            }
+
         });
         this.scanningThread.start();
     }
@@ -207,12 +200,10 @@ public class FileSetPanel extends JPanel
 
                 final java.util.List<FileSet> consolidatedFileSetList = fileSetFinder.consolidateFileSets(fileSetList);
 
-                Thread t = new Thread(new Runnable()
+                Thread t = new Thread(() ->
                 {
-                    public void run()
-                    {
                         performInstallation(consolidatedFileSetList);
-                    }
+
                 });
                 t.start();
             }
@@ -252,13 +243,11 @@ public class FileSetPanel extends JPanel
 
                 if (dataConfig != null && this.wwd != null)
                 {
-                    SwingUtilities.invokeLater(new Runnable()
+                    SwingUtilities.invokeLater(() ->
                     {
-                        public void run()
-                        {
                             DataInstaller.addToWorldWindow(wwd, dataConfig.getDocumentElement(), fileSet, true);
                             FileSetPanel.this.firePropertyChange(DataInstaller.INSTALL_COMPLETE, dataConfig, null);
-                        }
+
                     });
                 }
             }

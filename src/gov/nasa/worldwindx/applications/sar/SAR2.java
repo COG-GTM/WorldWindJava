@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -142,12 +142,10 @@ public class SAR2 extends JFrame
         this.scalebarHint.setWwd(this.wwd);
 
         // Setup and start redraw timer - to force downloads to completion without user interaction
-        this.redrawTimer = new Timer(REDRAW_TIMER_DELAY, new ActionListener()   // 1 sec
+        this.redrawTimer = new Timer(REDRAW_TIMER_DELAY, event ->
         {
-            public void actionPerformed(ActionEvent event)
-            {
                 wwd.redraw();
-            }
+
         });
         this.redrawTimer.start();
 
@@ -167,12 +165,10 @@ public class SAR2 extends JFrame
         });
 
         // Preferences
-        this.autoSaveTimer = new Timer(0, new ActionListener()
+        this.autoSaveTimer = new Timer(0, actionEvent ->
         {
-            public void actionPerformed(ActionEvent actionEvent)
-            {
                 onAutoSave();
-            }
+
         });
         this.initializeUserPreferences();
         this.loadUserPreferences();
@@ -808,12 +804,10 @@ public class SAR2 extends JFrame
                 newTrack.setMnemonic('N');
                 newTrack.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-                newTrack.addActionListener(new ActionListener()
+                newTrack.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         newTrack(null);
-                    }
+
                 });
                 fileMenu.add(newTrack);
 
@@ -823,12 +817,10 @@ public class SAR2 extends JFrame
                 openTrackFile.setMnemonic('O');
                 openTrackFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-                openTrackFile.addActionListener(new ActionListener()
+                openTrackFile.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         newTrackFromFile();
-                    }
+
                 });
                 fileMenu.add(openTrackFile);
 
@@ -838,12 +830,10 @@ public class SAR2 extends JFrame
                 openTrackURL.setMnemonic('U');
                 openTrackURL.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-                openTrackURL.addActionListener(new ActionListener()
+                openTrackURL.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         newTrackFromURL(null, null);
-                    }
+
                 });
                 fileMenu.add(openTrackURL);
 
@@ -854,12 +844,10 @@ public class SAR2 extends JFrame
                 removeTrack.setAccelerator(KeyStroke.getKeyStroke(
                     Configuration.isMacOS() ? KeyEvent.VK_W : KeyEvent.VK_F4,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-                removeTrack.addActionListener(new ActionListener()
+                removeTrack.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         removeTrack(getCurrentTrack(), false);
-                    }
+
                 });
                 fileMenu.add(removeTrack);
 
@@ -872,14 +860,12 @@ public class SAR2 extends JFrame
                 saveTrack.setMnemonic('S');
                 saveTrack.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-                saveTrack.addActionListener(new ActionListener()
+                saveTrack.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         // Show a save track dialog that won't prompt the user to choose a location unless it's
                         // necessary.
                         saveTrack(getCurrentTrack(), false);
-                    }
+
                 });
                 fileMenu.add(saveTrack);
 
@@ -889,13 +875,11 @@ public class SAR2 extends JFrame
                 saveTrackAs.setMnemonic('A');
                 saveTrackAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() + java.awt.event.InputEvent.SHIFT_DOWN_MASK));
-                saveTrackAs.addActionListener(new ActionListener()
+                saveTrackAs.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         // Show a save track dialog that will always prompt the user to choose a location.
                         saveTrack(getCurrentTrack(), true);
-                    }
+
                 });
                 fileMenu.add(saveTrackAs);
 
@@ -915,13 +899,11 @@ public class SAR2 extends JFrame
                 bulkDownload.setMnemonic('B');
                 bulkDownload.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-                bulkDownload.addActionListener(new ActionListener()
+                bulkDownload.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         // Bring the bulk download frame up
                         bulkDownload();
-                    }
+
                 });
                 fileMenu.add(bulkDownload);
 
@@ -930,34 +912,28 @@ public class SAR2 extends JFrame
 
                 JMenuItem openTrackItem = new JMenuItem();
                 openTrackItem.setText("PipeTrackTest.gpx");
-                openTrackItem.addActionListener(new ActionListener()
+                openTrackItem.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         newTrackFromPath("gov/nasa/worldwindx/applications/sar/data/PipeTrackTest.gpx", null);
-                    }
+
                 });
                 fileMenu.add(openTrackItem);
 
                 openTrackItem = new JMenuItem();
                 openTrackItem.setText("PipeTracks2.gpx");
-                openTrackItem.addActionListener(new ActionListener()
+                openTrackItem.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         newTrackFromPath("gov/nasa/worldwindx/applications/sar/data/PipeTracks2.gpx", null);
-                    }
+
                 });
                 fileMenu.add(openTrackItem);
 
                 openTrackItem = new JMenuItem();
                 openTrackItem.setText("PipeTracks3.gpx");
-                openTrackItem.addActionListener(new ActionListener()
+                openTrackItem.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         newTrackFromPath("gov/nasa/worldwindx/applications/sar/data/PipeTracks3.gpx", null);
-                    }
+
                 });
                 fileMenu.add(openTrackItem);
 
@@ -970,12 +946,10 @@ public class SAR2 extends JFrame
                     exit.setText("Exit");
                     exit.setMnemonic('X');
                     exit.setAccelerator(KeyStroke.getKeyStroke("alt F4"));
-                    exit.addActionListener(new ActionListener()
+                    exit.addActionListener(event ->
                     {
-                        public void actionPerformed(ActionEvent event)
-                        {
                             exit();
-                        }
+
                     });
                     fileMenu.add(exit);
                 }
@@ -1006,12 +980,10 @@ public class SAR2 extends JFrame
                 metersMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
                 metersMenuItem.setActionCommand(UNIT_METRIC);
-                metersMenuItem.addActionListener(new ActionListener()
+                metersMenuItem.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         setElevationUnit(e.getActionCommand());
-                    }
+
                 });
                 unitsMenu.add(metersMenuItem);
 
@@ -1022,12 +994,10 @@ public class SAR2 extends JFrame
                 feetMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
                     java.awt.event.InputEvent.ALT_DOWN_MASK));
                 feetMenuItem.setActionCommand(UNIT_IMPERIAL);
-                feetMenuItem.addActionListener(new ActionListener()
+                feetMenuItem.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         setElevationUnit(e.getActionCommand());
-                    }
+
                 });
                 unitsMenu.add(feetMenuItem);
 
@@ -1044,12 +1014,10 @@ public class SAR2 extends JFrame
                 angleDDMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
                 angleDDMenuItem.setActionCommand(Angle.ANGLE_FORMAT_DD);
-                angleDDMenuItem.addActionListener(new ActionListener()
+                angleDDMenuItem.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         setAngleFormat(e.getActionCommand());
-                    }
+
                 });
                 unitsMenu.add(angleDDMenuItem);
 
@@ -1060,12 +1028,10 @@ public class SAR2 extends JFrame
                 angleDMSMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
                     java.awt.event.InputEvent.ALT_DOWN_MASK));
                 angleDMSMenuItem.setActionCommand(Angle.ANGLE_FORMAT_DMS);
-                angleDMSMenuItem.addActionListener(new ActionListener()
+                angleDMSMenuItem.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         setAngleFormat(e.getActionCommand());
-                    }
+
                 });
                 unitsMenu.add(angleDMSMenuItem);
 
@@ -1087,12 +1053,10 @@ public class SAR2 extends JFrame
                 newAnnotation.setMnemonic('N');
                 newAnnotation.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-                newAnnotation.addActionListener(new ActionListener()
+                newAnnotation.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         newAnnotation();
-                    }
+
                 });
                 annotationMenu.add(newAnnotation);
 
@@ -1102,12 +1066,10 @@ public class SAR2 extends JFrame
                 removeAnnotation.setMnemonic('R');
                 removeAnnotation.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() + java.awt.event.InputEvent.SHIFT_DOWN_MASK));
-                removeAnnotation.addActionListener(new ActionListener()
+                removeAnnotation.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         removeAnnotation(getCurrentAnnotation());
-                    }
+
                 });
                 annotationMenu.add(removeAnnotation);
 
@@ -1158,12 +1120,10 @@ public class SAR2 extends JFrame
                 else
                     sarHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HELP,
                         Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-                sarHelp.addActionListener(new ActionListener()
+                sarHelp.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         showHelp();
-                    }
+
                 });
                 helpMenu.add(sarHelp);
 
@@ -1173,12 +1133,10 @@ public class SAR2 extends JFrame
                     JMenuItem about = new JMenuItem();
                     about.setText("About");
                     about.setMnemonic('A');
-                    about.addActionListener(new ActionListener()
+                    about.addActionListener(event ->
                     {
-                        public void actionPerformed(ActionEvent event)
-                        {
                             showAbout();
-                        }
+
                     });
                     helpMenu.add(about);
                 }
@@ -1208,35 +1166,29 @@ public class SAR2 extends JFrame
 
             // == Open track from file ==
             button = makeToolBarButton("24x24-open.gif", "Open track from file", "Open");
-            button.addActionListener(new ActionListener()
+            button.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     newTrackFromFile();
-                }
+
             });
             toolBar.add(button);
 
             // == New Track ==
             button = makeToolBarButton("24x24-new.gif", "New track", "New");
-            button.addActionListener(new ActionListener()
+            button.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     newTrack(null);
-                }
+
             });
             toolBar.add(button);
 
             // == Save Track ==
             button = makeToolBarButton("24x24-save.gif", "Save track", "Save");
-            button.addActionListener(new ActionListener()
+            button.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     // Show a save track dialog that won't prompt the user to choose a location unless it's necessary.
                     saveTrack(getCurrentTrack(), false);
-                }
+
             });
             toolBar.add(button);
 
@@ -1249,34 +1201,28 @@ public class SAR2 extends JFrame
 
             // == View Mode Examine  ==
             this.viewExamineButton = makeToolBarButton("24x24-view-examine.gif", "View examine", "Examine");
-            this.viewExamineButton.addActionListener(new ActionListener()
+            this.viewExamineButton.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     wwd.firePropertyChange(TrackViewPanel.VIEW_MODE_CHANGE, null, TrackViewPanel.VIEW_MODE_EXAMINE);
-                }
+
             });
             toolBar.add(this.viewExamineButton);
 
             // == View Mode Fly-it  ==
             this.viewFollowButton = makeToolBarButton("24x24-view-follow.gif", "View fly-it", "Fly-it");
-            this.viewFollowButton.addActionListener(new ActionListener()
+            this.viewFollowButton.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     wwd.firePropertyChange(TrackViewPanel.VIEW_MODE_CHANGE, null, TrackViewPanel.VIEW_MODE_FOLLOW);
-                }
+
             });
 
             toolBar.add(this.viewFollowButton);
             // == View Mode Free  ==
             this.viewFreeButton = makeToolBarButton("24x24-view-free.gif", "View free", "Free");
-            this.viewFreeButton.addActionListener(new ActionListener()
+            this.viewFreeButton.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     wwd.firePropertyChange(TrackViewPanel.VIEW_MODE_CHANGE, null, TrackViewPanel.VIEW_MODE_FREE);
-                }
+
             });
             toolBar.add(this.viewFreeButton);
 
@@ -1288,15 +1234,13 @@ public class SAR2 extends JFrame
             this.showTrackInfoButton = makeToolBarButton("24x24-segment-info.gif",
                 "Display track information in the 3D view", "Display track information");
             this.showTrackInfoButton.setBorderPainted(false);
-            this.showTrackInfoButton.addActionListener(new ActionListener()
+            this.showTrackInfoButton.addActionListener(actionEvent ->
             {
-                public void actionPerformed(ActionEvent actionEvent)
-                {
                     // Toggle between enabling and disabling the SHOW_TRACK_INFORMATION state.
                     showTrackInfoButton.setBorderPainted(!showTrackInfoButton.isBorderPainted());
                     String state = showTrackInfoButton.isBorderPainted() ? TrackViewPanel.CURRENT_SEGMENT : null;
                     wwd.firePropertyChange(TrackViewPanel.SHOW_TRACK_INFORMATION, null, state);
-                }
+
             });
             toolBar.add(this.showTrackInfoButton);
 
@@ -1307,61 +1251,51 @@ public class SAR2 extends JFrame
             // == Extension plane  ==
             this.extendTrackPlaneButton = makeToolBarButton("24x24-extend-plane.gif", "Extend track using the 3D plane",
                 "Extension plane");
-            this.extendTrackPlaneButton.addActionListener(new ActionListener()
+            this.extendTrackPlaneButton.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     extendTrack(TrackController.EXTENSION_PLANE);
-                }
+
             });
             toolBar.add(this.extendTrackPlaneButton);
 
             // == Extension in air with cursor  ==
             this.extendTrackCursorAirButton = makeToolBarButton("24x24-extend-air.gif",
                 "Extend track in the air with the mouse cursor and the Alt key", "Extension air");
-            this.extendTrackCursorAirButton.addActionListener(new ActionListener()
+            this.extendTrackCursorAirButton.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     extendTrack(TrackController.EXTENSION_CURSOR_AIR);
-                }
+
             });
             toolBar.add(this.extendTrackCursorAirButton);
 
             // == Extension on ground with cursor ==
             this.extendTrackCursorGroundButton = makeToolBarButton("24x24-extend-ground.gif",
                 "Extend track on the ground with the mouse cursor and the Alt key", "Extension ground");
-            this.extendTrackCursorGroundButton.addActionListener(new ActionListener()
+            this.extendTrackCursorGroundButton.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     extendTrack(TrackController.EXTENSION_CURSOR_GROUND);
-                }
+
             });
             toolBar.add(this.extendTrackCursorGroundButton);
 
             // == Remove last point  ==
             this.removeLastPointButton = makeToolBarButton("24x24-remove-point.gif", "Remove last track point",
                 "Remove last");
-            this.removeLastPointButton.addActionListener(new ActionListener()
+            this.removeLastPointButton.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     if (getCurrentTrack() != null)
                         getCurrentTrack().firePropertyChange(TrackController.REMOVE_LAST_POINT, null, null);
-                }
+
             });
             toolBar.add(this.removeLastPointButton);
 
             // == Next point  ==
             this.nextPointButton = makeToolBarButton("24x24-forward.gif", "Move to next point", "Next point");
-            this.nextPointButton.addActionListener(new ActionListener()
+            this.nextPointButton.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     if (getCurrentTrack() != null)
                         getCurrentTrack().firePropertyChange(TrackController.MOVE_TO_NEXT_POINT, null, null);
-                }
+
             });
             toolBar.add(this.nextPointButton);
 
@@ -1369,23 +1303,19 @@ public class SAR2 extends JFrame
 
             // == Terrain Profile ==
             button = makeToolBarButton("24x24-profile.gif", "Terrain profile", "Profile");
-            button.addActionListener(new ActionListener()
+            button.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     wwd.firePropertyChange(TerrainProfilePanel.TERRAIN_PROFILE_OPEN, null, null);
-                }
+
             });
             toolBar.add(button);
 
             // == Cloud ceiling ==
             button = makeToolBarButton("24x24-clouds.gif", "Cloud ceiling", "Clouds");
-            button.addActionListener(new ActionListener()
+            button.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     wwd.firePropertyChange(CloudCeilingPanel.CLOUD_CEILING_OPEN, null, null);
-                }
+
             });
             toolBar.add(button);
 
@@ -1393,23 +1323,19 @@ public class SAR2 extends JFrame
 
             // == Help ==
             button = makeToolBarButton("24x24-help.gif", "Help", "Help");
-            button.addActionListener(new ActionListener()
+            button.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     showHelp();
-                }
+
             });
             toolBar.add(button);
 
             // == About ==
             button = makeToolBarButton("24x24-about.gif", "About the Search And Rescue application", "About");
-            button.addActionListener(new ActionListener()
+            button.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     showAbout();
-                }
+
             });
             toolBar.add(button);
             // Set toolbar state
@@ -1453,7 +1379,7 @@ public class SAR2 extends JFrame
             SARTrack newTrack = getCurrentTrack();
             if (this.toolbarTrack == null || newTrack == null)
             {
-                // Reset defaul toolbar state 
+                // Reset defaul toolbar state
                 setToolbarDefaultState();
             }
             this.toolbarTrack = newTrack;

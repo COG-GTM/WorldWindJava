@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -268,10 +268,8 @@ public class BulkDownloadPanel extends JPanel
         locationPanel.add(locationButton, BorderLayout.EAST);
         this.add(locationPanel);
 
-        locationButton.addActionListener(new ActionListener()
+        locationButton.addActionListener(e ->
         {
-            public void actionPerformed(ActionEvent e)
-            {
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.setMultiSelectionEnabled(false);
@@ -286,7 +284,7 @@ public class BulkDownloadPanel extends JPanel
                         updateRetrievablePanels(selector.getSector());
                     }
                 }
-            }
+
         });
 
         // Select sector button
@@ -294,12 +292,10 @@ public class BulkDownloadPanel extends JPanel
         sectorPanel.setBorder(BorderFactory.createEmptyBorder(border, border, border, border));
         selectButton = new JButton("Select sector");
         selectButton.setToolTipText("Press Select then press and drag button 1 on globe");
-        selectButton.addActionListener(new ActionListener()
+        selectButton.addActionListener(event ->
         {
-            public void actionPerformed(ActionEvent event)
-            {
                 selectButtonActionPerformed(event);
-            }
+
         });
         sectorPanel.add(selectButton);
         sectorLabel = new JLabel("-");
@@ -325,12 +321,10 @@ public class BulkDownloadPanel extends JPanel
         startPanel.setBorder(BorderFactory.createEmptyBorder(border, border, border, border));
         startButton = new JButton("Start download");
         startButton.setEnabled(false);
-        startButton.addActionListener(new ActionListener()
+        startButton.addActionListener(event ->
         {
-            public void actionPerformed(ActionEvent event)
-            {
                 startButtonActionPerformed(event);
-            }
+
         });
         startPanel.add(startButton);
         this.add(startPanel);
@@ -392,13 +386,11 @@ public class BulkDownloadPanel extends JPanel
 
             // Check + name
             this.selectCheckBox = new JCheckBox(this.retrievable.getName());
-            this.selectCheckBox.addActionListener(new ActionListener()
+            this.selectCheckBox.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     if (((JCheckBox) e.getSource()).isSelected() && sector != null)
                         updateDescription(sector);
-                }
+
             });
             this.add(this.selectCheckBox, BorderLayout.WEST);
             // Description (size...)
@@ -418,12 +410,10 @@ public class BulkDownloadPanel extends JPanel
                 return;
             }
 
-            this.updateThread = new Thread(new Runnable()
+            this.updateThread = new Thread(() ->
             {
-                public void run()
-                {
                     doUpdateDescription(sector);
-                }
+
             });
             this.updateThread.setDaemon(true);
             this.updateThread.start();
@@ -437,32 +427,26 @@ public class BulkDownloadPanel extends JPanel
                 {
                     long size = retrievable.getEstimatedMissingDataSize(sector, 0, cache);
                     final String formattedSize = BulkDownloadPanel.makeSizeDescription(size);
-                    SwingUtilities.invokeLater(new Runnable()
+                    SwingUtilities.invokeLater(() ->
                     {
-                        public void run()
-                        {
                             descriptionLabel.setText(formattedSize);
-                        }
+
                     });
                 }
                 catch (Exception e)
                 {
-                    SwingUtilities.invokeLater(new Runnable()
+                    SwingUtilities.invokeLater(() ->
                     {
-                        public void run()
-                        {
                             descriptionLabel.setText("-");
-                        }
+
                     });
                 }
             }
             else
-                SwingUtilities.invokeLater(new Runnable()
+                SwingUtilities.invokeLater(() ->
                 {
-                    public void run()
-                    {
                         descriptionLabel.setText("-");
-                    }
+
                 });
         }
 
@@ -489,12 +473,10 @@ public class BulkDownloadPanel extends JPanel
 
             this.initComponents();
 
-            this.updateTimer = new Timer(1000, new ActionListener()
+            this.updateTimer = new Timer(1000, event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     updateStatus();
-                }
+
             });
             this.updateTimer.start();
         }
@@ -573,12 +555,10 @@ public class BulkDownloadPanel extends JPanel
             progressPanel.add(Box.createHorizontalStrut(8));
             cancelButton = new JButton("Cancel");
             cancelButton.setBackground(Color.RED);
-            cancelButton.addActionListener(new ActionListener()
+            cancelButton.addActionListener(event ->
             {
-                public void actionPerformed(ActionEvent event)
-                {
                     cancelButtonActionPerformed(event);
-                }
+
             });
             progressPanel.add(cancelButton);
             this.add(progressPanel);

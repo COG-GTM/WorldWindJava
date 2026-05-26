@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -460,25 +460,21 @@ public class CloudCeilingPanel extends JPanel implements Restorable
                 descPanel.add(this.descriptionLabel);
                 descPanel.add(Box.createHorizontalStrut(20));
                 this.descriptionTextField = new JTextField("Cloud contour", 20);
-                this.descriptionTextField.addActionListener(new ActionListener()
+                this.descriptionTextField.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             descriptionTextFieldActionPerformed(event);
-                    }
+
                 });
                 descPanel.add(this.descriptionTextField);
                 descPanel.add(Box.createHorizontalStrut(20));
                 this.enabledCheckBox = new JCheckBox("Show contour");
                 this.enabledCheckBox.setSelected(false);
-                this.enabledCheckBox.addActionListener(new ActionListener()
+                this.enabledCheckBox.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             enabledCheckBoxActionPerformed(event);
-                    }
+
                 });
                 descPanel.add(this.enabledCheckBox);
             }
@@ -493,13 +489,11 @@ public class CloudCeilingPanel extends JPanel implements Restorable
                 elevationPanel.add(this.baseElevationLabel);
                 elevationPanel.add(Box.createHorizontalStrut(10));
                 this.baseElevationTextField = new JTextField("0", 5);
-                this.baseElevationTextField.addActionListener(new ActionListener()
+                this.baseElevationTextField.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             baseElevationTextFieldActionPerformed(event);
-                    }
+
                 });
                 elevationPanel.add(this.baseElevationTextField);
                 elevationPanel.add(Box.createHorizontalStrut(5));
@@ -510,46 +504,38 @@ public class CloudCeilingPanel extends JPanel implements Restorable
                 elevationPanel.add(this.deltaElevationLabel);
                 elevationPanel.add(Box.createHorizontalStrut(10));
                 this.deltaElevationTextField = new JTextField("0", 5);
-                this.deltaElevationTextField.addActionListener(new ActionListener()
+                this.deltaElevationTextField.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             deltaElevationTextFieldActionPerformed(event);
-                    }
+
                 });
                 elevationPanel.add(this.deltaElevationTextField);
                 elevationPanel.add(Box.createHorizontalStrut(20));
 
                 this.deltaPlusRadioButton = new JRadioButton("+");
                 this.deltaPlusRadioButton.setSelected(true);
-                this.deltaPlusRadioButton.addActionListener(new ActionListener()
+                this.deltaPlusRadioButton.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             deltaModeRadioButtonActionPerformed(event);
-                    }
+
                 });
                 elevationPanel.add(this.deltaPlusRadioButton);
                 this.deltaMinusRadioButton = new JRadioButton("-");
-                this.deltaMinusRadioButton.addActionListener(new ActionListener()
+                this.deltaMinusRadioButton.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             deltaModeRadioButtonActionPerformed(event);
-                    }
+
                 });
                 elevationPanel.add(this.deltaMinusRadioButton);
                 this.deltaBothRadioButton = new JRadioButton("+/-");
-                this.deltaBothRadioButton.addActionListener(new ActionListener()
+                this.deltaBothRadioButton.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             deltaModeRadioButtonActionPerformed(event);
-                    }
+
                 });
                 elevationPanel.add(this.deltaBothRadioButton);
                 this.deltaModeGroup = new ButtonGroup();
@@ -573,13 +559,11 @@ public class CloudCeilingPanel extends JPanel implements Restorable
                 incrementPanel.add(this.incrementSpinner);
                 incrementPanel.add(Box.createHorizontalStrut(20));
                 this.incrementMinusButton = new JButton("Down");
-                this.incrementMinusButton.addActionListener(new ActionListener()
+                this.incrementMinusButton.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             incrementButtonActionPerformed(event);
-                    }
+
                 });
                 incrementPanel.add(this.incrementMinusButton);
                 incrementPanel.add(Box.createHorizontalStrut(10));
@@ -592,24 +576,20 @@ public class CloudCeilingPanel extends JPanel implements Restorable
                 incrementPanel.add(this.elevationUnitLabel2);
                 incrementPanel.add(Box.createHorizontalStrut(10));
                 this.incrementPlusButton = new JButton("Up");
-                this.incrementPlusButton.addActionListener(new ActionListener()
+                this.incrementPlusButton.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             incrementButtonActionPerformed(event);
-                    }
+
                 });
                 incrementPanel.add(this.incrementPlusButton);
                 incrementPanel.add(Box.createHorizontalStrut(10));
                 this.incrementResetButton = new JButton("Reset");
-                this.incrementResetButton.addActionListener(new ActionListener()
+                this.incrementResetButton.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             incrementButtonActionPerformed(event);
-                    }
+
                 });
                 incrementPanel.add(this.incrementResetButton);
             }
@@ -622,13 +602,11 @@ public class CloudCeilingPanel extends JPanel implements Restorable
                 this.advancedButton = new JButton("Advanced...");
                 this.advancedButton.setContentAreaFilled(false);
                 this.advancedButton.setBorderPainted(false);
-                this.advancedButton.addActionListener(new ActionListener()
+                this.advancedButton.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         if (!suspendEvents)
                             advancedButtonActionPerformed(e);
-                    }
+
                 });
                 advancedButtonPanel.add(Box.createHorizontalGlue());
                 advancedButtonPanel.add(this.advancedButton);
@@ -674,24 +652,20 @@ public class CloudCeilingPanel extends JPanel implements Restorable
                 segmentsPanel.add(Box.createHorizontalStrut(10));
                 this.currentSegmentCheckBox = new JCheckBox("Current segment");
                 this.currentSegmentCheckBox.setSelected(true);
-                this.currentSegmentCheckBox.addActionListener(new ActionListener()
+                this.currentSegmentCheckBox.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             currentSegmentCheckBoxActionPerformed(event);
-                    }
+
                 });
                 segmentsPanel.add(this.currentSegmentCheckBox);
                 segmentsPanel.add(Box.createHorizontalStrut(10));
                 this.wholeTrackCheckBox = new JCheckBox("Whole track");
-                this.wholeTrackCheckBox.addActionListener(new ActionListener()
+                this.wholeTrackCheckBox.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             wholeTrackCheckBoxActionPerformed(event);
-                    }
+
                 });
                 segmentsPanel.add(this.wholeTrackCheckBox);
 
@@ -708,25 +682,21 @@ public class CloudCeilingPanel extends JPanel implements Restorable
                 patternPanel.add(Box.createHorizontalStrut(20));
                 this.patternCombo = new JComboBox(new String[] {PATTERN_STRIPES, PATTERN_CROSS_HATCHED, PATTERN_DOTS});
                 this.patternCombo.setSelectedItem(PATTERN_DOTS);
-                this.patternCombo.addActionListener(new ActionListener()
+                this.patternCombo.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         if (!suspendEvents)
                             patternComboActionPerformed(e);
-                    }
+
                 });
                 patternPanel.add(this.patternCombo);
                 patternPanel.add(Box.createHorizontalStrut(10));
                 this.patternSizeCombo = new JComboBox(new String[] {SIZE_SMALL, SIZE_MEDIUM, SIZE_LARGE});
                 this.patternSizeCombo.setSelectedItem(SIZE_MEDIUM);
-                this.patternSizeCombo.addActionListener(new ActionListener()
+                this.patternSizeCombo.addActionListener(e ->
                 {
-                    public void actionPerformed(ActionEvent e)
-                    {
                         if (!suspendEvents)
                             patternSizeComboActionPerformed(e);
-                    }
+
                 });
                 patternPanel.add(this.patternSizeCombo);
                 patternPanel.add(Box.createHorizontalStrut(20));
@@ -749,13 +719,11 @@ public class CloudCeilingPanel extends JPanel implements Restorable
                 patternPanel.add(Box.createHorizontalStrut(20));
                 this.colorButton = new JButton("Color");
                 this.colorButton.setBackground(Color.CYAN);
-                this.colorButton.addActionListener(new ActionListener()
+                this.colorButton.addActionListener(event ->
                 {
-                    public void actionPerformed(ActionEvent event)
-                    {
                         if (!suspendEvents)
                             colorButtonActionPerformed(event);
-                    }
+
                 });
                 patternPanel.add(this.colorButton);
 
@@ -769,7 +737,7 @@ public class CloudCeilingPanel extends JPanel implements Restorable
         this.advancedPanel.setVisible(false);
 
         enableComponents(this.enabledCheckBox.isSelected());
-        
+
     }
 
     private void enableComponents(boolean state)

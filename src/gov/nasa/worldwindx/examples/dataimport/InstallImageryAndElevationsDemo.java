@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -83,12 +83,10 @@ public class InstallImageryAndElevationsDemo extends ApplicationTemplate
         {
             JButton button = new JButton("Show Installed Data...");
             button.setAlignmentX(Component.LEFT_ALIGNMENT);
-            button.addActionListener(new ActionListener()
+            button.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     getInstalledDataFrame().setVisible(true);
-                }
+
             });
 
             Box box = Box.createVerticalBox();
@@ -151,12 +149,10 @@ public class InstallImageryAndElevationsDemo extends ApplicationTemplate
 
         protected void loadPreviouslyInstalledData()
         {
-            Thread t = new Thread(new Runnable()
+            Thread t = new Thread(() ->
             {
-                public void run()
-                {
                     loadInstalledDataFromFileStore(fileStore, dataConfigPanel);
-                }
+
             });
             t.start();
         }
@@ -173,10 +169,8 @@ public class InstallImageryAndElevationsDemo extends ApplicationTemplate
             if (files == null || files.length == 0)
                 return;
 
-            Thread thread = new Thread(new Runnable()
+            Thread thread = new Thread(() ->
             {
-                public void run()
-                {
                     Document dataConfig = null;
 
                     try
@@ -190,13 +184,11 @@ public class InstallImageryAndElevationsDemo extends ApplicationTemplate
                         Logging.logger().log(java.util.logging.Level.FINEST, message, e);
 
                         // Show a message dialog indicating that the installation failed, and why.
-                        SwingUtilities.invokeLater(new Runnable()
+                        SwingUtilities.invokeLater(() ->
                         {
-                            public void run()
-                            {
                                 JOptionPane.showMessageDialog(InstalledDataFrame.this, message, "Installation Error",
                                     JOptionPane.ERROR_MESSAGE);
-                            }
+
                         });
                     }
 
@@ -205,7 +197,7 @@ public class InstallImageryAndElevationsDemo extends ApplicationTemplate
                         AVList params = new AVListImpl();
                         addInstalledData(dataConfig, params, dataConfigPanel);
                     }
-                }
+
             });
             thread.start();
         }
@@ -217,12 +209,10 @@ public class InstallImageryAndElevationsDemo extends ApplicationTemplate
             this.getContentPane().add(this.dataConfigPanel, BorderLayout.CENTER);
 
             JButton installButton = new JButton("Install...");
-            installButton.addActionListener(new ActionListener()
+            installButton.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     installFromFiles();
-                }
+
             });
 
             JCheckBox fullPyramidCheckBox = new JCheckBox("Create a full pyramid", true);
@@ -231,10 +221,8 @@ public class InstallImageryAndElevationsDemo extends ApplicationTemplate
             Configuration.removeKey(AVKey.TILED_RASTER_PRODUCER_LIMIT_MAX_LEVEL);
             fullPyramidCheckBox.setToolTipText(TOOLTIP_FULL_PYRAMID);
 
-            fullPyramidCheckBox.addActionListener(new ActionListener()
+            fullPyramidCheckBox.addActionListener(e ->
             {
-                public void actionPerformed(ActionEvent e)
-                {
                     Object source = e.getSource();
                     if (source instanceof JCheckBox)
                     {
@@ -259,7 +247,7 @@ public class InstallImageryAndElevationsDemo extends ApplicationTemplate
                         }
                         checkBox.setToolTipText(tooltipText);
                     }
-                }
+
             });
 
             Box box = Box.createHorizontalBox();
@@ -279,12 +267,10 @@ public class InstallImageryAndElevationsDemo extends ApplicationTemplate
     {
         if (!SwingUtilities.isEventDispatchThread())
         {
-            SwingUtilities.invokeLater(new Runnable()
+            SwingUtilities.invokeLater(() ->
             {
-                public void run()
-                {
                     addInstalledData(dataConfig, params, panel);
-                }
+
             });
         }
         else

@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -171,10 +171,10 @@ public class BalloonController extends MouseAdapter implements SelectListener
     private MouseEvent glMouseEvent(MouseEvent awtMouseEvent) {
         int[] GLmousePt = wwd.getSceneController().getDrawContext().awtPointToGLpoint(awtMouseEvent.getPoint());
         MouseEvent e = new MouseEvent(awtMouseEvent.getComponent(), awtMouseEvent.getID(),
-        		awtMouseEvent.getWhen(), awtMouseEvent.getModifiersEx(), 
-        		awtMouseEvent.getClickCount(), GLmousePt[0], GLmousePt[1], awtMouseEvent.isPopupTrigger(),
-        		awtMouseEvent.getButton());
-    	return e;
+                awtMouseEvent.getWhen(), awtMouseEvent.getModifiersEx(),
+                awtMouseEvent.getClickCount(), GLmousePt[0], GLmousePt[1], awtMouseEvent.isPopupTrigger(),
+                awtMouseEvent.getButton());
+        return e;
     }
     /**
      * Handle a mouse click. If the top picked object has a balloon attached to it the balloon will be made visible. A
@@ -234,9 +234,9 @@ public class BalloonController extends MouseAdapter implements SelectListener
             // Wrap the handler in a try/catch to keep exceptions from bubbling up
             Logging.logger().warning(ex.getMessage() != null ? ex.getMessage() : ex.toString());
         }
-        
+
         if (e.isConsumed())
-        	awtEv.consume();
+            awtEv.consume();
     }
 
     @Override
@@ -267,7 +267,7 @@ public class BalloonController extends MouseAdapter implements SelectListener
     }
 
     @Override
-	@SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation")
     public void selected(SelectEvent event)
     {
         if (event == null || event.isConsumed()
@@ -851,7 +851,7 @@ public class BalloonController extends MouseAdapter implements SelectListener
             text = "";
 
         // Create the balloon based on the features attachment mode and the browser balloon settings. Wrap the balloon
-        // in a KMLBalloonImpl to handle balloon style resolution.  
+        // in a KMLBalloonImpl to handle balloon style resolution.
         KMLAbstractBalloon kmlBalloon;
         if (AVKey.GLOBE.equals(this.getAttachmentMode(feature)))
         {
@@ -1522,7 +1522,7 @@ public class BalloonController extends MouseAdapter implements SelectListener
          * callback on the EDT to {@link BalloonController#onDocumentFailed(String, Exception)}
          */
         @Override
-		public void run()
+        public void run()
         {
             KMLRoot root = null;
 
@@ -1560,13 +1560,10 @@ public class BalloonController extends MouseAdapter implements SelectListener
                 {
                     // Schedule a callback on the EDT to let the BalloonController finish loading the document.
                     final KMLRoot pinnedRoot = root; // Final ref that can be accessed by anonymous class
-                    SwingUtilities.invokeLater(new Runnable()
+                    SwingUtilities.invokeLater(() ->
                     {
-                        @Override
-						public void run()
-                        {
                             BalloonController.this.onDocumentLoaded(docUrl, pinnedRoot, featureRef);
-                        }
+
                     });
 
                     this.cancel();
@@ -1575,13 +1572,10 @@ public class BalloonController extends MouseAdapter implements SelectListener
             catch (final Exception e)
             {
                 // Schedule a callback on the EDT to report the error to the BalloonController
-                SwingUtilities.invokeLater(new Runnable()
+                SwingUtilities.invokeLater(() ->
                 {
-                    @Override
-					public void run()
-                    {
                         BalloonController.this.onDocumentFailed(docUrl, e);
-                    }
+
                 });
                 this.cancel();
             }

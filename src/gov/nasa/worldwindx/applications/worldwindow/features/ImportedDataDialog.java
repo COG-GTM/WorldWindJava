@@ -2,25 +2,25 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
@@ -98,12 +98,10 @@ public class ImportedDataDialog extends AbstractFeatureDialog implements Network
 
     protected void loadPreviouslyImportedData()
     {
-        Thread t = new Thread(new Runnable()
+        Thread t = new Thread(() ->
         {
-            public void run()
-            {
                 loadImportedDataFromFileStore(fileStore, dataConfigPanel);
-            }
+
         });
         t.start();
     }
@@ -130,10 +128,8 @@ public class ImportedDataDialog extends AbstractFeatureDialog implements Network
         fc.setMultiSelectionEnabled(true);
         fc.setDialogTitle("");
 
-        this.importThread = new Thread(new Runnable()
+        this.importThread = new Thread(() ->
         {
-            public void run()
-            {
                 getController().getNetworkActivitySignal().addNetworkUser(ImportedDataDialog.this);
 
                 try
@@ -150,13 +146,11 @@ public class ImportedDataDialog extends AbstractFeatureDialog implements Network
                         final String message = e.getMessage();
 
                         // Show a message dialog indicating that the import failed, and why.
-                        SwingUtilities.invokeLater(new Runnable()
+                        SwingUtilities.invokeLater(() ->
                         {
-                            public void run()
-                            {
                                 JOptionPane.showMessageDialog(ImportedDataDialog.this.dialog, message, "Import Error",
                                     JOptionPane.ERROR_MESSAGE);
-                            }
+
                         });
                     }
 
@@ -169,7 +163,7 @@ public class ImportedDataDialog extends AbstractFeatureDialog implements Network
                 {
                     controller.getNetworkActivitySignal().removeNetworkUser(ImportedDataDialog.this);
                 }
-            }
+
         });
 
         this.importThread.start();
@@ -186,12 +180,10 @@ public class ImportedDataDialog extends AbstractFeatureDialog implements Network
         this.getJDialog().setResizable(true);
 
         JButton importButton = new JButton("Import...");
-        importButton.addActionListener(new ActionListener()
+        importButton.addActionListener(e ->
         {
-            public void actionPerformed(ActionEvent e)
-            {
                 importFromFile();
-            }
+
         });
         this.insertLeftDialogComponent(importButton);
 
@@ -205,12 +197,10 @@ public class ImportedDataDialog extends AbstractFeatureDialog implements Network
     {
         if (!SwingUtilities.isEventDispatchThread())
         {
-            SwingUtilities.invokeLater(new Runnable()
+            SwingUtilities.invokeLater(() ->
             {
-                public void run()
-                {
                     addImportedData(dataConfig, params, panel);
-                }
+
             });
         }
         else
