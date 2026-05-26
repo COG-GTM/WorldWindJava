@@ -216,10 +216,10 @@ public class WMSTiledImageLayer extends BasicTiledImageLayer
 
         public URL getURL(Tile tile, String altImageFormat) throws MalformedURLException
         {
-            StringBuffer sb;
+            StringBuilder sb;
             if (this.URLTemplate == null)
             {
-                sb = new StringBuffer(WWXML.fixGetMapString(tile.getLevel().getService()));
+                sb = new StringBuilder(WWXML.fixGetMapString(tile.getLevel().getService()));
 
                 if (!sb.toString().toLowerCase().contains("service=wms"))
                     sb.append("service=WMS");
@@ -236,7 +236,7 @@ public class WMSTiledImageLayer extends BasicTiledImageLayer
             }
             else
             {
-                sb = new StringBuffer(this.URLTemplate);
+                sb = new StringBuilder(this.URLTemplate);
             }
 
             String format = (altImageFormat != null) ? altImageFormat : this.imageFormat;
@@ -396,10 +396,10 @@ public class WMSTiledImageLayer extends BasicTiledImageLayer
     public void getRestorableStateForAVPair(String key, Object value,
         RestorableSupport rs, RestorableSupport.StateObject context)
     {
-        if (value instanceof URLBuilder)
+        if (value instanceof URLBuilder urlBuilder)
         {
-            rs.addStateValueAsString(context, "wms.Version", ((URLBuilder) value).wmsVersion);
-            rs.addStateValueAsString(context, "wms.Crs", ((URLBuilder) value).crs);
+            rs.addStateValueAsString(context, "wms.Version", urlBuilder.wmsVersion);
+            rs.addStateValueAsString(context, "wms.Crs", urlBuilder.crs);
         }
         else
         {
