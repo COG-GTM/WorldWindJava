@@ -83,67 +83,58 @@ public class StatusBar extends JPanel implements PositionListener, RenderingList
         heartBeat.setHorizontalAlignment(SwingConstants.CENTER);
         heartBeat.setForeground(new java.awt.Color(255, 0, 0, 0));
 
-        Timer downloadTimer = new Timer(100, new ActionListener()
+        Timer downloadTimer = new Timer(100, actionEvent ->
         {
-            public void actionPerformed(java.awt.event.ActionEvent actionEvent)
+            if (!showNetworkStatus.get())
             {
-                if (!showNetworkStatus.get())
-                {
-                    if (heartBeat.getText().length() > 0)
-                        heartBeat.setText("");
-                    return;
-                }
-
-                if (!isNetworkAvailable.get())
-                {
-                    heartBeat.setText(Logging.getMessage("term.NoNetwork"));
-                    heartBeat.setForeground(new Color(255, 0, 0, MAX_ALPHA));
-                    return;
-                }
-
-                Color color = heartBeat.getForeground();
-                int alpha = color.getAlpha();
-                if (isNetworkAvailable.get() && WorldWind.getRetrievalService().hasActiveTasks())
-                {
-                    heartBeat.setText(Logging.getMessage("term.Downloading"));
-                    if (alpha >= MAX_ALPHA)
-                        alpha = MAX_ALPHA;
-                    else
-                        alpha = alpha < 16 ? 16 : Math.min(MAX_ALPHA, alpha + 20);
-                }
-                else
-                {
-                    alpha = Math.max(0, alpha - 20);
-                }
-                heartBeat.setForeground(new Color(255, 0, 0, alpha));
+                if (heartBeat.getText().length() > 0)
+                    heartBeat.setText("");
+                return;
             }
+
+            if (!isNetworkAvailable.get())
+            {
+                heartBeat.setText(Logging.getMessage("term.NoNetwork"));
+                heartBeat.setForeground(new Color(255, 0, 0, MAX_ALPHA));
+                return;
+            }
+
+            Color color = heartBeat.getForeground();
+            int alpha = color.getAlpha();
+            if (isNetworkAvailable.get() && WorldWind.getRetrievalService().hasActiveTasks())
+            {
+                heartBeat.setText(Logging.getMessage("term.Downloading"));
+                if (alpha >= MAX_ALPHA)
+                    alpha = MAX_ALPHA;
+                else
+                    alpha = alpha < 16 ? 16 : Math.min(MAX_ALPHA, alpha + 20);
+            }
+            else
+            {
+                alpha = Math.max(0, alpha - 20);
+            }
+            heartBeat.setForeground(new Color(255, 0, 0, alpha));
         });
         downloadTimer.start();
 
         this.netCheckThread = this.startNetCheckThread();
 
         WorldWind.getNetworkStatus().addPropertyChangeListener(NetworkStatus.HOST_UNAVAILABLE,
-            new PropertyChangeListener()
+            evt ->
             {
-                public void propertyChange(PropertyChangeEvent evt)
-                {
-                    Object nv = evt.getNewValue();
-                    String message = Logging.getMessage("NetworkStatus.UnavailableHost",
-                        nv != null && nv instanceof URL ? ((URL) nv).getHost() : "Unknown");
-                    Logging.logger().info(message);
-                }
+                Object nv = evt.getNewValue();
+                String message = Logging.getMessage("NetworkStatus.UnavailableHost",
+                    nv instanceof URL url ? url.getHost() : "Unknown");
+                Logging.logger().info(message);
             });
 
         WorldWind.getNetworkStatus().addPropertyChangeListener(NetworkStatus.HOST_AVAILABLE,
-            new PropertyChangeListener()
+            evt ->
             {
-                public void propertyChange(PropertyChangeEvent evt)
-                {
-                    Object nv = evt.getNewValue();
-                    String message = Logging.getMessage("NetworkStatus.HostNowAvailable",
-                        nv != null && nv instanceof URL ? ((URL) nv).getHost() : "Unknown");
-                    Logging.logger().info(message);
-                }
+                Object nv = evt.getNewValue();
+                String message = Logging.getMessage("NetworkStatus.HostNowAvailable",
+                    nv instanceof URL url ? url.getHost() : "Unknown");
+                Logging.logger().info(message);
             });
     }
 
@@ -308,16 +299,13 @@ public class StatusBar extends JPanel implements PositionListener, RenderingList
         if (!event.getStage().equals(RenderingEvent.BEFORE_BUFFER_SWAP))
             return;
 
-        EventQueue.invokeLater(new Runnable()
+        EventQueue.invokeLater(() ->
         {
-            public void run()
-            {
-                if (eventSource.getView() != null && eventSource.getView().getEyePosition() != null)
-                    altDisplay.setText(makeEyeAltitudeDescription(
-                        eventSource.getView().getEyePosition().getElevation()));
-                else
-                    altDisplay.setText(Logging.getMessage("term.Altitude"));
-            }
+            if (eventSource.getView() != null && eventSource.getView().getEyePosition() != null)
+                altDisplay.setText(makeEyeAltitudeDescription(
+                    eventSource.getView().getEyePosition().getElevation()));
+            else
+                altDisplay.setText(Logging.getMessage("term.Altitude"));
         });
     }
 }

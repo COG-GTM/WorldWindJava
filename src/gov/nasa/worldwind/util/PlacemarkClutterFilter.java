@@ -146,11 +146,11 @@ public class PlacemarkClutterFilter implements ClutterFilter
 
             for (Declutterable shape : entry.getValue())
             {
-                if (shape instanceof PointPlacemark.OrderedPlacemark)
+                if (shape instanceof PointPlacemark.OrderedPlacemark placemark)
                 {
                     if (placemarks == null)
                         placemarks = new ArrayList<PointPlacemark.OrderedPlacemark>();
-                    placemarks.add((PointPlacemark.OrderedPlacemark) shape);
+                    placemarks.add(placemark);
                 }
                 else
                 {

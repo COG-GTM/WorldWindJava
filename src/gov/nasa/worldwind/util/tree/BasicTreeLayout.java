@@ -185,18 +185,14 @@ public class BasicTreeLayout extends WWObjectImpl implements TreeLayout, Scrolla
         // is a WWObject, it sends property change events to its listeners. Since Tree is likely to listen for property
         // change events on TreeLayout, we add an anonymous listener to avoid an infinite cycle of property change
         // events between TreeLayout and Tree.
-        this.tree.addPropertyChangeListener(new PropertyChangeListener()
+        this.tree.addPropertyChangeListener(propertyChangeEvent ->
         {
-            @Override
-			public void propertyChange(PropertyChangeEvent propertyChangeEvent)
+            // Ignore events originated by this TreeLayout, and repaint events. There is no need to recompute the
+            // tree layout just because a repaint was triggered.
+            if (propertyChangeEvent.getSource() != BasicTreeLayout.this
+                && !AVKey.REPAINT.equals(propertyChangeEvent.getPropertyName()))
             {
-                // Ignore events originated by this TreeLayout, and repaint events. There is no need to recompute the
-                // tree layout just because a repaint was triggered.
-                if (propertyChangeEvent.getSource() != BasicTreeLayout.this
-                    && !AVKey.REPAINT.equals(propertyChangeEvent.getPropertyName()))
-                {
-                    BasicTreeLayout.this.invalidate();
-                }
+                BasicTreeLayout.this.invalidate();
             }
         });
 
