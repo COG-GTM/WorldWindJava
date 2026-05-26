@@ -122,8 +122,8 @@ public class WMSLayerStyle extends AbstractXMLEventParser
             if (parser != null)
             {
                 Object o = parser.parse(ctx, event, args);
-                if (o != null && o instanceof WMSLogoURL)
-                    this.addLegendURL((WMSLogoURL) o);
+                if (o instanceof WMSLogoURL legendURL)
+                    this.addLegendURL(LegendURL);
             }
         }
         else if (ctx.isStartElement(event, STYLE_SHEET_URL))

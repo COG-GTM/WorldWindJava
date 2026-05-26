@@ -351,8 +351,8 @@ public class WMSLayerCapabilities extends AbstractXMLEventParser
             if (parser != null)
             {
                 Object o = parser.parse(ctx, event, args);
-                if (o != null && o instanceof OGCBoundingBox)
-                    this.addBoundingBox((OGCBoundingBox) o);
+                if (o instanceof OGCBoundingBox boundingBox)
+                    this.addBoundingBox(boundingBox);
             }
         }
         else if (ctx.isStartElement(event, ATTRIBUTION))
@@ -361,8 +361,8 @@ public class WMSLayerCapabilities extends AbstractXMLEventParser
             if (parser != null)
             {
                 Object o = parser.parse(ctx, event, args);
-                if (o != null && o instanceof WMSLayerAttribution)
-                    this.addAttribution((WMSLayerAttribution) o);
+                if (o instanceof WMSLayerAttribution attribution)
+                    this.addAttribution(attribution);
             }
         }
         else if (ctx.isStartElement(event, KEYWORD_LIST))
@@ -381,8 +381,8 @@ public class WMSLayerCapabilities extends AbstractXMLEventParser
             if (parser != null)
             {
                 Object o = parser.parse(ctx, event, args);
-                if (o != null && o instanceof WMSLayerIdentifier)
-                    this.addIdentifer((WMSLayerIdentifier) o);
+                if (o instanceof WMSLayerIdentifier identifer)
+                    this.addIdentifer(identifer);
             }
         }
         else if (ctx.isStartElement(event, DIMENSION))
@@ -391,8 +391,8 @@ public class WMSLayerCapabilities extends AbstractXMLEventParser
             if (parser != null)
             {
                 Object o = parser.parse(ctx, event, args);
-                if (o != null && o instanceof WMSLayerDimension)
-                    this.addDimension((WMSLayerDimension) o);
+                if (o instanceof WMSLayerDimension dimension)
+                    this.addDimension(dimension);
             }
         }
         else if (ctx.isStartElement(event, EXTENT))
@@ -401,8 +401,8 @@ public class WMSLayerCapabilities extends AbstractXMLEventParser
             if (parser != null)
             {
                 Object o = parser.parse(ctx, event, args);
-                if (o != null && o instanceof WMSLayerExtent)
-                    this.addExtent((WMSLayerExtent) o);
+                if (o instanceof WMSLayerExtent extent)
+                    this.addExtent(extent);
             }
         }
         else if (ctx.isStartElement(event, AUTHORITY_URL))
@@ -411,8 +411,8 @@ public class WMSLayerCapabilities extends AbstractXMLEventParser
             if (parser != null)
             {
                 Object o = parser.parse(ctx, event, args);
-                if (o != null && o instanceof WMSAuthorityURL)
-                    this.addAuthorityURL((WMSAuthorityURL) o);
+                if (o instanceof WMSAuthorityURL authorityURL)
+                    this.addAuthorityURL(authorityURL);
             }
         }
         else if (ctx.isStartElement(event, DATA_URL))
@@ -421,8 +421,8 @@ public class WMSLayerCapabilities extends AbstractXMLEventParser
             if (parser != null)
             {
                 Object o = parser.parse(ctx, event, args);
-                if (o != null && o instanceof WMSLayerInfoURL)
-                    this.addDataURL((WMSLayerInfoURL) o);
+                if (o instanceof WMSLayerInfoURL dataURL)
+                    this.addDataURL(dataURL);
             }
         }
         else if (ctx.isStartElement(event, FEATURE_LIST_URL))
@@ -431,8 +431,8 @@ public class WMSLayerCapabilities extends AbstractXMLEventParser
             if (parser != null)
             {
                 Object o = parser.parse(ctx, event, args);
-                if (o != null && o instanceof WMSLayerInfoURL)
-                    this.addFeatureListURL((WMSLayerInfoURL) o);
+                if (o instanceof WMSLayerInfoURL featureListURL)
+                    this.addFeatureListURL(featureListURL);
             }
         }
         else if (ctx.isStartElement(event, METADATA_URL))
@@ -441,8 +441,8 @@ public class WMSLayerCapabilities extends AbstractXMLEventParser
             if (parser != null)
             {
                 Object o = parser.parse(ctx, event, args);
-                if (o != null && o instanceof WMSLayerInfoURL)
-                    this.addMetadataURL((WMSLayerInfoURL) o);
+                if (o instanceof WMSLayerInfoURL metadataURL)
+                    this.addMetadataURL(metadataURL);
             }
         }
     }
