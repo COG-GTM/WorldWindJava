@@ -283,9 +283,9 @@ public class SaveTrackDialog
 
         for (FileFilter filter : this.fileChooser.getChoosableFileFilters())
         {
-            if (filter instanceof SaveTrackFilter)
+            if (filter instanceof SaveTrackFilter saveTrackFilter)
             {
-                if (((SaveTrackFilter) filter).getFormat() == format)
+                if (saveTrackFilter.getFormat() == format)
                 {
                     result = filter;
                     break;
