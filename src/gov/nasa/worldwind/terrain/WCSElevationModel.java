@@ -400,9 +400,9 @@ public class WCSElevationModel extends BasicElevationModel
     public void getRestorableStateForAVPair(String key, Object value,
         RestorableSupport rs, RestorableSupport.StateObject context)
     {
-        if (value instanceof URLBuilder)
+        if (value instanceof URLBuilder urlBuilder)
         {
-            rs.addStateValueAsString(context, AVKey.WCS_VERSION, ((URLBuilder) value).serviceVersion);
+            rs.addStateValueAsString(context, AVKey.WCS_VERSION, urlBuilder.serviceVersion);
         }
         else if (!(value instanceof WCS100DescribeCoverage))
         {

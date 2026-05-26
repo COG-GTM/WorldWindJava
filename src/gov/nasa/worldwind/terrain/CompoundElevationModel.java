@@ -76,9 +76,9 @@ public class CompoundElevationModel extends AbstractElevationModel
         // Check if the elevation model is a child of any CompoundElevationModels in our list.
         for (ElevationModel child : this.elevationModels)
         {
-            if (child instanceof CompoundElevationModel)
+            if (child instanceof CompoundElevationModel compoundChild)
             {
-                if (((CompoundElevationModel) child).containsElevationModel(em))
+                if (compoundChild.containsElevationModel(em))
                     return true;
             }
         }
@@ -174,8 +174,8 @@ public class CompoundElevationModel extends AbstractElevationModel
 
         for (ElevationModel child : this.elevationModels)
         {
-            if (child instanceof CompoundElevationModel)
-                ((CompoundElevationModel) child).removeElevationModel(em);
+            if (child instanceof CompoundElevationModel compoundChild)
+                compoundChild.removeElevationModel(em);
         }
 
         this.elevationModels.remove(em);
@@ -743,9 +743,9 @@ public class CompoundElevationModel extends AbstractElevationModel
         for (int i = this.elevationModels.size() - 1; i >= 0; i--)
         {
             ElevationModel em = this.elevationModels.get(i);
-            if (em instanceof BasicElevationModel && em.isEnabled())
+            if (em instanceof BasicElevationModel basicElevationModel && em.isEnabled())
             {
-                double e = ((BasicElevationModel) em).getUnmappedLocalSourceElevation(latitude, longitude);
+                double e = basicElevationModel.getUnmappedLocalSourceElevation(latitude, longitude);
                 if (e != em.getMissingDataSignal())
                 {
                     elevation = e;
