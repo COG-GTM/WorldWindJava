@@ -172,9 +172,9 @@ public class LinearTarget extends AbstractMilStd2525TacticalGraphic
     @Override
     public void setModifier(String key, Object value)
     {
-        if (SymbologyConstants.UNIQUE_DESIGNATION.equals(key) && value instanceof Iterable)
+        if (SymbologyConstants.UNIQUE_DESIGNATION.equals(key) && value instanceof Iterable<?> iterable)
         {
-            Iterator iterator = ((Iterable) value).iterator();
+            Iterator<?> iterator = iterable.iterator();
             if (iterator.hasNext())
             {
                 this.setText((String) iterator.next());

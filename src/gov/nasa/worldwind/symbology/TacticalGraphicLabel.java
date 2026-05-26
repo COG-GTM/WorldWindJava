@@ -1307,9 +1307,8 @@ public class TacticalGraphicLabel
 
         if (!dc.isPickingMode())
         {
-            while (nextItem != null && nextItem instanceof OrderedLabel)
+            while (nextItem instanceof OrderedLabel nextLabel)
             {
-                OrderedLabel nextLabel = (OrderedLabel) nextItem;
                 if (!nextLabel.isEnableBatchRendering())
                     break;
 
@@ -1321,9 +1320,8 @@ public class TacticalGraphicLabel
         }
         else if (this.isEnableBatchPicking())
         {
-            while (nextItem != null && nextItem instanceof OrderedLabel)
+            while (nextItem instanceof OrderedLabel nextLabel)
             {
-                OrderedLabel nextLabel = (OrderedLabel) nextItem;
                 if (!nextLabel.isEnableBatchRendering() || !nextLabel.isEnableBatchPicking())
                     break;
 
@@ -1357,9 +1355,8 @@ public class TacticalGraphicLabel
 
         if (!dc.isPickingMode())
         {
-            while (nextItem != null && nextItem instanceof OrderedLabel)
+            while (nextItem instanceof OrderedLabel nextLabel)
             {
-                OrderedLabel nextLabel = (OrderedLabel) nextItem;
                 if (!nextLabel.isEnableBatchRendering())
                     break;
 

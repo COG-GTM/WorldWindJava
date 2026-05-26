@@ -92,9 +92,9 @@ public abstract class AbstractMilStd2525TacticalGraphic extends AbstractTactical
     @Override
     public void setModifier(String modifier, Object value)
     {
-        if (SymbologyConstants.UNIQUE_DESIGNATION.equals(modifier) && (value instanceof String))
+        if (SymbologyConstants.UNIQUE_DESIGNATION.equals(modifier) && (value instanceof String s))
         {
-            this.setText((String) value);
+            this.setText(s);
         }
         else
         {

@@ -213,9 +213,9 @@ public class MilStd2525GraphicFactory implements TacticalGraphicFactory
     public TacticalPoint createPoint(String sidc, Position position, AVList params)
     {
         TacticalGraphic graphic = this.createGraphic(sidc, Arrays.asList(position), params);
-        if (graphic instanceof TacticalPoint)
+        if (graphic instanceof TacticalPoint point)
         {
-            return (TacticalPoint) graphic;
+            return point;
         }
         else if (graphic != null)
         {
@@ -232,9 +232,8 @@ public class MilStd2525GraphicFactory implements TacticalGraphicFactory
     public TacticalCircle createCircle(String sidc, Position center, double radius, AVList modifiers)
     {
         TacticalGraphic graphic = this.createPoint(sidc, center, modifiers);
-        if (graphic instanceof TacticalCircle)
+        if (graphic instanceof TacticalCircle circle)
         {
-            TacticalCircle circle = (TacticalCircle) graphic;
             circle.setRadius(radius);
             return circle;
         }
@@ -253,9 +252,9 @@ public class MilStd2525GraphicFactory implements TacticalGraphicFactory
     public TacticalQuad createQuad(String sidc, Iterable<? extends Position> positions, AVList modifiers)
     {
         TacticalGraphic graphic = this.createGraphic(sidc, positions, modifiers);
-        if (graphic instanceof TacticalQuad)
+        if (graphic instanceof TacticalQuad quad)
         {
-            return (TacticalQuad) graphic;
+            return quad;
         }
         else if (graphic != null)
         {
@@ -273,9 +272,8 @@ public class MilStd2525GraphicFactory implements TacticalGraphicFactory
         AVList modifiers)
     {
         TacticalGraphic graphic = this.createGraphic(sidc, null, modifiers);
-        if (graphic instanceof TacticalRoute)
+        if (graphic instanceof TacticalRoute route)
         {
-            TacticalRoute route = (TacticalRoute) graphic;
             route.setControlPoints(controlPoints);
             return route;
         }

@@ -165,7 +165,7 @@ public class LimitedAccessSymbol extends AbstractTacticalSymbol
                 return null;
 
             Object o = params.getValue(AVKey.COLOR);
-            return (o instanceof Color) ? (Color) o : null;
+            return (o instanceof Color color) ? color : null;
         }
 
         /**

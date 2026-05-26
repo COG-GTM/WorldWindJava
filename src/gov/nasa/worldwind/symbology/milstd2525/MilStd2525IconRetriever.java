@@ -393,7 +393,7 @@ public class MilStd2525IconRetriever extends AbstractIconRetriever
             return null;
 
         Object o = params.getValue(AVKey.COLOR);
-        return (o instanceof Color) ? (Color) o : null;
+        return (o instanceof Color color) ? color : null;
     }
 
     protected String getMaskedFillCode(SymbolCode symbolCode)

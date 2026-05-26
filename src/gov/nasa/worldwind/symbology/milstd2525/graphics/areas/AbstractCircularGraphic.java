@@ -115,8 +115,8 @@ public abstract class AbstractCircularGraphic extends AbstractMilStd2525Tactical
     @Override
     public void setModifier(String modifier, Object value)
     {
-        if (SymbologyConstants.DISTANCE.equals(modifier) && (value instanceof Double))
-            this.setRadius((Double) value);
+        if (SymbologyConstants.DISTANCE.equals(modifier) && (value instanceof Double d))
+            this.setRadius(d);
         else
             super.setModifier(modifier, value);
     }
