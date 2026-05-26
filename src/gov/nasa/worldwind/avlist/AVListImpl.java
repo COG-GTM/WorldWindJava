@@ -336,8 +336,8 @@ public class AVListImpl implements AVList
         if (o == null)
             return null;
 
-        if (o instanceof Integer)
-            return (Integer) o;
+        if (o instanceof Integer integer)
+            return integer;
 
         String v = getStringValue(avList, key);
         if (v == null)
@@ -366,8 +366,8 @@ public class AVListImpl implements AVList
         if (o == null)
             return null;
 
-        if (o instanceof Long)
-            return (Long) o;
+        if (o instanceof Long longValue)
+            return longValue;
 
         String v = getStringValue(avList, key);
         if (v == null)
@@ -396,8 +396,8 @@ public class AVListImpl implements AVList
         if (o == null)
             return null;
 
-        if (o instanceof Double)
-            return (Double) o;
+        if (o instanceof Double doubleValue)
+            return doubleValue;
 
         String v = getStringValue(avList, key);
         if (v == null)
@@ -445,8 +445,8 @@ public class AVListImpl implements AVList
         if (o == null)
             return null;
 
-        if (o instanceof Boolean)
-            return (Boolean) o;
+        if (o instanceof Boolean booleanValue)
+            return booleanValue;
 
         String v = getStringValue(avList, key);
         if (v == null)

@@ -99,17 +99,16 @@ public class BasicModel extends WWObjectImpl implements Model
     {
         Object o = BasicFactory.create(AVKey.LAYER_FACTORY, element);
 
-        if (o instanceof LayerList)
-            return (LayerList) o;
+        if (o instanceof LayerList layerList)
+            return layerList;
 
-        if (o instanceof Layer)
-            return new LayerList(new Layer[] {(Layer) o});
+        if (o instanceof Layer layer)
+            return new LayerList(new Layer[] {layer});
 
-        if (o instanceof LayerList[])
+        if (o instanceof LayerList[] lists)
         {
-            LayerList[] lists = (LayerList[]) o;
             if (lists.length > 0)
-                return LayerList.collapseLists((LayerList[]) o);
+                return LayerList.collapseLists(lists);
         }
 
         return null;

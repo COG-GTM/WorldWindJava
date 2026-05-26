@@ -444,10 +444,10 @@ public class DraggableSupport
      */
     protected Position getReferencePosition()
     {
-        if (this.dragObject instanceof Movable2)
-            return ((Movable2) this.dragObject).getReferencePosition();
-        else if (this.dragObject instanceof Movable)
-            return ((Movable) this.dragObject).getReferencePosition();
+        if (this.dragObject instanceof Movable2 movable2)
+            return movable2.getReferencePosition();
+        else if (this.dragObject instanceof Movable movable)
+            return movable.getReferencePosition();
 
         return null;
     }
@@ -463,7 +463,7 @@ public class DraggableSupport
      */
     protected void doMove(Position movePosition, Globe globe)
     {
-        if (this.dragObject instanceof Movable2)
+        if (this.dragObject instanceof Movable2 movable2)
         {
             if (globe == null)
             {
@@ -471,10 +471,10 @@ public class DraggableSupport
                 Logging.logger().severe(msg);
                 throw new IllegalArgumentException(msg);
             }
-            ((Movable2) this.dragObject).moveTo(globe, movePosition);
+            movable2.moveTo(globe, movePosition);
         }
-        else if (this.dragObject instanceof Movable)
-            ((Movable) this.dragObject).moveTo(movePosition);
+        else if (this.dragObject instanceof Movable movable)
+            movable.moveTo(movePosition);
     }
 
     /**
