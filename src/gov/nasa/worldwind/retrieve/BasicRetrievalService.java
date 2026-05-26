@@ -169,17 +169,14 @@ public final class BasicRetrievalService extends WWObjectImpl
 
         private RetrievalExecutor(int poolSize, int queueSize)
         {
-            super(poolSize, poolSize, THREAD_TIMEOUT, TimeUnit.SECONDS, new PriorityBlockingQueue<Runnable>(queueSize),
-                new ThreadFactory()
+            super(poolSize, poolSize, THREAD_TIMEOUT, TimeUnit.SECONDS, new PriorityBlockingQueue<>(queueSize),
+                runnable ->
                 {
-                    public Thread newThread(Runnable runnable)
-                    {
-                        Thread thread = new Thread(runnable);
-                        thread.setDaemon(true);
-                        thread.setPriority(Thread.MIN_PRIORITY);
-                        thread.setUncaughtExceptionHandler(BasicRetrievalService.this);
-                        return thread;
-                    }
+                    Thread thread = new Thread(runnable);
+                    thread.setDaemon(true);
+                    thread.setPriority(Thread.MIN_PRIORITY);
+                    thread.setUncaughtExceptionHandler(BasicRetrievalService.this);
+                    return thread;
                 }, new ThreadPoolExecutor.DiscardPolicy() // abandon task when queue is full
             {
                 // This listener is invoked only when the executor queue is a bounded queue and runs out of room.
@@ -285,16 +282,16 @@ public final class BasicRetrievalService extends WWObjectImpl
             {
                 String message = Logging.getMessage("BasicRetrievalService.ExecutionExceptionDuringRetrieval",
                     task.getRetriever().getName());
-                if (e.getCause() instanceof SocketTimeoutException)
+                if (e.getCause() instanceof SocketTimeoutException ste)
                 {
-                    Logging.logger().fine(message + " " + e.getCause().getLocalizedMessage());
+                    Logging.logger().fine(message + " " + ste.getLocalizedMessage());
                 }
-                else if (e.getCause() instanceof SSLHandshakeException)
+                else if (e.getCause() instanceof SSLHandshakeException sslEx)
                 {
                     if (sslExceptionListener != null)
-                        sslExceptionListener.onException(e.getCause(), task.getRetriever().getName());
+                        sslExceptionListener.onException(sslEx, task.getRetriever().getName());
                     else
-                        Logging.logger().fine(message + " " + e.getCause().getLocalizedMessage());
+                        Logging.logger().fine(message + " " + sslEx.getLocalizedMessage());
                 }
                 else
                 {
@@ -327,7 +324,7 @@ public final class BasicRetrievalService extends WWObjectImpl
         this.executor = new RetrievalExecutor(poolSize, this.queueSize);
 
         // this.activeTasks holds the list of currently executing tasks (*not* those pending on the queue)
-        this.activeTasks = new ConcurrentLinkedQueue<RetrievalTask>();
+        this.activeTasks = new ConcurrentLinkedQueue<>();
     }
 
     public void shutdown(boolean immediately)
