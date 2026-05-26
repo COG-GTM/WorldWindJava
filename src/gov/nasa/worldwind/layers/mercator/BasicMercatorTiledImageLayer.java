@@ -332,9 +332,8 @@ public class BasicMercatorTiledImageLayer extends MercatorTiledImageLayer
                 URLRetriever r = (URLRetriever) retriever;
                 ByteBuffer buffer = r.getBuffer();
 
-                if (retriever instanceof HTTPRetriever)
+                if (retriever instanceof HTTPRetriever htr)
                 {
-                    HTTPRetriever htr = (HTTPRetriever) retriever;
                     if (htr.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT)
                     {
                         // Mark tile as missing to avoid excessive attempts

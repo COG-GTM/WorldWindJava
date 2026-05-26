@@ -88,7 +88,7 @@ public class FileChooserPanelDescriptor extends DefaultPanelDescriptor
     private void selectedFileChanged(Object newValue)
     {
         WizardModel model = getWizardModel();
-        if (model != null && newValue != null && newValue instanceof File)
+        if (model != null && newValue instanceof File)
         {
             RPFWizardUtil.setSelectedFile(model, (File) newValue);
         }
