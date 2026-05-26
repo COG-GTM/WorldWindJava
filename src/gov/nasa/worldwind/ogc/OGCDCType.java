@@ -52,7 +52,7 @@ public class OGCDCType extends AbstractXMLEventParser
     {
         protected String protocol;
         protected String method;
-        protected OGConlineResource onlineResource;
+        protected OGCOnlineResource onlineResource;
 
         public DCPInfo(String protocol)
         {
@@ -75,7 +75,7 @@ public class OGCDCType extends AbstractXMLEventParser
         XMLEventParser defaultParser = null;
 
         if (ctx.isStartElement(event, ONLINE_RESOURCE))
-            defaultParser = new OGConlineResource(this.getNamespaceURI());
+            defaultParser = new OGCOnlineResource(this.getNamespaceURI());
 
         return ctx.allocate(event, defaultParser);
     }
@@ -85,7 +85,7 @@ public class OGCDCType extends AbstractXMLEventParser
         GET = new QName(this.getNamespaceURI(), "Get");
         POST = new QName(this.getNamespaceURI(), "Post");
         HTTP = new QName(this.getNamespaceURI(), "HTTP");
-        ONLINE_RESOURCE = new QName(this.getNamespaceURI(), "onlineResource");
+        ONLINE_RESOURCE = new QName(this.getNamespaceURI(), "OnlineResource");
     }
 
     @Override
@@ -106,8 +106,8 @@ public class OGCDCType extends AbstractXMLEventParser
             if (parser != null)
             {
                 Object o = parser.parse(ctx, event, args);
-                if (o instanceof OGConlineResource onlineResource)
-                    this.addonlineResource(onlineResource);
+                if (o instanceof OGCOnlineResource onlineResource)
+                    this.addOnlineResource(OnlineResource);
             }
         }
     }
@@ -135,14 +135,14 @@ public class OGCDCType extends AbstractXMLEventParser
         dcpi.method = requestMethod;
     }
 
-    protected void addonlineResource(OGConlineResource onlineResource)
+    protected void addOnlineResource(OGCOnlineResource onlineResource)
     {
         DCPInfo dcpi = this.protocols.get(this.protocols.size() - 1);
 
         dcpi.onlineResource = onlineResource;
     }
 
-    public OGConlineResource getOnlineResouce(String protocol, String requestMethod)
+    public OGCOnlineResource getOnlineResouce(String protocol, String requestMethod)
     {
         for (DCPInfo dcpi : this.getDCPInfos())
         {
