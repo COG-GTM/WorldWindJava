@@ -825,10 +825,10 @@ public abstract class AbstractViewInputHandler implements ViewInputHandler, java
             return 0.0;
         }
 
-        if (view instanceof OrbitView)
+        if (view instanceof OrbitView orbitView)
         {
             double radius = this.wwd.getModel().getGlobe().getRadius();
-            double t = ((OrbitView) view).getZoom() / (3.0 * radius);
+            double t = orbitView.getZoom() / (3.0 * radius);
             return (t < 0 ? 0 : (t > 1 ? 1 : t));
         }
 

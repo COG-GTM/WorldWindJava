@@ -320,7 +320,7 @@ public class ViewInputAttributes
 
     public static class ActionAttributesMap
     {
-        private Map<Object, ActionAttributes> actionMap = new HashMap<Object, ActionAttributes>();
+        private Map<Object, ActionAttributes> actionMap = new HashMap<>();
 
         public ActionAttributesMap()
         {
@@ -608,13 +608,13 @@ public class ViewInputAttributes
     public static final double DEFAULT_MOUSE_ROTATE_MAX_VALUE = 0.18; // Speed in degrees per mouse movement
 
     // Device attributes.
-    private Map<Object, DeviceAttributes> deviceMap = new HashMap<Object, DeviceAttributes>();
+    private Map<Object, DeviceAttributes> deviceMap = new HashMap<>();
     // Device/action pairing attributes.
-    private Map<Object, ActionAttributesMap> deviceActionMap = new HashMap<Object, ActionAttributesMap>();
+    private Map<Object, ActionAttributesMap> deviceActionMap = new HashMap<>();
     // Device/Modifier/Action map
     // Devices are mapped to modifier keys, which are then mapped to actions.  Actions contain the keys
     // that they are interested in, and only act on those keys.
-    private Map<Object, DeviceModifierMap> deviceModActionMap = new HashMap<Object, DeviceModifierMap>();
+    private Map<Object, DeviceModifierMap> deviceModActionMap = new HashMap<>();
 
     public ViewInputAttributes()
     {
