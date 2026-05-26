@@ -256,9 +256,9 @@ public class ImageIORasterReader extends AbstractDataRasterReader
                 // WORLD_FILE_IMAGE_SIZE parameter.
                 Object width = params.getValue(AVKey.WIDTH);
                 Object height = params.getValue(AVKey.HEIGHT);
-                if (width != null && height != null && width instanceof Integer && height instanceof Integer)
+                if (width instanceof Integer imageWidth && height instanceof Integer imageHeight)
                 {
-                    int[] size = new int[]{(Integer) width, (Integer) height};
+                    int[] size = new int[]{imageWidth, imageHeight};
                     params.setValue(WorldFile.WORLD_FILE_IMAGE_SIZE, size);
                 }
             }
@@ -275,13 +275,13 @@ public class ImageIORasterReader extends AbstractDataRasterReader
 
         Object input = source;
 
-        if (source instanceof java.net.URL)
+        if (source instanceof java.net.URL url)
         {
-            input = ((java.net.URL) source).openStream();
+            input = url.openStream();
         }
-        else if (source instanceof CharSequence)
+        else if (source instanceof CharSequence charSequence)
         {
-            input = openInputStream(source.toString());
+            input = openInputStream(charSequence.toString());
         }
 
         return javax.imageio.ImageIO.createImageInputStream(input);
@@ -294,14 +294,14 @@ public class ImageIORasterReader extends AbstractDataRasterReader
         {
             return null;
         }
-        else if (streamOrException instanceof java.io.IOException)
+        else if (streamOrException instanceof java.io.IOException ioException)
         {
-            throw (java.io.IOException) streamOrException;
+            throw ioException;
         }
-        else if (streamOrException instanceof Exception)
+        else if (streamOrException instanceof Exception exception)
         {
             String message = Logging.getMessage("generic.ExceptionAttemptingToReadImageFile", path);
-            Logging.logger().log(java.util.logging.Level.SEVERE, message, streamOrException);
+            Logging.logger().log(java.util.logging.Level.SEVERE, message, exception);
             throw new java.io.IOException(message);
         }
 
