@@ -475,10 +475,8 @@ public final class Plane
     {
         if (this == o)
             return true;
-        if (!(o instanceof Plane))
+        if (!(o instanceof Plane plane))
             return false;
-
-        Plane plane = (Plane) o;
 
         return !(n != null ? !n.equals(plane.n) : plane.n != null);
     }
