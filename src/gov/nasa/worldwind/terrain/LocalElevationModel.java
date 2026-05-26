@@ -472,11 +472,11 @@ public class LocalElevationModel extends AbstractElevationModel
         Double minElevation = null;
         Double maxElevation = null;
         Object o = bufferParams.getValue(AVKey.ELEVATION_MIN);
-        if (o instanceof Double)
-            minElevation = (Double) o;
+        if (o instanceof Double min)
+            minElevation = min;
         o = bufferParams.getValue(AVKey.ELEVATION_MAX);
-        if (o instanceof Double)
-            maxElevation = (Double) o;
+        if (o instanceof Double max)
+            maxElevation = max;
 
         String dataType = bufferParams.getStringValue(AVKey.DATA_TYPE);
         if (WWUtil.isEmpty(dataType))

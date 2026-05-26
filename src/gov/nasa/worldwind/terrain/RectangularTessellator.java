@@ -886,8 +886,8 @@ public class RectangularTessellator extends WWObjectImpl implements Tessellator
             gl.glClientActiveTexture(GL2.GL_TEXTURE0 + i);
             gl.glEnableClientState(GL2.GL_TEXTURE_COORD_ARRAY);
             Object texCoords = dc.getValue(AVKey.TEXTURE_COORDINATES);
-            if (texCoords != null && texCoords instanceof DoubleBuffer)
-                gl.glTexCoordPointer(2, GL.GL_FLOAT, 0, ((DoubleBuffer) texCoords).rewind());
+            if (texCoords instanceof DoubleBuffer doubleBuffer)
+                gl.glTexCoordPointer(2, GL.GL_FLOAT, 0, doubleBuffer.rewind());
             else
                 gl.glTexCoordPointer(2, GL.GL_FLOAT, 0, tile.ri.texCoords.rewind());
         }
@@ -1121,8 +1121,8 @@ public class RectangularTessellator extends WWObjectImpl implements Tessellator
         if (extent == null)
             return;
 
-        if (extent instanceof Renderable)
-            ((Renderable) extent).render(dc);
+        if (extent instanceof Renderable renderable)
+            renderable.render(dc);
     }
 
     protected void renderTileID(DrawContext dc, RectTile tile)
@@ -1565,9 +1565,8 @@ public class RectangularTessellator extends WWObjectImpl implements Tessellator
 
         // Check whether the tile includes the intersection elevation - assume cylinder as Extent
         // TODO: replace this test with a generic test against Extent
-        if (tile.getExtent() instanceof Cylinder)
+        if (tile.getExtent() instanceof Cylinder cylinder)
         {
-            Cylinder cylinder = ((Cylinder) tile.getExtent());
             if (!(globe.isPointAboveElevation(cylinder.getBottomCenter(), elevation)
                 ^ globe.isPointAboveElevation(cylinder.getTopCenter(), elevation)))
                 return null;
