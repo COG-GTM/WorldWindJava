@@ -355,44 +355,42 @@ public class SectorRangeFan extends AbstractMilStd2525TacticalGraphic implements
     {
         if (SymbologyConstants.DISTANCE.equals(modifier))
         {
-            if (value instanceof Iterable)
+            if (value instanceof Iterable iterable)
             {
-                this.setRadii((Iterable) value);
+                this.setRadii(iterable);
             }
-            else if (value instanceof Double)
+            else if (value instanceof Double d)
             {
-                this.setRadii(Arrays.asList((Double) value));
+                this.setRadii(Arrays.asList(d));
             }
         }
         else if (SymbologyConstants.AZIMUTH.equals(modifier))
         {
-            if (value instanceof Iterable)
+            if (value instanceof Iterable<?> iterable)
             {
-                // Store the Iterable in an unnecessary variable to suppress Java 7 compiler warnings on Windows.
-                Iterable<? extends Angle> iterable = (Iterable<? extends Angle>) value;
-                this.setAzimuths(iterable);
+                //noinspection unchecked
+                this.setAzimuths((Iterable<? extends Angle>) iterable);
             }
-            else if (value instanceof Angle)
+            else if (value instanceof Angle a)
             {
-                this.setAzimuths(Arrays.asList((Angle) value));
+                this.setAzimuths(Arrays.asList(a));
             }
         }
         else if (SymbologyConstants.ALTITUDE_DEPTH.equals(modifier))
         {
-            if (value instanceof Iterable)
+            if (value instanceof Iterable<?> iterable)
             {
-                // Store the Iterable in an unnecessary variable to suppress Java 7 compiler warnings on Windows.
-                Iterable<String> iterable = (Iterable<String>) value;
-                this.setAltitudes(iterable);
+                //noinspection unchecked
+                this.setAltitudes((Iterable<String>) iterable);
             }
             else if (value != null)
             {
                 this.setAltitudes(Arrays.asList(value.toString()));
             }
         }
-        else if (SymbologyConstants.SYMBOL_INDICATOR.equals(modifier) && value instanceof String)
+        else if (SymbologyConstants.SYMBOL_INDICATOR.equals(modifier) && value instanceof String s)
         {
-            this.setSymbol((String) value);
+            this.setSymbol(s);
         }
         else
         {

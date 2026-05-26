@@ -99,8 +99,8 @@ public class BasicArea extends AbstractMilStd2525TacticalGraphic implements PreR
 
         for (LatLon ll : locations)
         {
-            if (ll instanceof Position)
-                positions.add((Position) ll);
+            if (ll instanceof Position pos)
+                positions.add(pos);
             else
                 positions.add(new Position(ll, 0));
         }

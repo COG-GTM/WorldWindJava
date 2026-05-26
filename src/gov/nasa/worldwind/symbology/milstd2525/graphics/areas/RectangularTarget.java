@@ -117,15 +117,15 @@ public class RectangularTarget extends AbstractRectangularGraphic
     @Override
     public void setModifier(String modifier, Object value)
     {
-        if (SymbologyConstants.DISTANCE.equals(modifier) && (value instanceof Iterable))
+        if (SymbologyConstants.DISTANCE.equals(modifier) && (value instanceof Iterable<?> iterable))
         {
-            Iterator iterator = ((Iterable) value).iterator();
+            Iterator<?> iterator = iterable.iterator();
             this.setWidth((Double) iterator.next());
             this.setLength((Double) iterator.next());
         }
-        else if (SymbologyConstants.AZIMUTH.equals(modifier) && (value instanceof Angle))
+        else if (SymbologyConstants.AZIMUTH.equals(modifier) && (value instanceof Angle heading))
         {
-            this.setHeading((Angle) value);
+            this.setHeading(heading);
         }
         else
         {

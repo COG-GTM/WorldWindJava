@@ -250,9 +250,9 @@ public class SearchArea extends AbstractMilStd2525TacticalGraphic implements Pre
     @SuppressWarnings("unchecked")
     public void setModifier(String modifier, Object value)
     {
-        if (SymbologyConstants.SYMBOL_INDICATOR.equals(modifier) && value instanceof String)
+        if (SymbologyConstants.SYMBOL_INDICATOR.equals(modifier) && value instanceof String s)
         {
-            this.setSymbol((String) value);
+            this.setSymbol(s);
         }
         else
         {

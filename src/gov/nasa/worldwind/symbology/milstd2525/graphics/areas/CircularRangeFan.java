@@ -141,19 +141,19 @@ public class CircularRangeFan extends AbstractMilStd2525TacticalGraphic implemen
     {
         if (SymbologyConstants.DISTANCE.equals(modifier))
         {
-            if (value instanceof Iterable)
+            if (value instanceof Iterable iterable)
             {
                 //noinspection unchecked
-                this.setRadii((Iterable) value);
+                this.setRadii(iterable);
             }
-            else if (value instanceof Double)
+            else if (value instanceof Double d)
             {
-                this.setRadii(Arrays.asList((Double) value));
+                this.setRadii(Arrays.asList(d));
             }
         }
-        else if (SymbologyConstants.SYMBOL_INDICATOR.equals(modifier) && value instanceof String)
+        else if (SymbologyConstants.SYMBOL_INDICATOR.equals(modifier) && value instanceof String s)
         {
-            this.setSymbol((String) value);
+            this.setSymbol(s);
         }
         else
         {
@@ -318,9 +318,9 @@ public class CircularRangeFan extends AbstractMilStd2525TacticalGraphic implemen
 
         // See if the altitude modifier is set. If so, use it's value to construct altitude labels.
         Object modifier = this.getModifier(SymbologyConstants.ALTITUDE_DEPTH);
-        if (modifier instanceof Iterable)
+        if (modifier instanceof Iterable iterable)
         {
-            altIterator = ((Iterable) modifier).iterator();
+            altIterator = iterable.iterator();
         }
         else if (modifier != null)
         {

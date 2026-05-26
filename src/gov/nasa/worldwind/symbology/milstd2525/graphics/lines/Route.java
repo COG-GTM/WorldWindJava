@@ -140,9 +140,9 @@ public class Route extends AbstractMilStd2525TacticalGraphic implements Tactical
     public double getWidth()
     {
         Object widthModifier = this.getModifier(SymbologyConstants.DISTANCE);
-        if (widthModifier instanceof Double)
+        if (widthModifier instanceof Double width)
         {
-            return (Double) widthModifier;
+            return width;
         }
         else
         {
@@ -246,9 +246,9 @@ public class Route extends AbstractMilStd2525TacticalGraphic implements Tactical
         {
             for (TacticalGraphic child : this.children)
             {
-                if (child instanceof MilStd2525TacticalGraphic)
+                if (child instanceof MilStd2525TacticalGraphic milStdChild)
                 {
-                    ((MilStd2525TacticalGraphic) child).setStatus(status);
+                    milStdChild.setStatus(status);
                 }
             }
         }
@@ -268,9 +268,9 @@ public class Route extends AbstractMilStd2525TacticalGraphic implements Tactical
         {
             for (TacticalGraphic child : this.children)
             {
-                if (child instanceof PreRenderable)
+                if (child instanceof PreRenderable preRenderable)
                 {
-                    ((PreRenderable) child).preRender(dc);
+                    preRenderable.preRender(dc);
                 }
             }
         }

@@ -195,13 +195,13 @@ public class MilStd2525PointGraphic extends AVListImpl implements MilStd2525Tact
     {
         // Get the Unique Designation modifier. If it's an iterable, return the first value.
         Object value = this.getModifier(SymbologyConstants.UNIQUE_DESIGNATION);
-        if (value instanceof String)
+        if (value instanceof String s)
         {
-            return (String) value;
+            return s;
         }
-        else if (value instanceof Iterable)
+        else if (value instanceof Iterable<?> iterable)
         {
-            Iterator iterator = ((Iterable) value).iterator();
+            Iterator<?> iterator = iterable.iterator();
             Object o = iterator.hasNext() ? iterator.next() : null;
             if (o != null)
                 return o.toString();

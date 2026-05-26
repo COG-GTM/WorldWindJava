@@ -138,14 +138,14 @@ public class AbstractRectangularGraphic extends AbstractMilStd2525TacticalGraphi
     {
         if (SymbologyConstants.DISTANCE.equalsIgnoreCase(modifier))
         {
-            if (value instanceof Double)
+            if (value instanceof Double d)
             {
-                this.setWidth((Double) value);
+                this.setWidth(d);
             }
-            else if (value instanceof Iterable)
+            else if (value instanceof Iterable<?> iterable)
             {
                 // Only use the first value of the iterable. This graphic uses two control points and a width.
-                Iterator iterator = ((Iterable) value).iterator();
+                Iterator<?> iterator = iterable.iterator();
                 this.setWidth((Double) iterator.next());
             }
         }
