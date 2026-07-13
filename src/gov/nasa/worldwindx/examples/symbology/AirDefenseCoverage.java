@@ -376,9 +376,14 @@ public class AirDefenseCoverage extends ApplicationTemplate
             {
                 boolean hasRadius = fields.length > 5 && !fields[5].trim().isEmpty();
                 if (!hasRadius)
+                {
+                    // A threat without a weapon-engagement-zone radius is meaningless; warn and skip it,
+                    // consistent with the other malformed-record branches.
                     Logging.logger().warning(Logging.getMessage("generic.CannotParse", line));
+                    return;
+                }
 
-                double radiusKm = hasRadius ? Double.parseDouble(fields[5].trim()) : 0.0;
+                double radiusKm = Double.parseDouble(fields[5].trim());
                 scenario.threats.add(new Threat(name, type, location, radiusKm * 1000.0));
             }
             else
