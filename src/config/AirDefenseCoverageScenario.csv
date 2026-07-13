@@ -1,0 +1,37 @@
+# Protection Cell Air-Defense Coverage - scenario laydown
+#
+# Unclassified planning vignette over a Baltic area of operations. All place
+# names are publicly known geography; friendly locations are well-known NATO
+# air-policing / enhanced Forward Presence sites, and the hostile integrated
+# air-defense (IADS) entries are open-source (OSINT) coverage ESTIMATES derived
+# from publicly reported nominal system ranges. No classified data is included.
+#
+# Format (comma-separated). Lines beginning with '#' and blank lines are ignored.
+#   kind,name,type,latitude,longitude,wez_radius_km
+#     kind           ASSET (friendly) or THREAT (hostile air defense)
+#     name           free-text label
+#     type           friendly asset class or hostile SAM class (drives the SIDC)
+#     latitude       decimal degrees (WGS84)
+#     longitude      decimal degrees (WGS84)
+#     wez_radius_km  weapon-engagement-zone radius in km (THREAT only; blank for ASSET)
+#
+# --- Friendly assets ---------------------------------------------------------
+ASSET,Siauliai Air Base,AIRFIELD,55.8939,23.3950,
+ASSET,Amari Air Base,AIRFIELD,59.2603,24.2085,
+ASSET,Lielvarde Air Base,AIRFIELD,56.7775,24.8536,
+ASSET,Rukla Battle Group Base,MANEUVER,55.0139,24.2597,
+ASSET,Tapa Battle Group Base,MANEUVER,59.2606,25.9589,
+ASSET,Adazi Battle Group Base,MANEUVER,57.0876,24.3251,
+ASSET,Suwalki Corridor Node,MANEUVER,54.1116,22.9309,
+ASSET,Kaunas Logistics Hub,SUSTAINMENT,54.8985,23.9036,
+ASSET,Vilnius Command Node,C2,54.6872,25.2797,
+ASSET,Riga Command Node,C2,56.9496,24.1052,
+ASSET,Tallinn Command Node,C2,59.4370,24.7536,
+ASSET,Kaunas ADA Battery,AIR_DEFENSE,54.9500,23.9800,
+ASSET,Vilnius ADA Battery,AIR_DEFENSE,54.6000,25.1000,
+ASSET,Bydgoszcz Rear Sustainment,SUSTAINMENT,53.1235,18.0084,
+# --- Hostile integrated air defenses (OSINT coverage estimates) --------------
+THREAT,Long-Range SAM (Chernyakhovsk),SAM_LONG,54.6300,21.7900,370
+THREAT,Medium-Range SAM (Gvardeysk),SAM_MEDIUM,54.6560,21.0700,250
+THREAT,Point-Defense SAM (Baltiysk),SAM_SHORT,54.6510,19.9100,120
+THREAT,Medium-Range SAM (Pskov),SAM_MEDIUM,57.7900,28.3300,250
