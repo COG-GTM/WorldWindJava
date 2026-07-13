@@ -69,8 +69,6 @@ import java.util.logging.Level;
  * with a red callout, and prints a coverage summary.</li>
  * </ul>
  * See the {@link TacticalSymbols} and {@link TacticalGraphics} examples for the underlying symbology building blocks.
- *
- * @author Cognition
  */
 public class AirDefenseCoverage extends ApplicationTemplate
 {
@@ -202,6 +200,12 @@ public class AirDefenseCoverage extends ApplicationTemplate
             symbol.setAttributes(this.sharedSymbolAttrs);
             symbol.setHighlightAttributes(this.sharedHighlightAttrs);
             symbol.setModifier(SymbologyConstants.UNIQUE_DESIGNATION, threat.getName());
+
+            // Distinguish long/medium/short-range systems on the map with a MIL-STD-2525 echelon marker.
+            String echelon = echelonForThreat(threat.getType());
+            if (echelon != null)
+                symbol.setModifier(SymbologyConstants.ECHELON, echelon);
+
             symbol.setShowLocation(false);
             this.symbolLayer.addRenderable(symbol);
         }
@@ -312,12 +316,15 @@ public class AirDefenseCoverage extends ApplicationTemplate
         InputStream stream = WWIO.openFileOrResourceStream(SCENARIO_RESOURCE, AirDefenseCoverage.class);
         if (stream == null)
         {
-            throw new FileNotFoundException(Logging.getMessage("generic.CannotOpenFile", SCENARIO_RESOURCE));
+            String message = Logging.getMessage("generic.CannotOpenFile", SCENARIO_RESOURCE);
+            Logging.logger().severe(message);
+            throw new FileNotFoundException(message);
         }
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        // Close the underlying stream in the finally block so it is released even if reader construction fails.
         try
         {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
             String line;
             while ((line = reader.readLine()) != null)
             {
@@ -325,35 +332,62 @@ public class AirDefenseCoverage extends ApplicationTemplate
                 if (line.isEmpty() || line.startsWith("#"))
                     continue;
 
-                String[] fields = line.split(",", -1);
-                if (fields.length < 5)
-                    continue;
-
-                String kind = fields[0].trim();
-                String name = fields[1].trim();
-                String type = fields[2].trim();
-                double lat = Double.parseDouble(fields[3].trim());
-                double lon = Double.parseDouble(fields[4].trim());
-                LatLon location = LatLon.fromDegrees(lat, lon);
-
-                if ("ASSET".equalsIgnoreCase(kind))
-                {
-                    scenario.assets.add(new Asset(name, type, location));
-                }
-                else if ("THREAT".equalsIgnoreCase(kind))
-                {
-                    double radiusKm = fields.length > 5 && !fields[5].trim().isEmpty()
-                        ? Double.parseDouble(fields[5].trim()) : 0.0;
-                    scenario.threats.add(new Threat(name, type, location, radiusKm * 1000.0));
-                }
+                parseScenarioLine(line, scenario);
             }
         }
         finally
         {
-            WWIO.closeStream(reader, SCENARIO_RESOURCE);
+            WWIO.closeStream(stream, SCENARIO_RESOURCE);
         }
 
         return scenario;
+    }
+
+    /**
+     * Parses a single non-comment scenario line and adds the resulting entity to the scenario. A malformed line is
+     * logged and skipped so one bad record does not abort loading the rest of the scenario.
+     *
+     * @param line     the trimmed scenario line.
+     * @param scenario the scenario to populate.
+     */
+    protected static void parseScenarioLine(String line, Scenario scenario)
+    {
+        String[] fields = line.split(",", -1);
+        if (fields.length < 5)
+        {
+            Logging.logger().warning(Logging.getMessage("generic.CannotParse", line));
+            return;
+        }
+
+        try
+        {
+            String kind = fields[0].trim();
+            String name = fields[1].trim();
+            String type = fields[2].trim();
+            double lat = Double.parseDouble(fields[3].trim());
+            double lon = Double.parseDouble(fields[4].trim());
+            LatLon location = LatLon.fromDegrees(lat, lon);
+
+            if ("ASSET".equalsIgnoreCase(kind))
+            {
+                scenario.assets.add(new Asset(name, type, location));
+            }
+            else if ("THREAT".equalsIgnoreCase(kind))
+            {
+                double radiusKm = fields.length > 5 && !fields[5].trim().isEmpty()
+                    ? Double.parseDouble(fields[5].trim()) : 0.0;
+                scenario.threats.add(new Threat(name, type, location, radiusKm * 1000.0));
+            }
+            else
+            {
+                Logging.logger().warning(Logging.getMessage("generic.CannotParse", line));
+            }
+        }
+        catch (NumberFormatException e)
+        {
+            // Skip the malformed record but keep loading the remaining scenario entries.
+            Logging.logger().warning(Logging.getMessage("generic.CannotParse", line));
+        }
     }
 
     /**
@@ -396,6 +430,32 @@ public class AirDefenseCoverage extends ApplicationTemplate
     {
         // All modeled threats are hostile air-defense (surface-to-air) systems.
         return "SHGPUCD--------";
+    }
+
+    /**
+     * Maps a threat type to a MIL-STD-2525 echelon code so long-, medium-, and short-range systems are visually
+     * distinguishable on the map even though they share the hostile air-defense icon.
+     *
+     * @param type the threat type.
+     *
+     * @return an echelon code from {@link SymbologyConstants}, or {@code null} for no echelon marker.
+     */
+    protected static String echelonForThreat(String type)
+    {
+        if (type == null)
+            return null;
+
+        switch (type.toUpperCase())
+        {
+            case "SAM_LONG":
+                return SymbologyConstants.ECHELON_BATTALION_SQUADRON;
+            case "SAM_MEDIUM":
+                return SymbologyConstants.ECHELON_COMPANY_BATTERY_TROOP;
+            case "SAM_SHORT":
+                return SymbologyConstants.ECHELON_PLATOON_DETACHMENT;
+            default:
+                return null;
+        }
     }
 
     public static void main(String[] args)

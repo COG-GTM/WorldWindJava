@@ -46,8 +46,6 @@ import java.util.List;
  * the exposure decision is consistent with the range rings rendered by
  * {@link AirDefenseCoverage}. This class performs no rendering and has no WorldWind runtime dependencies beyond the
  * geometry package, which makes it straightforward to unit test.
- *
- * @author Cognition
  */
 public class ThreatCoverageAnalyzer
 {
