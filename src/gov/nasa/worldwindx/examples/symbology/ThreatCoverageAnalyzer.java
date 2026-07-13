@@ -463,8 +463,9 @@ public class ThreatCoverageAnalyzer
             StringBuilder sb = new StringBuilder();
             sb.append("Protection Cell Air-Defense Coverage Summary\n");
             sb.append("============================================\n");
-            sb.append(String.format("%d of %d assets EXPOSED (inside a hostile weapon-engagement zone).%n",
+            sb.append(String.format("%d of %d assets EXPOSED (inside a hostile weapon-engagement zone).",
                 this.getExposedCount(), this.getTotalCount()));
+            sb.append("\n");
             sb.append("\n");
 
             for (AssetExposure exposure : this.exposures)
@@ -479,11 +480,11 @@ public class ThreatCoverageAnalyzer
                             threatNames.append(", ");
                         threatNames.append(threat.getName());
                     }
-                    sb.append(String.format("  [EXPOSED] %-28s by: %s%n", asset.getName(), threatNames.toString()));
+                    sb.append(String.format("  [EXPOSED] %-28s by: %s\n", asset.getName(), threatNames.toString()));
                 }
                 else
                 {
-                    sb.append(String.format("  [COVERED] %-28s (outside all threat rings)%n", asset.getName()));
+                    sb.append(String.format("  [COVERED] %-28s (outside all threat rings)\n", asset.getName()));
                 }
             }
 

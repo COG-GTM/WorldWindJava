@@ -46,8 +46,6 @@ import java.util.List;
 @RunWith(JUnit4.class)
 public class ThreatCoverageAnalyzerTest
 {
-    private static final double DELTA = 1e-6;
-
     /** A spherical Earth radius used by the analyzer under test. */
     private static final double GLOBE_RADIUS = ThreatCoverageAnalyzer.DEFAULT_GLOBE_RADIUS_METERS;
 

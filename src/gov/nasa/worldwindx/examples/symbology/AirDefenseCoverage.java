@@ -374,8 +374,11 @@ public class AirDefenseCoverage extends ApplicationTemplate
             }
             else if ("THREAT".equalsIgnoreCase(kind))
             {
-                double radiusKm = fields.length > 5 && !fields[5].trim().isEmpty()
-                    ? Double.parseDouble(fields[5].trim()) : 0.0;
+                boolean hasRadius = fields.length > 5 && !fields[5].trim().isEmpty();
+                if (!hasRadius)
+                    Logging.logger().warning(Logging.getMessage("generic.CannotParse", line));
+
+                double radiusKm = hasRadius ? Double.parseDouble(fields[5].trim()) : 0.0;
                 scenario.threats.add(new Threat(name, type, location, radiusKm * 1000.0));
             }
             else
